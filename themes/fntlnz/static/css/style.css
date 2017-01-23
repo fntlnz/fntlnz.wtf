@@ -107,8 +107,9 @@ header.topBar {
 }
 
 /* Index */
-section.postExcerpt {
-    margin-bottom: 2em;
+li.postExcerpt time {
+  color: #666666;
+  margin-right: 2em;
 }
 
 section.postExcerpt section {
@@ -136,6 +137,7 @@ article section#title h1 {
 }
 
 section time {
+    font-size: 14px;
     color: #666666;
 }
 
@@ -279,3 +281,22 @@ hr {
   background-color: #666666;
 }
 
+.lorenzo-pic {
+  width: 100px;
+  float: right;
+}
+
+@media screen and (min-width: 0px) and (max-width: 400px) {
+  .lorenzo-pic {
+    display: none;
+  }
+
+  li.postExcerpt time {
+    margin-right: 0.1em;
+  }
+}
+
+section#main h2 {
+  font-weight: bold;
+  margin-top: 0.8em;
+}

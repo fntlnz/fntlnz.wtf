@@ -1,6 +1,6 @@
 baseurl = "http://blog.fntlnz.wtf"
 languageCode = "en-us"
-title = "fntlnz's blog"
+title = "Lorenzo Fontana's Blog"
 theme = "fntlnz"
 paginate = 500
 PygmentsCodeFences = true

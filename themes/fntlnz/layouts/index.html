@@ -1,17 +1,36 @@
 {{ partial "head.html" . }}
 
-<section>
-    {{ range .Paginator.Pages }}
-    <section class="postExcerpt">
-        <h1><a href='{{ .Permalink }}'>{{ .Title }}</a></h1>
-      <time>{{ .Date.Format "Jan 2, 2006" }}</time>
-      <span class="middot"></span>
-      <span class="reading-time">{{ .ReadingTime }} minutes read</span>
-      <span class="middot"></span>
-      <span class="wordcount">{{ .FuzzyWordCount }} words</span>
-      <p>{{ .Description | markdownify }}</p>
-    </section>
-    {{ end }}
-</section>
+<img class="lorenzo-pic" src="/lorenzo.jpg" />
 
+<section id="main">
+  <h2>Talks</h2>
+  <ul>
+      {{ range where .Data.Pages "Section" "talks"}}
+      <li class="postExcerpt">
+          <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+          <a href='{{ echoParam .Params "link" }}'>{{ .Title }}</a>
+      </li>
+      {{ end }}
+  </ul>
+
+  <h2>Blogs Posts</h2>
+  <ul>
+      {{ range where .Data.Pages "Section" "post"}}
+      <li class="postExcerpt">
+          <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+          <a href='{{ .Permalink }}'>{{ .Title }}</a>
+      </li>
+      {{ end }}
+  </ul>
+
+  <h2>Other Publications</h2>
+  <ul>
+      {{ range where .Data.Pages "Section" "links"}}
+      <li class="postExcerpt">
+          <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+          <a href='{{ echoParam .Params "link" }}'>{{ .Title }}</a>
+      </li>
+      {{ end }}
+  </ul>
+</section>
 {{ partial "foot.html" . }}
