@@ -1,36 +1,45 @@
 {{ partial "head.html" . }}
 
-<img class="lorenzo-pic" src="/lorenzo.jpg" />
 
 <section id="main">
-  <h2>Talks</h2>
-  <ul>
-      {{ range where .Data.Pages "Section" "talks"}}
-      <li class="postExcerpt">
-          <time>{{ .Date.Format "Jan 2, 2006" }}</time>
-          <a href='{{ echoParam .Params "link" }}'>{{ .Title }}</a>
-      </li>
-      {{ end }}
-  </ul>
-
-  <h2>Blogs Posts</h2>
-  <ul>
+  <section class="lorenzo-pic">
+    <img src="/lorenzo.jpg" />
+    <h2>fntlnz</h2>
+    <ul>
+      <li><a href="https://github.com/fntlnz">github</a></li>
+      <li><a href="https://twitter.com/fntlnz">twitter</a></li>
+    </ul>
+  </section>
+  <section class="list">
+    <h2>Blogs Posts</h2>
+    <ul>
       {{ range where .Data.Pages "Section" "post"}}
       <li class="postExcerpt">
-          <time>{{ .Date.Format "Jan 2, 2006" }}</time>
-          <a href='{{ .Permalink }}'>{{ .Title }}</a>
+        <a href='{{ .Permalink }}'>{{ .Title }}</a> 
+        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
       </li>
       {{ end }}
-  </ul>
-
-  <h2>Other Publications</h2>
-  <ul>
+    </ul>
+    <h2>Other Publications</h2>
+    <ul>
       {{ range where .Data.Pages "Section" "links"}}
       <li class="postExcerpt">
-          <time>{{ .Date.Format "Jan 2, 2006" }}</time>
-          <a href='{{ echoParam .Params "link" }}'>{{ .Title }}</a>
+        <a href='{{ echoParam .Params "link" }}'>{{ .Title }}</a>
+        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
       </li>
       {{ end }}
-  </ul>
+    </ul>
+    <h2>Talks</h2>
+    <ul>
+      {{ range where .Data.Pages "Section" "talks"}}
+      <li class="postExcerpt">
+        <a href='{{ echoParam .Params "link" }}'>{{ .Title }}</a>
+        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+      </li>
+      {{ end }}
+    </ul>
+  </section>
+
 </section>
+
 {{ partial "foot.html" . }}

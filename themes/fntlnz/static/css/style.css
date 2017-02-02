@@ -130,7 +130,7 @@ section.postExcerpt header {
 /* Single */
 
 article section#title h1 {
-    font-size: 30px;
+    font-size: 40px;
     letter-spacing: -.028em;
     font-style: normal;
 }
@@ -151,36 +151,32 @@ article section#content {
 }
 
 article section#content h1 {
-    font-size: 27px;
+    font-size: 33px;
     font-weight: 500;
-    letter-spacing: -.028em;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 0.8em;
 }
 
 article section#content h2 {
-    font-size: 25px;
+    font-size: 28px;
     font-weight: 500;
-    letter-spacing: -.028em;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 0.8em;
 }
 
 article section#content h3 {
-    font-size: 23px;
+    font-size: 25px;
     font-weight: 500;
-    letter-spacing: -.028em;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 0.8em;
 }
 
 article section#content h4 {
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 500;
-    letter-spacing: -.028em;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 0.8em;
@@ -259,13 +255,23 @@ hr {
   background-color: #666666;
 }
 
-.lorenzo-pic {
-  width: 100px;
-  float: right;
+section.lorenzo-pic {
+  max-width: 100px;
+  margin-right: 2em;
+  float: left;
 }
 
-@media screen and (min-width: 0px) and (max-width: 400px) {
-  .lorenzo-pic {
+section.lorenzo-pic > img {
+  max-width: 100px;
+}
+
+
+@media screen and (min-width: 0px) and (max-width: 600px) {
+  section.lorenzo-pic {
+    width: 100%;
+  }
+
+  section.lorenzo-pic > img{
     display: none;
   }
 
@@ -274,6 +280,10 @@ hr {
   }
 }
 
+section.list {
+  max-width: 80%;
+  float: left;
+}
 section#main h2 {
   font-weight: bold;
   margin-top: 0.8em;
