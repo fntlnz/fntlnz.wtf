@@ -30,14 +30,20 @@
       </li>
       {{ end }}
     </ul>
+    <h2>Upcoming Talks</h2>
+    <ul>
+      {{ range where .Data.Pages "Section" "talks-upcoming"}}
+      <li class="postExcerpt">
+        {{ .Title }}
+        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+      </li>
+      {{ end }}
+    </ul>
     <h2>Talks</h2>
     <ul>
       {{ range where .Data.Pages "Section" "talks"}}
       <li class="postExcerpt">
         {{ .Title }}
-        , desc
-        , slides
-        , video
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
       </li>
       {{ end }}

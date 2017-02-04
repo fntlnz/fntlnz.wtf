@@ -6,17 +6,17 @@ help: ## Show this help
 deploy: ## Deploy to GitHub Pages
 	echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
-	# Build the project.
+	# Build the project
 	hugo -d docs
 	echo "fntlnz.wtf" > docs/CNAME
 
-	# Add changes to git.
+	# Add changes to git
 	git add -A
 
-	# Commit changes.
+	# Commit changes
 	git commit -m "rebuilding site `date`"
 
-	# Deploy	
+	# Deploy
 	git push origin master
 
 serve: ## Serve a local development copy
