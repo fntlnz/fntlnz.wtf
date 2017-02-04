@@ -1,4 +1,4 @@
-baseurl = "http://blog.fntlnz.wtf"
+baseurl = "https://fntlnz.wtf"
 languageCode = "en-us"
 title = "Lorenzo Fontana's Homepage"
 theme = "fntlnz"

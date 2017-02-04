@@ -8,7 +8,7 @@ deploy: ## Deploy to GitHub Pages
 
 	# Build the project.
 	hugo -d docs
-	echo "blog.fntlnz.wtf" > docs/CNAME
+	echo "fntlnz.wtf" > docs/CNAME
 
 	# Add changes to git.
 	git add -A

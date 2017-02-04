@@ -8,10 +8,11 @@
     <ul>
       <li><a href="https://github.com/fntlnz">github</a></li>
       <li><a href="https://twitter.com/fntlnz">twitter</a></li>
+      <li><a href="/downloads/pubkey-9FBF85ED.asc">gpg key</a></li>
     </ul>
   </section>
   <section class="list">
-    <h2>Blogs Posts</h2>
+    <h2>Blog Posts</h2>
     <ul>
       {{ range where .Data.Pages "Section" "post"}}
       <li class="postExcerpt">
@@ -33,7 +34,10 @@
     <ul>
       {{ range where .Data.Pages "Section" "talks"}}
       <li class="postExcerpt">
-        <a href='{{ echoParam .Params "link" }}'>{{ .Title }}</a>
+        {{ .Title }}
+        , desc
+        , slides
+        , video
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
       </li>
       {{ end }}
