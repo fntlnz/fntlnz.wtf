@@ -265,6 +265,10 @@ section.lorenzo-pic > img {
   max-width: 100px;
 }
 
+section.list {
+  max-width: 80%;
+  float: left;
+}
 
 @media screen and (min-width: 0px) and (max-width: 600px) {
   section.lorenzo-pic {
@@ -278,12 +282,11 @@ section.lorenzo-pic > img {
   li.postExcerpt time {
     margin-right: 0.1em;
   }
+  section.list {
+    max-width: 100%;
+  }
 }
 
-section.list {
-  max-width: 80%;
-  float: left;
-}
 section#main h2 {
   font-weight: bold;
   margin-top: 0.8em;
