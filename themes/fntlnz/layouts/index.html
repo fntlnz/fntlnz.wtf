@@ -34,7 +34,7 @@
 
     <h2>Upcoming Talks</h2>
     <ul>
-      {{ range where .Data.Pages "Section" "talks-upcoming"}}
+      {{ range where .Data.Pages.ByDate "Section" "talks-upcoming"}}
       <li class="postExcerpt">
         <a href="{{ echoParam .Params "details" }}">{{ echoParam .Params "where" }}</a>
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
