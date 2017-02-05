@@ -2,17 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://fntlnz.wtf/talks-upcoming/25-may-17-codemotion-rome-golang-dsl/</loc>
-    <lastmod>2017-05-25T00:00:00+02:00</lastmod>
+    <loc>https://fntlnz.wtf/talks-upcoming/30-mar-17-demist-docker-networking/</loc>
+    <lastmod>2017-03-30T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/25-mar-17-codemotion-rome-golang-dsl/</loc>
+    <lastmod>2017-03-25T00:00:00+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://fntlnz.wtf/talks-upcoming/16-mar-17-demist-docker-networking/</loc>
-    <lastmod>2017-03-16T00:00:00+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/talks-upcoming/30-mar-17-demist-docker-networking/</loc>
     <lastmod>2017-03-16T00:00:00+02:00</lastmod>
   </url>
   
@@ -135,7 +135,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/</loc>
-    <lastmod>2017-05-25T00:00:00+02:00</lastmod>
+    <lastmod>2017-03-30T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -188,7 +188,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/talks-upcoming/</loc>
-    <lastmod>2017-05-25T00:00:00+02:00</lastmod>
+    <lastmod>2017-03-30T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
