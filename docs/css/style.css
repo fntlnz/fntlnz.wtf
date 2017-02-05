@@ -1,0 +1,290 @@
+/* Reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+em {
+    font-style: italic;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* Generic styles */
+body {
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+    max-width: 780px;
+    font-weight: 400;
+    font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+    color: #111111;
+    line-height: 1.58;
+    text-rendering: optimizeLegibility !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    line-height: 1.10;
+}
+
+@media only screen and (max-device-width: 480px) {
+    body {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        padding-top: 0.5em;
+    }
+}
+
+a {
+    color: black;
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+strong {
+    font-weight: bold;
+}
+
+header.topBar {
+    margin-bottom: 1em;
+    background-color: rgba(35, 57, 66, 0.11);
+}
+
+.topBar > span.rss {
+    float: right;
+}
+
+.topBar > span.rss img {
+    width: 15px;
+}
+
+/* Index */
+li.postExcerpt time {
+  color: #666666;
+  margin-right: 2em;
+}
+
+section.postExcerpt section {
+  display: block;
+}
+
+section.postExcerpt h1 {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 0.3em;
+}
+
+
+section.postExcerpt header {
+    margin-bottom: 0.4em;
+}
+
+/* Single */
+
+article section#title h1 {
+    font-size: 40px;
+    letter-spacing: -.028em;
+    font-style: normal;
+}
+
+section time {
+    font-size: 14px;
+    color: #666666;
+}
+
+article section#title {
+    margin-top: 0.8em;
+    margin-bottom: 0.4em;
+}
+
+article section#content {
+    line-height: 1.6em;
+    font-size: 15px;
+}
+
+article section#content h1 {
+    font-size: 33px;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 0.4em;
+    margin-top: 0.8em;
+}
+
+article section#content h2 {
+    font-size: 28px;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 0.4em;
+    margin-top: 0.8em;
+}
+
+article section#content h3 {
+    font-size: 25px;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 0.4em;
+    margin-top: 0.8em;
+}
+
+article section#content h4 {
+    font-size: 23px;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 0.4em;
+    margin-top: 0.8em;
+}
+
+/* Quotes */
+blockquote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+blockquote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.07em;
+    vertical-align: -0.4em;
+}
+
+blockquote p {
+    display: inline;
+}
+
+/* Lists */
+ul {
+    list-style-type: disc;
+    list-style-position: outside;
+    margin-left: 1em;
+}
+
+ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+}
+
+ul ul, ol ul {
+    list-style-type: circle;
+    list-style-position: inside;
+    margin-left: 15px;
+}
+
+ol ol, ul ol {
+    list-style-type: lower-latin;
+    list-style-position: inside;
+    margin-left: 15px;
+}
+
+
+pre {
+    display: block;
+    font-size: 16px;
+    font-family: Menlo,Monaco,"Courier New",Courier,monospace;
+    overflow-x: auto;
+    margin: 1em 0;
+    width: auto;
+    padding: 15px;
+    background: rgba(0,0,0,.05);
+}
+
+img {
+    max-width: 750px;
+}
+
+#disqus_thread {
+    margin-top: 4em;
+}
+
+hr {
+  border: none;
+  height: 0.5px;
+  color: #666666;
+  background-color: #666666;
+}
+
+section.lorenzo-pic {
+  max-width: 100px;
+  margin-right: 2em;
+  float: left;
+}
+
+section.lorenzo-pic > img {
+  max-width: 100px;
+}
+
+
+@media screen and (min-width: 0px) and (max-width: 600px) {
+  section.lorenzo-pic {
+    width: 100%;
+  }
+
+  section.lorenzo-pic > img{
+    display: none;
+  }
+
+  li.postExcerpt time {
+    margin-right: 0.1em;
+  }
+}
+
+section.list {
+  max-width: 80%;
+  float: left;
+}
+section#main h2 {
+  font-weight: bold;
+  margin-top: 0.8em;
+}

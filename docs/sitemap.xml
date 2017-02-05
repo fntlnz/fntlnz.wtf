@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/25-may-17-codemotion-rome-golang-dsl/</loc>
+    <lastmod>2017-05-25T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/16-mar-17-demist-docker-networking/</loc>
+    <lastmod>2017-03-16T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/30-mar-17-demist-docker-networking/</loc>
+    <lastmod>2017-03-16T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/10-mar-17-demist-docker-networking/</loc>
+    <lastmod>2017-03-10T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/15-nov-16-rhos-automation-devops/</loc>
+    <lastmod>2016-11-15T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/post/systemd-nspawn/</loc>
+    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/26-nov-16-understanding-docker-net/</loc>
+    <lastmod>2016-10-26T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/monitoring-docker-containers-elastic-cadvisor/</loc>
+    <lastmod>2016-09-13T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/post/why-containers/</loc>
+    <lastmod>2016-08-11T15:35:53+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/23-jun-16-understanding-docker-ecosys/</loc>
+    <lastmod>2016-06-23T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/nginx-reverse-proxy-docker-containers-swarm/</loc>
+    <lastmod>2016-06-16T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/extending-docker-via-plugin/</loc>
+    <lastmod>2016-04-28T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/15-apr-16-extending-docker/</loc>
+    <lastmod>2016-04-15T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/15-12-15-introduction-ansible/</loc>
+    <lastmod>2016-04-15T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/20-11-14-php-ext-dev/</loc>
+    <lastmod>2016-04-15T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/dist-data-analysis-swarm/</loc>
+    <lastmod>2016-04-04T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/write-filesystem-fuse/</loc>
+    <lastmod>2016-01-11T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/from-dev-prod-docker-ebs/</loc>
+    <lastmod>2015-10-19T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/beanstalk/</loc>
+    <lastmod>2015-10-19T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/containers/</loc>
+    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/docker/</loc>
+    <lastmod>2016-09-13T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/elasticsearch/</loc>
+    <lastmod>2016-09-13T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/filesystem/</loc>
+    <lastmod>2016-01-11T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/fuse/</loc>
+    <lastmod>2016-01-11T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/</loc>
+    <lastmod>2016-09-13T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/</loc>
+    <lastmod>2017-05-25T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/monitoring/</loc>
+    <lastmod>2016-09-13T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/nginx/</loc>
+    <lastmod>2016-06-16T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/post/</loc>
+    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/swarm/</loc>
+    <lastmod>2016-06-16T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/systemd/</loc>
+    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/systemd-nspawn/</loc>
+    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/</loc>
+    <lastmod>2016-11-15T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/</loc>
+    <lastmod>2017-05-25T00:00:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>
