@@ -21,6 +21,7 @@
       </li>
       {{ end }}
     </ul>
+
     <h2>Other Publications</h2>
     <ul>
       {{ range where .Data.Pages "Section" "links"}}
@@ -30,21 +31,27 @@
       </li>
       {{ end }}
     </ul>
+
     <h2>Upcoming Talks</h2>
     <ul>
       {{ range where .Data.Pages "Section" "talks-upcoming"}}
       <li class="postExcerpt">
-        {{ .Title }}
+        <a href="{{ echoParam .Params "details" }}">{{ echoParam .Params "where" }}</a>
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+        <br />
+        <em>{{ .Title }}</em>
       </li>
       {{ end }}
     </ul>
+
     <h2>Talks</h2>
     <ul>
       {{ range where .Data.Pages "Section" "talks"}}
       <li class="postExcerpt">
-        {{ .Title }}
+        <a href="{{ echoParam .Params "details" }}">{{ echoParam .Params "where" }}</a>
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+        <br />
+        <em>{{ .Title }}</em> - <a href="{{ echoParam .Params "slide" }}">slides</a>
       </li>
       {{ end }}
     </ul>
