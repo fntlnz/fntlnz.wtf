@@ -2,7 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://fntlnz.wtf/talks-upcoming/30-mar-17-demist-docker-networking/</loc>
+    <loc>https://fntlnz.wtf/talks-upcoming/18-may-17-practical-docker-security-infoshare/</loc>
+    <lastmod>2017-05-18T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/17-may-17-docker-networking-workshop-infoshare/</loc>
+    <lastmod>2017-05-17T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/28-apr-17-containerday-practical-docker-security/</loc>
+    <lastmod>2017-04-28T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/30-mar-17-demist-docker-networking/</loc>
     <lastmod>2017-03-30T00:00:00+02:00</lastmod>
   </url>
   
@@ -140,7 +155,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/</loc>
-    <lastmod>2017-03-30T00:00:00+02:00</lastmod>
+    <lastmod>2017-05-18T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -187,13 +202,13 @@
   
   <url>
     <loc>https://fntlnz.wtf/talks/</loc>
-    <lastmod>2017-03-25T00:00:00+02:00</lastmod>
+    <lastmod>2017-03-30T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://fntlnz.wtf/talks-upcoming/</loc>
-    <lastmod>2017-03-30T00:00:00+02:00</lastmod>
+    <lastmod>2017-05-18T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
