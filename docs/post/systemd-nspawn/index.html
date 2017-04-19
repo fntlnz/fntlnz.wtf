@@ -102,66 +102,61 @@ by identifying why Docker wasn&rsquo;t performing well as I expected in such sit
 <p><strong>A</strong>: In fact <strong>I don&rsquo;t</strong>, I&rsquo;m just using Docker to create a Docker image, which I will export to a tar and use as a base filesystem for my container</p>
 
 <p>Here&rsquo;s the Dockerfile:</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-weight: bold">FROM</span><span style="font-style: italic"> debian:jessie</span>
+FROM debian:jessie
 
-<span style="font-weight: bold">RUN</span> apt-get update -y
-<span style="font-weight: bold">RUN</span> gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
-<span style="font-weight: bold">RUN</span> gpg --export --armor BBEBDCB318AD50EC6865090613B00F1FD2C19886 | apt-key add -
-<span style="font-weight: bold">RUN</span> echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list
-<span style="font-weight: bold">RUN</span> apt-get update -y
-<span style="font-weight: bold">RUN</span> apt-get install spotify-client -y
-<span style="font-weight: bold">RUN</span> apt-get install pulseaudio -y
-<span style="font-weight: bold">RUN</span> apt-get install -f -y
-<span style="font-weight: bold">RUN</span> echo enable-shm=no &gt;&gt; /etc/pulse/client.conf
+RUN apt-get update -y
+RUN gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+RUN gpg --export --armor BBEBDCB318AD50EC6865090613B00F1FD2C19886 | apt-key add -
+RUN echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list
+RUN apt-get update -y
+RUN apt-get install spotify-client -y
+RUN apt-get install pulseaudio -y
+RUN apt-get install -f -y
+RUN echo enable-shm=no >> /etc/pulse/client.conf
 
-<span style="font-weight: bold">ENV</span><span style="font-style: italic"> PULSE_SERVER /run/pulse/native</span>
-<span style="font-weight: bold">ENV</span><span style="font-style: italic"> HOME /home/spotify</span>
+ENV PULSE_SERVER /run/pulse/native
+ENV HOME /home/spotify
 
-<span style="font-weight: bold">RUN</span> useradd --create-home --home-dir $HOME spotify <span style="font-weight: bold; font-style: italic">\</span>
-  &amp;&amp; gpasswd -a spotify audio <span style="font-weight: bold; font-style: italic">\</span>
-  &amp;&amp; chown -R spotify:spotify $HOME
+RUN useradd --create-home --home-dir $HOME spotify \
+  && gpasswd -a spotify audio \
+  && chown -R spotify:spotify $HOME
 
   WORKDIR $HOME
   USER spotify
-  ENTRYPOINT  [ <span style="font-style: italic">&quot;spotify&quot;</span> ]
-</pre></div>
+  ENTRYPOINT  [ "spotify" ]
 
 <p>After building it with name <code>fntlnz/spotify</code> it can be run in Docker with:</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic"># docker run -d \</span>
-  -v /etc/localtime:/etc/localtime:ro <span style="font-weight: bold; font-style: italic">\</span>
-  -v /tmp/.X11-unix:/tmp/.X11-unix <span style="font-weight: bold; font-style: italic">\</span>
-  -e DISPLAY=unix$DISPLAY <span style="font-weight: bold; font-style: italic">\</span>
-  -v /run/user/1000/pulse:/run/pulse:ro <span style="font-weight: bold; font-style: italic">\</span>
-  -v /var/lib/dbus:/var/lib/dbus <span style="font-weight: bold; font-style: italic">\</span>
-  -v $HOME/.spotify/config:/home/spotify/.config/spotify <span style="font-weight: bold; font-style: italic">\</span>
-  -v $HOME/.spotify/cache:/home/spotify/spotify <span style="font-weight: bold; font-style: italic">\</span>
-  --name spotify <span style="font-weight: bold; font-style: italic">\</span>
+# docker run -d \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -e DISPLAY=unix$DISPLAY \
+  -v /run/user/1000/pulse:/run/pulse:ro \
+  -v /var/lib/dbus:/var/lib/dbus \
+  -v $HOME/.spotify/config:/home/spotify/.config/spotify \
+  -v $HOME/.spotify/cache:/home/spotify/spotify \
+  --name spotify \
   fntlnz/spotify
-</pre></div>
 
 <p>Now that I have my image and I can use it with Docker seeing that it works I can try it with <code>systemd-nspawn</code></p>
 
 <p>The first thing to do is to export the docker image to a folder we&rsquo;ll call <code>rootfs</code></p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic"># mkdir -p /var/lib/machines</span>
-<span style="font-style: italic"># cd /var/lib/machines</span>
+# mkdir -p /var/lib/machines
+# cd /var/lib/machines
 
-<span style="font-style: italic"># mkdir spotify</span>
-<span style="font-style: italic"># docker export $(docker create fntlnz/spotify) | tar -C spotify -xvf -</span>
-</pre></div>
+# mkdir spotify
+# docker export $(docker create fntlnz/spotify) | tar -C spotify -xvf -
 
 <p>Then we have to give the right permissions to <code>/home/spotify</code></p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic"># systemd-nspawn -D spotify/ bash -c &quot;chown -R spotify:spotify /home/spotify&quot;</span>
-</pre></div>
+# systemd-nspawn -D spotify/ bash -c "chown -R spotify:spotify /home/spotify"
 
 <p>Now each time we want to start that container we can do it with:</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic"># systemd-nspawn \</span>
-  --setenv=DISPLAY=unix$DISPLAY <span style="font-weight: bold; font-style: italic">\</span>
-  --bind=/tmp/.X11-unix:/tmp/.X11-unix <span style="font-weight: bold; font-style: italic">\</span>
-  --bind /run/user/1000/pulse:/run/pulse <span style="font-weight: bold; font-style: italic">\</span>
-  --bind /var/lib/dbus:/var/lib/dbus <span style="font-weight: bold; font-style: italic">\</span>
-  -u spotify -D spotify/ <span style="font-weight: bold; font-style: italic">\</span>
+# systemd-nspawn \
+  --setenv=DISPLAY=unix$DISPLAY \
+  --bind=/tmp/.X11-unix:/tmp/.X11-unix \
+  --bind /run/user/1000/pulse:/run/pulse \
+  --bind /var/lib/dbus:/var/lib/dbus \
+  -u spotify -D spotify/ \
   spotify
-</pre></div>
 
 <h3 id="things-to-note">Things to note:</h3>
 
@@ -180,25 +175,22 @@ by the <a href="https://wiki.freedesktop.org/www/Software/systemd/machined/"><st
 <h4 id="container-services">Container services</h4>
 
 <p>Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic"># machinectl enable network-manager</span>
+# machinectl enable network-manager
 
 Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
-</pre></div>
 
 <h4 id="management">Management</h4>
 
 <p>machinectl allows you to list, terminate and show the status of machines.</p>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic"># machinectl list</span>
+# machinectl list
 
 
 MACHINE CLASS     SERVICE
 spotify container nspawn 
 
 1 machines listed.
-</pre></div>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic"># machinectl terminate spotify</span>
-</pre></div>
-<div class="highlight" style="background: #ffffff"><pre style="line-height: 125%"><span></span><span style="font-style: italic"># machinectl status spotify</span>
+# machinectl terminate spotify
+# machinectl status spotify
 
 spotify
            Since: Mon 2016-11-14 02:13:54 CET; 7s ago
@@ -214,7 +206,6 @@ spotify
 
 Nov 14 02:13:54 fntlnz systemd[1]: Started Container spotify.
 Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
-</pre></div>
 
 <h4 id="pull-images">Pull images</h4>
 

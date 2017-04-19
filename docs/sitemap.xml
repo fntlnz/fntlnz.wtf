@@ -17,6 +17,11 @@
   </url>
   
   <url>
+    <loc>https://fntlnz.wtf/talks/17-apr-17-dockercon-networking-workshop/</loc>
+    <lastmod>2017-04-17T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://fntlnz.wtf/talks/30-mar-17-demist-docker-networking/</loc>
     <lastmod>2017-03-30T00:00:00+02:00</lastmod>
   </url>
@@ -202,7 +207,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/talks/</loc>
-    <lastmod>2017-03-30T00:00:00+02:00</lastmod>
+    <lastmod>2017-04-17T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
