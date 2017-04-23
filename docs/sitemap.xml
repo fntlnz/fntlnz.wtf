@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://fntlnz.wtf/talks-upcoming/20-june-17-practical-cni/</loc>
+    <lastmod>2017-06-20T14:15:00+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://fntlnz.wtf/talks-upcoming/18-may-17-practical-docker-security-infoshare/</loc>
     <lastmod>2017-05-18T00:00:00+02:00</lastmod>
   </url>
@@ -160,7 +165,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/</loc>
-    <lastmod>2017-05-18T00:00:00+02:00</lastmod>
+    <lastmod>2017-06-20T14:15:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -213,7 +218,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/talks-upcoming/</loc>
-    <lastmod>2017-05-18T00:00:00+02:00</lastmod>
+    <lastmod>2017-06-20T14:15:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
