@@ -7,17 +7,7 @@
   </url>
   
   <url>
-    <loc>https://fntlnz.wtf/talks-upcoming/18-may-17-practical-docker-security-infoshare/</loc>
-    <lastmod>2017-05-18T00:00:00+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/talks-upcoming/17-may-17-docker-networking-workshop-infoshare/</loc>
-    <lastmod>2017-05-17T00:00:00+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/talks-upcoming/28-apr-17-containerday-practical-docker-security/</loc>
+    <loc>https://fntlnz.wtf/talks/28-apr-17-containerday-practical-docker-security/</loc>
     <lastmod>2017-04-28T00:00:00+02:00</lastmod>
   </url>
   
@@ -212,7 +202,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/talks/</loc>
-    <lastmod>2017-04-17T00:00:00+02:00</lastmod>
+    <lastmod>2017-04-28T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
