@@ -102,7 +102,8 @@ by identifying why Docker wasn&rsquo;t performing well as I expected in such sit
 <p><strong>A</strong>: In fact <strong>I don&rsquo;t</strong>, I&rsquo;m just using Docker to create a Docker image, which I will export to a tar and use as a base filesystem for my container</p>
 
 <p>Here&rsquo;s the Dockerfile:</p>
-FROM debian:jessie
+
+<pre><code>FROM debian:jessie
 
 RUN apt-get update -y
 RUN gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
@@ -112,21 +113,23 @@ RUN apt-get update -y
 RUN apt-get install spotify-client -y
 RUN apt-get install pulseaudio -y
 RUN apt-get install -f -y
-RUN echo enable-shm=no >> /etc/pulse/client.conf
+RUN echo enable-shm=no &gt;&gt; /etc/pulse/client.conf
 
 ENV PULSE_SERVER /run/pulse/native
 ENV HOME /home/spotify
 
 RUN useradd --create-home --home-dir $HOME spotify \
-  && gpasswd -a spotify audio \
-  && chown -R spotify:spotify $HOME
+  &amp;&amp; gpasswd -a spotify audio \
+  &amp;&amp; chown -R spotify:spotify $HOME
 
   WORKDIR $HOME
   USER spotify
-  ENTRYPOINT  [ "spotify" ]
+  ENTRYPOINT  [ &quot;spotify&quot; ]
+</code></pre>
 
 <p>After building it with name <code>fntlnz/spotify</code> it can be run in Docker with:</p>
-# docker run -d \
+
+<pre><code># docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -e DISPLAY=unix$DISPLAY \
@@ -136,27 +139,34 @@ RUN useradd --create-home --home-dir $HOME spotify \
   -v $HOME/.spotify/cache:/home/spotify/spotify \
   --name spotify \
   fntlnz/spotify
+</code></pre>
 
 <p>Now that I have my image and I can use it with Docker seeing that it works I can try it with <code>systemd-nspawn</code></p>
 
 <p>The first thing to do is to export the docker image to a folder we&rsquo;ll call <code>rootfs</code></p>
-# mkdir -p /var/lib/machines
+
+<pre><code># mkdir -p /var/lib/machines
 # cd /var/lib/machines
 
 # mkdir spotify
 # docker export $(docker create fntlnz/spotify) | tar -C spotify -xvf -
+</code></pre>
 
 <p>Then we have to give the right permissions to <code>/home/spotify</code></p>
-# systemd-nspawn -D spotify/ bash -c "chown -R spotify:spotify /home/spotify"
+
+<pre><code># systemd-nspawn -D spotify/ bash -c &quot;chown -R spotify:spotify /home/spotify&quot;
+</code></pre>
 
 <p>Now each time we want to start that container we can do it with:</p>
-# systemd-nspawn \
+
+<pre><code># systemd-nspawn \
   --setenv=DISPLAY=unix$DISPLAY \
   --bind=/tmp/.X11-unix:/tmp/.X11-unix \
   --bind /run/user/1000/pulse:/run/pulse \
   --bind /var/lib/dbus:/var/lib/dbus \
   -u spotify -D spotify/ \
   spotify
+</code></pre>
 
 <h3 id="things-to-note">Things to note:</h3>
 
@@ -175,22 +185,29 @@ by the <a href="https://wiki.freedesktop.org/www/Software/systemd/machined/"><st
 <h4 id="container-services">Container services</h4>
 
 <p>Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)</p>
-# machinectl enable network-manager
+
+<pre><code># machinectl enable network-manager
 
 Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
+</code></pre>
 
 <h4 id="management">Management</h4>
 
 <p>machinectl allows you to list, terminate and show the status of machines.</p>
-# machinectl list
+
+<pre><code># machinectl list
 
 
 MACHINE CLASS     SERVICE
 spotify container nspawn 
 
 1 machines listed.
-# machinectl terminate spotify
-# machinectl status spotify
+</code></pre>
+
+<pre><code># machinectl terminate spotify
+</code></pre>
+
+<pre><code># machinectl status spotify
 
 spotify
            Since: Mon 2016-11-14 02:13:54 CET; 7s ago
@@ -206,6 +223,7 @@ spotify
 
 Nov 14 02:13:54 fntlnz systemd[1]: Started Container spotify.
 Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
+</code></pre>
 
 <h4 id="pull-images">Pull images</h4>
 

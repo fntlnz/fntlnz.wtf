@@ -66,7 +66,7 @@ So the first thing I did was in fact to create **a Dockerfile for spotify.**
 
 Here's the Dockerfile:
 
-```Dockerfile
+```
 FROM debian:jessie
 
 RUN apt-get update -y
@@ -93,7 +93,7 @@ RUN useradd --create-home --home-dir $HOME spotify \
 
 After building it with name `fntlnz/spotify` it can be run in Docker with:
 
-```bash
+```
 # docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
@@ -110,7 +110,7 @@ Now that I have my image and I can use it with Docker seeing that it works I can
 
 The first thing to do is to export the docker image to a folder we'll call `rootfs`
 
-```bash
+```
 # mkdir -p /var/lib/machines
 # cd /var/lib/machines
 
@@ -120,13 +120,13 @@ The first thing to do is to export the docker image to a folder we'll call `root
 
 Then we have to give the right permissions to `/home/spotify`
 
-```bash
+```
 # systemd-nspawn -D spotify/ bash -c "chown -R spotify:spotify /home/spotify"
 ```
 
 Now each time we want to start that container we can do it with:
 
-```bash
+```
 # systemd-nspawn \
   --setenv=DISPLAY=unix$DISPLAY \
   --bind=/tmp/.X11-unix:/tmp/.X11-unix \
@@ -154,7 +154,7 @@ by the [**systemd machine manager**](https://wiki.freedesktop.org/www/Software/s
 
 Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)
 
-```bash
+```
 # machinectl enable network-manager
 
 Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
@@ -163,7 +163,7 @@ Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@ne
 #### Management
 machinectl allows you to list, terminate and show the status of machines.
 
-```bash
+```
 # machinectl list
 
 
@@ -173,11 +173,11 @@ spotify container nspawn
 1 machines listed.
 ```
 
-```bash
+```
 # machinectl terminate spotify
 ```
 
-```bash
+```
 # machinectl status spotify
 
 spotify
