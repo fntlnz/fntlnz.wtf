@@ -13,6 +13,8 @@ in those three years.
 
 This time, I wanted to take my time to **improve the process** and after a few minutes thinking I had a light-bulb moment and I just started creating **a Dockerfile for every application** I needed !
 
+- - -
+
 Well, after some time I had 27 images including:
 
 - google-chrome
@@ -144,6 +146,7 @@ Now each time we want to start that container we can do it with:
 - I'm not mounting `$HOME/.spotify` things inside my `systemd-nspawn` container since I decided to keep the state in the `spotify` directory
 
 
+- - -
 
 # machinectl
 
@@ -219,6 +222,8 @@ In this post I showed you something like the top 1% of the things that can be do
 
 
 see `man machinectl` and `man systemd-nspawn` for more
+
+- - -
 
 # What I achieved ?
 

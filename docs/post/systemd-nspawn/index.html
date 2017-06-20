@@ -51,6 +51,8 @@ in those three years.</p>
 
 <p>This time, I wanted to take my time to <strong>improve the process</strong> and after a few minutes thinking I had a light-bulb moment and I just started creating <strong>a Dockerfile for every application</strong> I needed !</p>
 
+<hr />
+
 <p>Well, after some time I had 27 images including:</p>
 
 <ul>
@@ -177,6 +179,8 @@ RUN useradd --create-home --home-dir $HOME spotify \
 <li>I&rsquo;m not mounting <code>$HOME/.spotify</code> things inside my <code>systemd-nspawn</code> container since I decided to keep the state in the <code>spotify</code> directory</li>
 </ul>
 
+<hr />
+
 <h1 id="machinectl">machinectl</h1>
 
 <p>There&rsquo;s another tool, invokable via <code>machinectl</code> which allows you to manage your &ldquo;machines&rdquo; aka containers and vms managed
@@ -247,6 +251,8 @@ Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
 </ul>
 
 <p>see <code>man machinectl</code> and <code>man systemd-nspawn</code> for more</p>
+
+<hr />
 
 <h1 id="what-i-achieved">What I achieved ?</h1>
 

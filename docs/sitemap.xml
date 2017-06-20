@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://fntlnz.wtf/talks-upcoming/20-june-17-practical-cni/</loc>
+    <loc>https://fntlnz.wtf/talks/20-june-17-practical-cni/</loc>
     <lastmod>2017-06-20T14:15:00+08:00</lastmod>
   </url>
   
@@ -202,12 +202,6 @@
   
   <url>
     <loc>https://fntlnz.wtf/talks/</loc>
-    <lastmod>2017-04-28T00:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/talks-upcoming/</loc>
     <lastmod>2017-06-20T14:15:00+08:00</lastmod>
     <priority>0</priority>
   </url>

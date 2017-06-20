@@ -75,13 +75,13 @@ to put all the pieces toghether and obtain containers that only owns their code,
 - **Live Migration**: Some OS-Level virtualization platform such as OpenVZ does support live migrations, most Fill virtualization platforms supports it. Docker containers on the
 other hand does not have an official implementation for this
 
+- - -
 
 ## Motivations for using Containers
 
 I can't know what is your intended use case.
 But if at some extent your motivation consist in **decreasing costs** related to full virtualization overheads
 while **allowing developers to ship, develop and test code faster** we already found two.
-
 
 # In the end, why containers are actually there?
 

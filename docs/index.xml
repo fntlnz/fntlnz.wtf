@@ -21,6 +21,8 @@ in those three years.&lt;/p&gt;
 
 &lt;p&gt;This time, I wanted to take my time to &lt;strong&gt;improve the process&lt;/strong&gt; and after a few minutes thinking I had a light-bulb moment and I just started creating &lt;strong&gt;a Dockerfile for every application&lt;/strong&gt; I needed !&lt;/p&gt;
 
+&lt;hr /&gt;
+
 &lt;p&gt;Well, after some time I had 27 images including:&lt;/p&gt;
 
 &lt;ul&gt;
@@ -147,6 +149,8 @@ RUN useradd --create-home --home-dir $HOME spotify \
 &lt;li&gt;I&amp;rsquo;m not mounting &lt;code&gt;$HOME/.spotify&lt;/code&gt; things inside my &lt;code&gt;systemd-nspawn&lt;/code&gt; container since I decided to keep the state in the &lt;code&gt;spotify&lt;/code&gt; directory&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;hr /&gt;
+
 &lt;h1 id=&#34;machinectl&#34;&gt;machinectl&lt;/h1&gt;
 
 &lt;p&gt;There&amp;rsquo;s another tool, invokable via &lt;code&gt;machinectl&lt;/code&gt; which allows you to manage your &amp;ldquo;machines&amp;rdquo; aka containers and vms managed
@@ -217,6 +221,8 @@ Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
 &lt;/ul&gt;
 
 &lt;p&gt;see &lt;code&gt;man machinectl&lt;/code&gt; and &lt;code&gt;man systemd-nspawn&lt;/code&gt; for more&lt;/p&gt;
+
+&lt;hr /&gt;
 
 &lt;h1 id=&#34;what-i-achieved&#34;&gt;What I achieved ?&lt;/h1&gt;
 
@@ -312,6 +318,8 @@ to put all the pieces toghether and obtain containers that only owns their code,
 &lt;li&gt;&lt;strong&gt;Live Migration&lt;/strong&gt;: Some OS-Level virtualization platform such as OpenVZ does support live migrations, most Fill virtualization platforms supports it. Docker containers on the
 other hand does not have an official implementation for this&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;hr /&gt;
 
 &lt;h2 id=&#34;motivations-for-using-containers&#34;&gt;Motivations for using Containers&lt;/h2&gt;
 

@@ -141,42 +141,43 @@ section time {
 }
 
 article section#title {
-    margin-top: 0.8em;
+    margin-top: 1em;
     margin-bottom: 0.4em;
 }
 
 article section#content {
-    line-height: 1.6em;
-    font-size: 15px;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    line-height: 1.7em;
+    font-size: 20px;
 }
 
 article section#content h1 {
     font-size: 33px;
-    font-weight: 500;
+    font-weight: 800;
     font-style: normal;
     margin-bottom: 0.4em;
-    margin-top: 0.8em;
+    margin-top: 1.4em;
 }
 
 article section#content h2 {
     font-size: 28px;
-    font-weight: 500;
+    font-weight: 800;
     font-style: normal;
     margin-bottom: 0.4em;
-    margin-top: 0.8em;
+    margin-top: 1.3em;
 }
 
 article section#content h3 {
     font-size: 25px;
-    font-weight: 500;
+    font-weight: 800;
     font-style: normal;
     margin-bottom: 0.4em;
-    margin-top: 0.8em;
+    margin-top: 1em;
 }
 
 article section#content h4 {
-    font-size: 23px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 800;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 0.8em;
@@ -250,9 +251,11 @@ img {
 
 hr {
   border: none;
-  height: 0.5px;
-  color: #666666;
-  background-color: #666666;
+  height: 0.9px;
+  color: #e7eaeb;
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+  background-color: #e6e9ea;
 }
 
 section.lorenzo-pic {
