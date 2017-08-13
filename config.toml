@@ -6,6 +6,3 @@ paginate = 500
 PygmentsCodeFences = true
 PygmentsOptions = ""
 PygmentsStyle = "bw"
-disqusShortname = "fntlnz"
-googleAnalytics = "UA-45983436-3"
-
