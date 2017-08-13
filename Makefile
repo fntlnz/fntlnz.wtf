@@ -14,7 +14,7 @@ deploy: ## Deploy to GitHub Pages
 	git add -A
 
 	# Commit changes
-	git commit -m "rebuilding site `date`"
+	git commit -S -s -m "rebuilding site `date`"
 
 	# Deploy
 	git push origin master
