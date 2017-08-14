@@ -59,8 +59,7 @@ body {
     padding-top: 0.5em;
     padding-bottom: 1em;
     max-width: 780px;
-    font-weight: 400;
-    font-family: "Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+    font-family: Arial, sans-serif;
     color: #111111;
     line-height: 1.58;
     text-rendering: optimizeLegibility !important;
@@ -131,7 +130,8 @@ section.postExcerpt header {
 
 article section#title h1 {
     font-size: 40px;
-    letter-spacing: -.028em;
+    letter-spacing: -.015em;
+    font-weight: 800;
     font-style: normal;
 }
 
@@ -142,13 +142,12 @@ section time {
 
 article section#title {
     margin-top: 1em;
-    margin-bottom: 0.4em;
+    margin-bottom: 1.3em;
 }
 
 article section#content {
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     line-height: 1.7em;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 article section#content h1 {
@@ -242,7 +241,9 @@ pre {
 }
 
 img {
+    width: 100%;
     max-width: 750px;
+    height: auto;
 }
 
 #disqus_thread {

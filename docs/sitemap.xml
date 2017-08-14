@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://fntlnz.wtf/post/drawing-own-gopher/</loc>
+    <lastmod>2017-08-14T04:18:00+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://fntlnz.wtf/talks/20-june-17-practical-cni/</loc>
     <lastmod>2017-06-20T14:15:00+08:00</lastmod>
   </url>
@@ -136,6 +141,12 @@
   </url>
   
   <url>
+    <loc>https://fntlnz.wtf/tags/drawings/</loc>
+    <lastmod>2017-08-14T04:18:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://fntlnz.wtf/tags/elasticsearch/</loc>
     <lastmod>2016-09-13T00:00:00+02:00</lastmod>
     <priority>0</priority>
@@ -154,6 +165,18 @@
   </url>
   
   <url>
+    <loc>https://fntlnz.wtf/tags/go/</loc>
+    <lastmod>2017-08-14T04:18:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/tags/gopher/</loc>
+    <lastmod>2017-08-14T04:18:00+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://fntlnz.wtf/links/</loc>
     <lastmod>2016-09-13T00:00:00+02:00</lastmod>
     <priority>0</priority>
@@ -161,7 +184,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/</loc>
-    <lastmod>2017-06-20T14:15:00+08:00</lastmod>
+    <lastmod>2017-08-14T04:18:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -179,7 +202,7 @@
   
   <url>
     <loc>https://fntlnz.wtf/post/</loc>
-    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
+    <lastmod>2017-08-14T04:18:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
