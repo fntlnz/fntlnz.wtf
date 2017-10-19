@@ -15,6 +15,8 @@
       <guid>https://fntlnz.wtf/post/systemd-nspawn/</guid>
       <description>
 
+&lt;h1 id=&#34;first-things-first&#34;&gt;First things first&lt;/h1&gt;
+
 &lt;p&gt;About one year ago, after years with Fedora 18, I refreshed my laptop and installed a brand new Fedora 22.
 My first thought went to all the mess there was before the refresh because I tried tons of applications and changed my mind thousands of times
 in those three years.&lt;/p&gt;
@@ -327,7 +329,7 @@ other hand does not have an official implementation for this&lt;/li&gt;
 But if at some extent your motivation consist in &lt;strong&gt;decreasing costs&lt;/strong&gt; related to full virtualization overheads
 while &lt;strong&gt;allowing developers to ship, develop and test code faster&lt;/strong&gt; we already found two.&lt;/p&gt;
 
-&lt;h1 id=&#34;in-the-end-why-containers-are-actually-there&#34;&gt;In the end, why containers are actually there?&lt;/h1&gt;
+&lt;h2 id=&#34;in-the-end-why-containers-are-actually-there&#34;&gt;In the end, why containers are actually there?&lt;/h2&gt;
 
 &lt;p&gt;If you&amp;rsquo;v read up to here you probably think I missed the point, instead what I wanted to write is exactly that
 OS-Level virtualization (aka containers) is just another way of doing virtualization which solves specific needs that are not solved by others:&lt;/p&gt;

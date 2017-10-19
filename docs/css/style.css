@@ -93,16 +93,7 @@ strong {
 }
 
 header.topBar {
-    margin-bottom: 1em;
-    background-color: rgba(35, 57, 66, 0.11);
-}
-
-.topBar > span.rss {
-    float: right;
-}
-
-.topBar > span.rss img {
-    width: 15px;
+    font-size: 1.3em;
 }
 
 /* Index */
@@ -129,15 +120,15 @@ section.postExcerpt header {
 /* Single */
 
 article section#title h1 {
-    font-size: 40px;
+    font-size: 2.5em;
     letter-spacing: -.015em;
-    font-weight: 800;
     font-style: normal;
+    color: rgb(36, 35, 35);
 }
 
 section time {
-    font-size: 14px;
-    color: #666666;
+    font-size: 0.8em;
+    margin-left: 0.2em;
 }
 
 article section#title {
@@ -147,36 +138,43 @@ article section#title {
 
 article section#content {
     line-height: 1.7em;
-    font-size: 18px;
+    font-size: 1em;
+}
+
+article section#content ul {
+    margin-bottom: 1em;
+    line-height: 1.5em;
+    margin-top: 1em;
+    margin-left: 2em;
+}
+
+article section#content > :not(h1):not(h2):not(h3):not(h4):not(ul) {
+    margin-left: 0.4em;
 }
 
 article section#content h1 {
-    font-size: 33px;
-    font-weight: 800;
+    font-size: 1.9em;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 1.4em;
 }
 
 article section#content h2 {
-    font-size: 28px;
-    font-weight: 800;
+    font-size: 1.4em;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 1.3em;
 }
 
 article section#content h3 {
-    font-size: 25px;
-    font-weight: 800;
+    font-size: 1.2em;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 1em;
 }
 
 article section#content h4 {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 1.1em;
     font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 0.8em;
@@ -231,7 +229,7 @@ ol ol, ul ol {
 
 pre {
     display: block;
-    font-size: 16px;
+    font-size: 13px;
     font-family: Menlo,Monaco,"Courier New",Courier,monospace;
     overflow-x: auto;
     margin: 1em 0;

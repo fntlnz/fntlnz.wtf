@@ -7,6 +7,8 @@ topics      = [ "containers", "systemd", "systemd-nspawn" ]
 slug        = "systemd-nspawn"
 +++
 
+# First things first
+
 About one year ago, after years with Fedora 18, I refreshed my laptop and installed a brand new Fedora 22.
 My first thought went to all the mess there was before the refresh because I tried tons of applications and changed my mind thousands of times
 in those three years.
