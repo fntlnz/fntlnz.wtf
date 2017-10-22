@@ -51,8 +51,8 @@
         <a href="{{ echoParam .Params "details" }}">{{ echoParam .Params "where" }}</a>
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
         <br />
-        <em>{{ .Title }}</em> - 
-        <a href="{{ echoParam .Params "slide" }}">slides</a>
+        <em>{{ .Title }}</em> 
+        {{ if index .Params "slide" }}- <a href="{{ echoParam .Params "slide" }}">slides</a>{{ end }}
         {{ if index .Params "video" }}- <a href="{{ echoParam .Params "video" }}">video</a>{{ end }}
       </li>
       {{ end }}
