@@ -8,8 +8,8 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
     margin: 0;
@@ -20,27 +20,33 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 
-article, aside, details, figcaption, figure, 
+article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 em {
     font-style: italic;
 }
+
 ol, ul {
     list-style: none;
 }
+
 blockquote, q {
     quotes: none;
 }
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -48,21 +54,29 @@ table {
 
 /* Generic styles */
 body {
-    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 20px;
     padding-left: 1.5em;
     padding-right: 1.5em;
     padding-top: 0.5em;
     padding-bottom: 1em;
     max-width: 780px;
+    font-family: Arial, sans-serif;
+    color: #111111;
+    line-height: 1.58;
+    text-rendering: optimizeLegibility !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    line-height: 1.10;
 }
 
 @media only screen and (max-device-width: 480px) {
-  body {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    padding-top: 0.5em;
-  }
+    body {
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        padding-top: 0.5em;
+    }
 }
 
 a {
@@ -74,36 +88,30 @@ a:hover {
     text-decoration: none;
 }
 
-strong { 
+strong {
     font-weight: bold;
 }
 
 header.topBar {
-    margin-bottom: 1em;
-    background-color: rgba(35, 57, 66, 0.11);
-}
-
-.topBar > span.rss {
-  float: right;
-}
-
-.topBar > span.rss img {
-  width: 15px;
+    font-size: 1.3em;
 }
 
 /* Index */
-section.postExcerpt {
-    margin-bottom: 1em;
+li.postExcerpt time {
+  color: #666666;
+  margin-right: 2em;
 }
 
-section.postExcerpt header h1 {
-    display: inline; 
-    font-size: 25px;
+section.postExcerpt section {
+  display: block;
 }
 
-section.postExcerpt header time {
-    font-style: italic;
+section.postExcerpt h1 {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 0.3em;
 }
+
 
 section.postExcerpt header {
     margin-bottom: 0.4em;
@@ -112,104 +120,177 @@ section.postExcerpt header {
 /* Single */
 
 article section#title h1 {
-    font-size: 35px;
-    margin-bottom: 0.2em;
+    font-size: 2.5em;
+    letter-spacing: -.015em;
+    font-style: normal;
+    color: rgb(36, 35, 35);
 }
 
-article section#title time {
-    font-style: italic;
+section time {
+    font-size: 0.8em;
+    margin-left: 0.2em;
 }
 
 article section#title {
-    margin-top: 0.8em;
-    margin-bottom: 0.4em;
+    margin-top: 1em;
+    margin-bottom: 1.3em;
 }
 
 article section#content {
-    margin-top: 0.8em;
-    line-height: 1.4em;
+    line-height: 1.7em;
+    font-size: 1em;
 }
 
-article section#content ul, ol, p {
-    margin-top: 0.8em;
+article section#content ul {
+    margin-bottom: 1em;
+    line-height: 1.5em;
+    margin-top: 1em;
+    margin-left: 2em;
+}
+
+article section#content > :not(h1):not(h2):not(h3):not(h4):not(ul) {
+    margin-left: 0.4em;
 }
 
 article section#content h1 {
-    font-weight: bold;
-    font-size: 30px;
+    font-size: 1.9em;
+    font-style: normal;
     margin-bottom: 0.4em;
-    margin-top: 0.8em;
+    margin-top: 1.4em;
 }
 
 article section#content h2 {
-    font-weight: bold;
-    font-size: 25px;
+    font-size: 1.4em;
+    font-style: normal;
     margin-bottom: 0.4em;
-    margin-top: 0.8em;
+    margin-top: 1.3em;
 }
 
 article section#content h3 {
-    font-weight: bold;
-    font-size: 23px;
+    font-size: 1.2em;
+    font-style: normal;
     margin-bottom: 0.4em;
-    margin-top: 0.8em;
+    margin-top: 1em;
 }
 
 article section#content h4 {
-    font-weight: bold;
-    font-size: 20px;
+    font-size: 1.1em;
+    font-style: normal;
     margin-bottom: 0.4em;
     margin-top: 0.8em;
 }
 
 /* Quotes */
 blockquote {
-  background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-  quotes: "\201C""\201D""\2018""\2019";
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C" "\201D" "\2018" "\2019";
 }
+
 blockquote:before {
-  color: #ccc;
-  content: open-quote;
-  font-size: 4em;
-  line-height: 0.1em;
-  margin-right: 0.07em;
-  vertical-align: -0.4em;
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.07em;
+    vertical-align: -0.4em;
 }
+
 blockquote p {
-  display: inline;
+    display: inline;
 }
 
 /* Lists */
 ul {
-   list-style-type: disc;
-   list-style-position: inside;
+    list-style-type: disc;
+    list-style-position: outside;
+    margin-left: 1em;
 }
+
 ol {
-   list-style-type: decimal;
-   list-style-position: inside;
+    list-style-type: decimal;
+    list-style-position: inside;
 }
+
 ul ul, ol ul {
-   list-style-type: circle;
-   list-style-position: inside;
-   margin-left: 15px;
+    list-style-type: circle;
+    list-style-position: inside;
+    margin-left: 15px;
 }
+
 ol ol, ul ol {
-   list-style-type: lower-latin;
-   list-style-position: inside;
-   margin-left: 15px;
+    list-style-type: lower-latin;
+    list-style-position: inside;
+    margin-left: 15px;
 }
+
 
 pre {
     display: block;
-    font-family: monospace;
-    white-space: pre;
+    font-size: 13px;
+    font-family: Menlo,Monaco,"Courier New",Courier,monospace;
+    overflow-x: auto;
     margin: 1em 0;
-    padding: 5px;
+    width: auto;
+    padding: 15px;
+    background: rgba(0,0,0,.05);
+}
+
+img {
+    width: 100%;
+    max-width: 750px;
+    height: auto;
 }
 
 #disqus_thread {
     margin-top: 4em;
+}
+
+hr {
+  border: none;
+  height: 0.9px;
+  color: #e7eaeb;
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+  background-color: #e6e9ea;
+}
+
+section.lorenzo-pic {
+  max-width: 100px;
+  margin-right: 2em;
+  float: left;
+}
+
+section.lorenzo-pic > img {
+  max-width: 100px;
+}
+
+section.list {
+  max-width: 80%;
+  float: left;
+}
+
+@media screen and (min-width: 0px) and (max-width: 600px) {
+  section.lorenzo-pic {
+    width: 100%;
+  }
+
+  section.lorenzo-pic > img{
+    display: none;
+  }
+
+  li.postExcerpt time {
+    margin-right: 0.1em;
+  }
+
+  section.list {
+    max-width: 100%;
+  }
+}
+
+section#main h2 {
+  font-weight: bold;
+  margin-top: 0.8em;
 }

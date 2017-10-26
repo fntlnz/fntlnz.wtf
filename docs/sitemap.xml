@@ -118,44 +118,23 @@
   </url>
   
   <url>
-    <loc>https://fntlnz.wtf/tags/beanstalk/</loc>
-    <lastmod>2015-10-19T00:00:00+02:00</lastmod>
+    <loc>https://fntlnz.wtf/</loc>
     <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://fntlnz.wtf/"
+                />
   </url>
   
   <url>
-    <loc>https://fntlnz.wtf/categories/</loc>
+    <loc>https://fntlnz.wtf/</loc>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/containers/</loc>
-    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/docker/</loc>
-    <lastmod>2016-09-13T00:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/elasticsearch/</loc>
-    <lastmod>2016-09-13T00:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/filesystem/</loc>
-    <lastmod>2016-01-11T00:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/fuse/</loc>
-    <lastmod>2016-01-11T00:00:00+02:00</lastmod>
-    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://fntlnz.wtf/"
+                />
   </url>
   
   <url>
@@ -171,44 +150,8 @@
   </url>
   
   <url>
-    <loc>https://fntlnz.wtf/tags/monitoring/</loc>
-    <lastmod>2016-09-13T00:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/nginx/</loc>
-    <lastmod>2016-06-16T00:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://fntlnz.wtf/post/</loc>
     <lastmod>2016-11-14T10:00:22+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/swarm/</loc>
-    <lastmod>2016-06-16T00:00:00+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/systemd/</loc>
-    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/systemd-nspawn/</loc>
-    <lastmod>2016-11-14T10:00:22+02:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://fntlnz.wtf/tags/</loc>
-    <lastmod>2015-10-19T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   

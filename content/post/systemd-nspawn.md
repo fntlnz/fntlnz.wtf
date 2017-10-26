@@ -2,8 +2,6 @@
 date        = "2016-11-14T10:00:22+02:00"
 title       = "Using systemd-nspawn for some containerization needs"
 description = "Personal considerations on the usage of systemd-nspawn for desktop applications and system services"
-tags        = [ "containers", "systemd", "systemd-nspawn" ]
-topics      = [ "containers", "systemd", "systemd-nspawn" ]
 slug        = "systemd-nspawn"
 +++
 
@@ -68,9 +66,9 @@ So the first thing I did was in fact to create **a Dockerfile for spotify.**
 **A**: In fact **I don't**, I'm just using Docker to create a Docker image, which I will export to a tar and use as a base filesystem for my container
 
 
-Here's the Dockerfile:
+### Here's the Dockerfile:
 
-```
+```docker
 FROM debian:jessie
 
 RUN apt-get update -y
@@ -95,10 +93,10 @@ RUN useradd --create-home --home-dir $HOME spotify \
   ENTRYPOINT  [ "spotify" ]
 ```
 
-After building it with name `fntlnz/spotify` it can be run in Docker with:
+### run - the - thing
 
-```
-# docker run -d \
+```bash
+docker run -d \
   -v /etc/localtime:/etc/localtime:ro \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -e DISPLAY=unix$DISPLAY \
@@ -114,24 +112,24 @@ Now that I have my image and I can use it with Docker seeing that it works I can
 
 The first thing to do is to export the docker image to a folder we'll call `rootfs`
 
-```
-# mkdir -p /var/lib/machines
-# cd /var/lib/machines
+```bash
+mkdir -p /var/lib/machines
+cd /var/lib/machines
 
-# mkdir spotify
-# docker export $(docker create fntlnz/spotify) | tar -C spotify -xvf -
+mkdir spotify
+docker export $(docker create fntlnz/spotify) | tar -C spotify -xvf -
 ```
 
 Then we have to give the right permissions to `/home/spotify`
 
-```
-# systemd-nspawn -D spotify/ bash -c "chown -R spotify:spotify /home/spotify"
+```bash
+systemd-nspawn -D spotify/ bash -c "chown -R spotify:spotify /home/spotify"
 ```
 
 Now each time we want to start that container we can do it with:
 
-```
-# systemd-nspawn \
+```bash
+systemd-nspawn \
   --setenv=DISPLAY=unix$DISPLAY \
   --bind=/tmp/.X11-unix:/tmp/.X11-unix \
   --bind /run/user/1000/pulse:/run/pulse \
@@ -159,32 +157,45 @@ by the [**systemd machine manager**](https://wiki.freedesktop.org/www/Software/s
 
 Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)
 
+```bash
+machinectl enable network-manager
 ```
-# machinectl enable network-manager
 
+Output:
+```
 Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
 ```
 
 #### Management
 machinectl allows you to list, terminate and show the status of machines.
 
+#### List all the machines
+```bash
+machinectl list
+
 ```
-# machinectl list
 
-
+Output:
+```
 MACHINE CLASS     SERVICE
 spotify container nspawn 
 
 1 machines listed.
 ```
 
-```
-# machinectl terminate spotify
+#### Terminate the machine
+
+```bash
+machinectl terminate spotify
 ```
 
+#### Get the status
+```bash
+machinectl status spotify
 ```
-# machinectl status spotify
 
+Output:
+```
 spotify
            Since: Mon 2016-11-14 02:13:54 CET; 7s ago
           Leader: 11308 (spotify)
@@ -205,9 +216,9 @@ Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
 
 machinectl can pull images using `pull-raw`, `pull-tar` and `pull-dkr` from remote urls.
 
-```
-# machinectl pull-raw --verify=no http://ftp.halifax.rwth-aachen.de/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.raw.xz
-# systemd-nspawn -M Fedora-Cloud-Base-20141203-21
+```bash
+machinectl pull-raw --verify=no http://ftp.halifax.rwth-aachen.de/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.raw.xz
+systemd-nspawn -M Fedora-Cloud-Base-20141203-21
 ```
 
 for more, see [machinectl](https://www.freedesktop.org/software/systemd/man/machinectl.html)

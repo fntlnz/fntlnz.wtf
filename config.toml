@@ -3,6 +3,10 @@ languageCode = "en-us"
 title = "Lorenzo Fontana's Homepage"
 theme = "fntlnz"
 paginate = 500
-PygmentsCodeFences = true
-PygmentsOptions = ""
-PygmentsStyle = "bw"
+pygmentsCodeFences = true
+pygmentsStyle = "borland"
+pygmentsCodeFencesGuessSyntax = true
+
+[taxonomies]
+    category = ""
+    tag = ""

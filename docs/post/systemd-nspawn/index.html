@@ -4,9 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
         <link rel="stylesheet" href="/css/style.css?v=3">
+        <link rel="stylesheet" href="/css/chroma.css?v=3">
         <link rel="alternate" type="application/rss+xml" title="RSS" href="https://fntlnz.wtf/index.xml">
         <meta property="og:url" content="https://fntlnz.wtf">
-<link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png?v=2">
+        <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png?v=2">
 <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png?v=2">
 <link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png?v=2">
 <link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png?v=2">
@@ -102,73 +103,58 @@ by identifying why Docker wasn&rsquo;t performing well as I expected in such sit
 
 <p><strong>A</strong>: In fact <strong>I don&rsquo;t</strong>, I&rsquo;m just using Docker to create a Docker image, which I will export to a tar and use as a base filesystem for my container</p>
 
-<p>Here&rsquo;s the Dockerfile:</p>
-
-<pre><code>FROM debian:jessie
-
-RUN apt-get update -y
-RUN gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
-RUN gpg --export --armor BBEBDCB318AD50EC6865090613B00F1FD2C19886 | apt-key add -
-RUN echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list
-RUN apt-get update -y
-RUN apt-get install spotify-client -y
-RUN apt-get install pulseaudio -y
-RUN apt-get install -f -y
-RUN echo enable-shm=no &gt;&gt; /etc/pulse/client.conf
-
-ENV PULSE_SERVER /run/pulse/native
-ENV HOME /home/spotify
-
-RUN useradd --create-home --home-dir $HOME spotify \
-  &amp;&amp; gpasswd -a spotify audio \
-  &amp;&amp; chown -R spotify:spotify $HOME
-
-  WORKDIR $HOME
-  USER spotify
-  ENTRYPOINT  [ &quot;spotify&quot; ]
-</code></pre>
-
-<p>After building it with name <code>fntlnz/spotify</code> it can be run in Docker with:</p>
-
-<pre><code># docker run -d \
-  -v /etc/localtime:/etc/localtime:ro \
-  -v /tmp/.X11-unix:/tmp/.X11-unix \
-  -e DISPLAY=unix$DISPLAY \
-  -v /run/user/1000/pulse:/run/pulse:ro \
-  -v /var/lib/dbus:/var/lib/dbus \
-  -v $HOME/.spotify/config:/home/spotify/.config/spotify \
-  -v $HOME/.spotify/cache:/home/spotify/spotify \
-  --name spotify \
-  fntlnz/spotify
-</code></pre>
-
+<h3 id="here-s-the-dockerfile">Here&rsquo;s the Dockerfile:</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker"><span style="color:#000080;font-weight:bold">FROM</span><span style="color:#00f"> debian:jessie</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get update -y<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> gpg --export --armor BBEBDCB318AD50EC6865090613B00F1FD2C19886 | apt-key add -<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get update -y<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get install spotify-client -y<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get install pulseaudio -y<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get install -f -y<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> echo enable-shm=no &gt;&gt; /etc/pulse/client.conf<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">ENV</span><span style="color:#00f"> PULSE_SERVER /run/pulse/native</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">ENV</span><span style="color:#00f"> HOME /home/spotify</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> useradd --create-home --home-dir $HOME spotify <span style="color:#00f">\
+</span><span style="color:#00f"></span>  &amp;&amp; gpasswd -a spotify audio <span style="color:#00f">\
+</span><span style="color:#00f"></span>  &amp;&amp; chown -R spotify:spotify $HOME<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span>  WORKDIR $HOME<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span>  USER spotify<span style="color:#a61717;background-color:#e3d2d2">
+</span><span style="color:#a61717;background-color:#e3d2d2"></span>  ENTRYPOINT  [ <span style="color:#00f">&#34;spotify&#34;</span> ]</code></pre></div>
+<h3 id="run-the-thing">run - the - thing</h3>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker run -d <span style="color:#00f">\
+</span><span style="color:#00f"></span>  -v /etc/localtime:/etc/localtime:ro <span style="color:#00f">\
+</span><span style="color:#00f"></span>  -v /tmp/.X11-unix:/tmp/.X11-unix <span style="color:#00f">\
+</span><span style="color:#00f"></span>  -e DISPLAY=unix$DISPLAY <span style="color:#00f">\
+</span><span style="color:#00f"></span>  -v /run/user/1000/pulse:/run/pulse:ro <span style="color:#00f">\
+</span><span style="color:#00f"></span>  -v /var/lib/dbus:/var/lib/dbus <span style="color:#00f">\
+</span><span style="color:#00f"></span>  -v $HOME/.spotify/config:/home/spotify/.config/spotify <span style="color:#00f">\
+</span><span style="color:#00f"></span>  -v $HOME/.spotify/cache:/home/spotify/spotify <span style="color:#00f">\
+</span><span style="color:#00f"></span>  --name spotify <span style="color:#00f">\
+</span><span style="color:#00f"></span>  fntlnz/spotify</code></pre></div>
 <p>Now that I have my image and I can use it with Docker seeing that it works I can try it with <code>systemd-nspawn</code></p>
 
 <p>The first thing to do is to export the docker image to a folder we&rsquo;ll call <code>rootfs</code></p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /var/lib/machines
+cd /var/lib/machines
 
-<pre><code># mkdir -p /var/lib/machines
-# cd /var/lib/machines
-
-# mkdir spotify
-# docker export $(docker create fntlnz/spotify) | tar -C spotify -xvf -
-</code></pre>
-
+mkdir spotify
+docker export <span style="color:#000080;font-weight:bold">$(</span>docker create fntlnz/spotify<span style="color:#000080;font-weight:bold">)</span> | tar -C spotify -xvf -</code></pre></div>
 <p>Then we have to give the right permissions to <code>/home/spotify</code></p>
-
-<pre><code># systemd-nspawn -D spotify/ bash -c &quot;chown -R spotify:spotify /home/spotify&quot;
-</code></pre>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemd-nspawn -D spotify/ bash -c <span style="color:#00f">&#34;chown -R spotify:spotify /home/spotify&#34;</span></code></pre></div>
 <p>Now each time we want to start that container we can do it with:</p>
-
-<pre><code># systemd-nspawn \
-  --setenv=DISPLAY=unix$DISPLAY \
-  --bind=/tmp/.X11-unix:/tmp/.X11-unix \
-  --bind /run/user/1000/pulse:/run/pulse \
-  --bind /var/lib/dbus:/var/lib/dbus \
-  -u spotify -D spotify/ \
-  spotify
-</code></pre>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemd-nspawn <span style="color:#00f">\
+</span><span style="color:#00f"></span>  --setenv=DISPLAY=unix$DISPLAY <span style="color:#00f">\
+</span><span style="color:#00f"></span>  --bind=/tmp/.X11-unix:/tmp/.X11-unix <span style="color:#00f">\
+</span><span style="color:#00f"></span>  --bind /run/user/1000/pulse:/run/pulse <span style="color:#00f">\
+</span><span style="color:#00f"></span>  --bind /var/lib/dbus:/var/lib/dbus <span style="color:#00f">\
+</span><span style="color:#00f"></span>  -u spotify -D spotify/ <span style="color:#00f">\
+</span><span style="color:#00f"></span>  spotify</code></pre></div>
 <h3 id="things-to-note">Things to note:</h3>
 
 <ul>
@@ -188,31 +174,26 @@ by the <a href="https://wiki.freedesktop.org/www/Software/systemd/machined/"><st
 <h4 id="container-services">Container services</h4>
 
 <p>Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)</p>
-
-<pre><code># machinectl enable network-manager
-
-Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
-</code></pre>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl enable network-manager</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.</pre></div>
 <h4 id="management">Management</h4>
 
 <p>machinectl allows you to list, terminate and show the status of machines.</p>
 
-<pre><code># machinectl list
-
-
-MACHINE CLASS     SERVICE
+<h4 id="list-all-the-machines">List all the machines</h4>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl list</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">MACHINE CLASS     SERVICE
 spotify container nspawn 
 
-1 machines listed.
-</code></pre>
-
-<pre><code># machinectl terminate spotify
-</code></pre>
-
-<pre><code># machinectl status spotify
-
-spotify
+1 machines listed.</pre></div>
+<h4 id="terminate-the-machine">Terminate the machine</h4>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl terminate spotify</code></pre></div>
+<h4 id="get-the-status">Get the status</h4>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl status spotify</code></pre></div>
+<p>Output:</p>
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">spotify
            Since: Mon 2016-11-14 02:13:54 CET; 7s ago
           Leader: 11308 (spotify)
          Service: nspawn; class container
@@ -225,17 +206,12 @@ spotify
                   └─11372 /usr/share/spotify/spotify --type=renderer --disable-pinch --no-sandbox --primordial-pipe-token=431AFC3F7268B33A8765213F7926A54A --lang=en-US --lang=en-US --log-file=/usr/share/spotify/
 
 Nov 14 02:13:54 fntlnz systemd[1]: Started Container spotify.
-Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
-</code></pre>
-
+Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.</pre></div>
 <h4 id="pull-images">Pull images</h4>
 
 <p>machinectl can pull images using <code>pull-raw</code>, <code>pull-tar</code> and <code>pull-dkr</code> from remote urls.</p>
-
-<pre><code># machinectl pull-raw --verify=no http://ftp.halifax.rwth-aachen.de/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.raw.xz
-# systemd-nspawn -M Fedora-Cloud-Base-20141203-21
-</code></pre>
-
+<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl pull-raw --verify=no http://ftp.halifax.rwth-aachen.de/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.raw.xz
+systemd-nspawn -M Fedora-Cloud-Base-20141203-21</code></pre></div>
 <p>for more, see <a href="https://www.freedesktop.org/software/systemd/man/machinectl.html">machinectl</a></p>
 
 <h2 id="what-s-next">What&rsquo;s next</h2>

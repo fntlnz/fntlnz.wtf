@@ -156,6 +156,7 @@ article section#content h1 {
     font-size: 1.9em;
     font-style: normal;
     margin-bottom: 0.4em;
+    font-weight: 800;
     margin-top: 1.4em;
 }
 
@@ -163,12 +164,14 @@ article section#content h2 {
     font-size: 1.4em;
     font-style: normal;
     margin-bottom: 0.4em;
+    font-weight: 800;
     margin-top: 1.3em;
 }
 
 article section#content h3 {
     font-size: 1.2em;
     font-style: normal;
+    font-weight: 800;
     margin-bottom: 0.4em;
     margin-top: 1em;
 }
@@ -176,6 +179,7 @@ article section#content h3 {
 article section#content h4 {
     font-size: 1.1em;
     font-style: normal;
+    font-weight: 800;
     margin-bottom: 0.4em;
     margin-top: 0.8em;
 }

@@ -75,73 +75,58 @@ by identifying why Docker wasn&amp;rsquo;t performing well as I expected in such
 
 &lt;p&gt;&lt;strong&gt;A&lt;/strong&gt;: In fact &lt;strong&gt;I don&amp;rsquo;t&lt;/strong&gt;, I&amp;rsquo;m just using Docker to create a Docker image, which I will export to a tar and use as a base filesystem for my container&lt;/p&gt;
 
-&lt;p&gt;Here&amp;rsquo;s the Dockerfile:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;FROM debian:jessie
-
-RUN apt-get update -y
-RUN gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
-RUN gpg --export --armor BBEBDCB318AD50EC6865090613B00F1FD2C19886 | apt-key add -
-RUN echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list
-RUN apt-get update -y
-RUN apt-get install spotify-client -y
-RUN apt-get install pulseaudio -y
-RUN apt-get install -f -y
-RUN echo enable-shm=no &amp;gt;&amp;gt; /etc/pulse/client.conf
-
-ENV PULSE_SERVER /run/pulse/native
-ENV HOME /home/spotify
-
-RUN useradd --create-home --home-dir $HOME spotify \
-  &amp;amp;&amp;amp; gpasswd -a spotify audio \
-  &amp;amp;&amp;amp; chown -R spotify:spotify $HOME
-
-  WORKDIR $HOME
-  USER spotify
-  ENTRYPOINT  [ &amp;quot;spotify&amp;quot; ]
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;After building it with name &lt;code&gt;fntlnz/spotify&lt;/code&gt; it can be run in Docker with:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# docker run -d \
-  -v /etc/localtime:/etc/localtime:ro \
-  -v /tmp/.X11-unix:/tmp/.X11-unix \
-  -e DISPLAY=unix$DISPLAY \
-  -v /run/user/1000/pulse:/run/pulse:ro \
-  -v /var/lib/dbus:/var/lib/dbus \
-  -v $HOME/.spotify/config:/home/spotify/.config/spotify \
-  -v $HOME/.spotify/cache:/home/spotify/spotify \
-  --name spotify \
-  fntlnz/spotify
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;h3 id=&#34;here-s-the-dockerfile&#34;&gt;Here&amp;rsquo;s the Dockerfile:&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-docker&#34; data-lang=&#34;docker&#34;&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;FROM&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt; debian:jessie&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; apt-get update -y&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; gpg --export --armor BBEBDCB318AD50EC6865090613B00F1FD2C19886 | apt-key add -&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; apt-get update -y&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; apt-get install spotify-client -y&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; apt-get install pulseaudio -y&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; apt-get install -f -y&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; echo enable-shm=no &amp;gt;&amp;gt; /etc/pulse/client.conf&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;ENV&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt; PULSE_SERVER /run/pulse/native&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;ENV&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt; HOME /home/spotify&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;RUN&lt;/span&gt; useradd --create-home --home-dir $HOME spotify &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  &amp;amp;&amp;amp; gpasswd -a spotify audio &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  &amp;amp;&amp;amp; chown -R spotify:spotify $HOME&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;  WORKDIR $HOME&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;  USER spotify&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;
+&lt;/span&gt;&lt;span style=&#34;color:#a61717;background-color:#e3d2d2&#34;&gt;&lt;/span&gt;  ENTRYPOINT  [ &lt;span style=&#34;color:#00f&#34;&gt;&amp;#34;spotify&amp;#34;&lt;/span&gt; ]&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&#34;run-the-thing&#34;&gt;run - the - thing&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;docker run -d &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  -v /etc/localtime:/etc/localtime:ro &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  -v /tmp/.X11-unix:/tmp/.X11-unix &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  -e DISPLAY=unix$DISPLAY &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  -v /run/user/1000/pulse:/run/pulse:ro &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  -v /var/lib/dbus:/var/lib/dbus &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  -v $HOME/.spotify/config:/home/spotify/.config/spotify &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  -v $HOME/.spotify/cache:/home/spotify/spotify &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  --name spotify &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  fntlnz/spotify&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now that I have my image and I can use it with Docker seeing that it works I can try it with &lt;code&gt;systemd-nspawn&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;The first thing to do is to export the docker image to a folder we&amp;rsquo;ll call &lt;code&gt;rootfs&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;mkdir -p /var/lib/machines
+cd /var/lib/machines
 
-&lt;pre&gt;&lt;code&gt;# mkdir -p /var/lib/machines
-# cd /var/lib/machines
-
-# mkdir spotify
-# docker export $(docker create fntlnz/spotify) | tar -C spotify -xvf -
-&lt;/code&gt;&lt;/pre&gt;
-
+mkdir spotify
+docker export &lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;$(&lt;/span&gt;docker create fntlnz/spotify&lt;span style=&#34;color:#000080;font-weight:bold&#34;&gt;)&lt;/span&gt; | tar -C spotify -xvf -&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Then we have to give the right permissions to &lt;code&gt;/home/spotify&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# systemd-nspawn -D spotify/ bash -c &amp;quot;chown -R spotify:spotify /home/spotify&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;systemd-nspawn -D spotify/ bash -c &lt;span style=&#34;color:#00f&#34;&gt;&amp;#34;chown -R spotify:spotify /home/spotify&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Now each time we want to start that container we can do it with:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# systemd-nspawn \
-  --setenv=DISPLAY=unix$DISPLAY \
-  --bind=/tmp/.X11-unix:/tmp/.X11-unix \
-  --bind /run/user/1000/pulse:/run/pulse \
-  --bind /var/lib/dbus:/var/lib/dbus \
-  -u spotify -D spotify/ \
-  spotify
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;systemd-nspawn &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  --setenv=DISPLAY=unix$DISPLAY &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  --bind=/tmp/.X11-unix:/tmp/.X11-unix &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  --bind /run/user/1000/pulse:/run/pulse &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  --bind /var/lib/dbus:/var/lib/dbus &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  -u spotify -D spotify/ &lt;span style=&#34;color:#00f&#34;&gt;\
+&lt;/span&gt;&lt;span style=&#34;color:#00f&#34;&gt;&lt;/span&gt;  spotify&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h3 id=&#34;things-to-note&#34;&gt;Things to note:&lt;/h3&gt;
 
 &lt;ul&gt;
@@ -161,31 +146,26 @@ by the &lt;a href=&#34;https://wiki.freedesktop.org/www/Software/systemd/machine
 &lt;h4 id=&#34;container-services&#34;&gt;Container services&lt;/h4&gt;
 
 &lt;p&gt;Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# machinectl enable network-manager
-
-Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl enable network-manager&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Output:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&#34;management&#34;&gt;Management&lt;/h4&gt;
 
 &lt;p&gt;machinectl allows you to list, terminate and show the status of machines.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;# machinectl list
-
-
-MACHINE CLASS     SERVICE
+&lt;h4 id=&#34;list-all-the-machines&#34;&gt;List all the machines&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl list&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Output:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;MACHINE CLASS     SERVICE
 spotify container nspawn 
 
-1 machines listed.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;# machinectl terminate spotify
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;# machinectl status spotify
-
-spotify
+1 machines listed.&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;terminate-the-machine&#34;&gt;Terminate the machine&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl terminate spotify&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&#34;get-the-status&#34;&gt;Get the status&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl status spotify&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Output:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;spotify
            Since: Mon 2016-11-14 02:13:54 CET; 7s ago
           Leader: 11308 (spotify)
          Service: nspawn; class container
@@ -198,17 +178,12 @@ spotify
                   └─11372 /usr/share/spotify/spotify --type=renderer --disable-pinch --no-sandbox --primordial-pipe-token=431AFC3F7268B33A8765213F7926A54A --lang=en-US --lang=en-US --log-file=/usr/share/spotify/
 
 Nov 14 02:13:54 fntlnz systemd[1]: Started Container spotify.
-Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
-&lt;/code&gt;&lt;/pre&gt;
-
+Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&#34;pull-images&#34;&gt;Pull images&lt;/h4&gt;
 
 &lt;p&gt;machinectl can pull images using &lt;code&gt;pull-raw&lt;/code&gt;, &lt;code&gt;pull-tar&lt;/code&gt; and &lt;code&gt;pull-dkr&lt;/code&gt; from remote urls.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;# machinectl pull-raw --verify=no http://ftp.halifax.rwth-aachen.de/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.raw.xz
-# systemd-nspawn -M Fedora-Cloud-Base-20141203-21
-&lt;/code&gt;&lt;/pre&gt;
-
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl pull-raw --verify=no http://ftp.halifax.rwth-aachen.de/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.raw.xz
+systemd-nspawn -M Fedora-Cloud-Base-20141203-21&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;for more, see &lt;a href=&#34;https://www.freedesktop.org/software/systemd/man/machinectl.html&#34;&gt;machinectl&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;what-s-next&#34;&gt;What&amp;rsquo;s next&lt;/h2&gt;

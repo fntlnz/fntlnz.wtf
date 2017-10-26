@@ -2,8 +2,6 @@
 date        = "2016-08-11T15:35:53+02:00"
 title       = "Why do we have containers"
 description = "Speculations on why we do have containers"
-tags        = [ "containers" ]
-topics      = [ "containers" ]
 slug        = "why-containers"
 +++
 
