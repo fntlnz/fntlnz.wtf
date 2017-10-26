@@ -176,7 +176,10 @@ by the <a href="https://wiki.freedesktop.org/www/Software/systemd/machined/"><st
 <p>Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)</p>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl enable network-manager</code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.</pre></div>
+
+<pre><code>Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
+</code></pre>
+
 <h4 id="management">Management</h4>
 
 <p>machinectl allows you to list, terminate and show the status of machines.</p>
@@ -184,16 +187,20 @@ by the <a href="https://wiki.freedesktop.org/www/Software/systemd/machined/"><st
 <h4 id="list-all-the-machines">List all the machines</h4>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl list</code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">MACHINE CLASS     SERVICE
+
+<pre><code>MACHINE CLASS     SERVICE
 spotify container nspawn 
 
-1 machines listed.</pre></div>
+1 machines listed.
+</code></pre>
+
 <h4 id="terminate-the-machine">Terminate the machine</h4>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl terminate spotify</code></pre></div>
 <h4 id="get-the-status">Get the status</h4>
 <div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl status spotify</code></pre></div>
 <p>Output:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">spotify
+
+<pre><code>spotify
            Since: Mon 2016-11-14 02:13:54 CET; 7s ago
           Leader: 11308 (spotify)
          Service: nspawn; class container
@@ -206,7 +213,9 @@ spotify container nspawn
                   └─11372 /usr/share/spotify/spotify --type=renderer --disable-pinch --no-sandbox --primordial-pipe-token=431AFC3F7268B33A8765213F7926A54A --lang=en-US --lang=en-US --log-file=/usr/share/spotify/
 
 Nov 14 02:13:54 fntlnz systemd[1]: Started Container spotify.
-Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.</pre></div>
+Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
+</code></pre>
+
 <h4 id="pull-images">Pull images</h4>
 
 <p>machinectl can pull images using <code>pull-raw</code>, <code>pull-tar</code> and <code>pull-dkr</code> from remote urls.</p>

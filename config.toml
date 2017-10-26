@@ -5,7 +5,8 @@ theme = "fntlnz"
 paginate = 500
 pygmentsCodeFences = true
 pygmentsStyle = "borland"
-pygmentsCodeFencesGuessSyntax = true
+pygmentsCodeFencesGuessSyntax = false
+publishDir = "docs"
 
 [taxonomies]
     category = ""

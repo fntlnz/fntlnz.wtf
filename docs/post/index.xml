@@ -148,7 +148,10 @@ by the &lt;a href=&#34;https://wiki.freedesktop.org/www/Software/systemd/machine
 &lt;p&gt;Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl enable network-manager&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Output:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.&lt;/pre&gt;&lt;/div&gt;
+
+&lt;pre&gt;&lt;code&gt;Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h4 id=&#34;management&#34;&gt;Management&lt;/h4&gt;
 
 &lt;p&gt;machinectl allows you to list, terminate and show the status of machines.&lt;/p&gt;
@@ -156,16 +159,20 @@ by the &lt;a href=&#34;https://wiki.freedesktop.org/www/Software/systemd/machine
 &lt;h4 id=&#34;list-all-the-machines&#34;&gt;List all the machines&lt;/h4&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl list&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Output:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;MACHINE CLASS     SERVICE
+
+&lt;pre&gt;&lt;code&gt;MACHINE CLASS     SERVICE
 spotify container nspawn 
 
-1 machines listed.&lt;/pre&gt;&lt;/div&gt;
+1 machines listed.
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h4 id=&#34;terminate-the-machine&#34;&gt;Terminate the machine&lt;/h4&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl terminate spotify&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;h4 id=&#34;get-the-status&#34;&gt;Get the status&lt;/h4&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;machinectl status spotify&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Output:&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;spotify
+
+&lt;pre&gt;&lt;code&gt;spotify
            Since: Mon 2016-11-14 02:13:54 CET; 7s ago
           Leader: 11308 (spotify)
          Service: nspawn; class container
@@ -178,7 +185,9 @@ spotify container nspawn
                   └─11372 /usr/share/spotify/spotify --type=renderer --disable-pinch --no-sandbox --primordial-pipe-token=431AFC3F7268B33A8765213F7926A54A --lang=en-US --lang=en-US --log-file=/usr/share/spotify/
 
 Nov 14 02:13:54 fntlnz systemd[1]: Started Container spotify.
-Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.&lt;/pre&gt;&lt;/div&gt;
+Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
+&lt;/code&gt;&lt;/pre&gt;
+
 &lt;h4 id=&#34;pull-images&#34;&gt;Pull images&lt;/h4&gt;
 
 &lt;p&gt;machinectl can pull images using &lt;code&gt;pull-raw&lt;/code&gt;, &lt;code&gt;pull-tar&lt;/code&gt; and &lt;code&gt;pull-dkr&lt;/code&gt; from remote urls.&lt;/p&gt;
