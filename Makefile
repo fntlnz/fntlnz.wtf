@@ -1,23 +1,13 @@
-.PHONY: serve deploy
+.PHONY: build
 
-help: ## Show this help
-	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
+GIT_COMMIT := $(shell git rev-parse HEAD 2> /dev/null || true)
+IMAGE := docker.io/fntlnz/fntlnz.wtf:${GIT_COMMIT}
 
-deploy: ## Deploy to GitHub Pages
-	echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
+build:
+	docker build -t ${IMAGE} .
 
-	# Build the project
-	hugo -d docs
-	echo "fntlnz.wtf" > docs/CNAME
-
-	# Add changes to git
-	git add -A
-
-	# Commit changes
-	git commit -S -s -m "rebuilding site `date`"
-
-	# Deploy
-	git push origin master
-
-serve: ## Serve a local development copy
-	hugo serve
+push:
+	docker push ${IMAGE}
+	@echo ""
+	@echo "Now you only need to deploy the brand new ver!"
+	@echo ">> kubectl set image deployment/fntlnzweb -n fntlnzweb fntlnzweb=${IMAGE}"

@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fntlnzweb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fntlnzweb
+  namespace: fntlnzweb
+  labels:
+    app: fntlnzweb
+spec:
+  selector:
+    app: fntlnzweb
+  ports:
+    - name: fntlnzweb
+      port: 80
+      protocol: TCP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: 'true'
+  name: fntlnzweb
+  namespace: fntlnzweb
+spec:
+  rules:
+    - host: fntlnz.wtf
+      http:
+        paths:
+          - backend:
+              serviceName: fntlnzweb
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - "fntlnz.wtf"
+      secretName: fntlnzweb
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: fntlnzweb
+  namespace: fntlnzweb
+  labels:
+    app: catrday
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fntlnzweb
+  template:
+    metadata:
+      labels:
+        app: fntlnzweb
+    spec:
+      containers:
+      - name: fntlnzweb
+        image: docker.io/fntlnz/fntlnz.wtf:latest
+        resources:
+          limits:
+            cpu: 0.5
+            memory: 200M
