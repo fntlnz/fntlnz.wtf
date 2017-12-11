@@ -4,5 +4,5 @@ title       = "Write a filesystem with FUSE"
 description = ""
 tags        = [ "filesystem", "fuse"]
 topics        = [ "filesystem", "fuse"]
-link        = "http://engineering.facile.it/write-filesystem-fuse"
+link        = "https://engineering.facile.it/blog/eng/write-filesystem-fuse/"
 +++
