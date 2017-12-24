@@ -12,4 +12,6 @@ RUN hugo -d build
 
 FROM docker.io/nginx:1.13-alpine
 
+ADD conf/nginx.conf /etc/nginx/nginx.conf
+
 COPY --from=builder /site/build /usr/share/nginx/html
