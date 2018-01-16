@@ -38,7 +38,7 @@ As you can imagine, I started each one with the right options (**I hope!**) allo
 
 In the next days I did some fine tuning and ended up having most of the containers I listed starting as startup system services.
 
-### What happened ?
+## What happened ?
 
 My computer **took minutes** to **undefined time** to boot depending on the state of the Docker daemon, and that wasn't acceptable for me so, sad but full of hope I started thinking at a possible solution
 by identifying why Docker wasn't performing well as I expected in such situation.
@@ -66,7 +66,7 @@ So the first thing I did was in fact to create **a Dockerfile for spotify.**
 **A**: In fact **I don't**, I'm just using Docker to create a Docker image, which I will export to a tar and use as a base filesystem for my container
 
 
-### Here's the Dockerfile:
+## Here's the Dockerfile:
 
 ```docker
 FROM debian:jessie
@@ -93,7 +93,7 @@ RUN useradd --create-home --home-dir $HOME spotify \
   ENTRYPOINT  [ "spotify" ]
 ```
 
-### run - the - thing
+## Run the thing
 
 ```bash
 docker run -d \
@@ -138,7 +138,7 @@ systemd-nspawn \
   spotify
 ```
 
-### Things to note:
+## Additional notes
 
 - We haven't used any layered filesystem and the container is actually writing into the `spotify` directory.
 - The network stack is not isolated
@@ -153,7 +153,7 @@ systemd-nspawn \
 There's another tool, invokable via `machinectl` which allows you to manage your "machines" aka containers and vms managed
 by the [**systemd machine manager**](https://wiki.freedesktop.org/www/Software/systemd/machined/)
 
-#### Container services
+## Container services
 
 Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)
 
@@ -166,10 +166,10 @@ Output:
 Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
 ```
 
-#### Management
+## Management
 machinectl allows you to list, terminate and show the status of machines.
 
-#### List all the machines
+### List all the machines
 ```bash
 machinectl list
 
@@ -183,13 +183,14 @@ spotify container nspawn
 1 machines listed.
 ```
 
-#### Terminate the machine
+### Terminate the machine
 
 ```bash
 machinectl terminate spotify
 ```
 
-#### Get the status
+### Get the status
+
 ```bash
 machinectl status spotify
 ```
@@ -224,7 +225,7 @@ systemd-nspawn -M Fedora-Cloud-Base-20141203-21
 for more, see [machinectl](https://www.freedesktop.org/software/systemd/man/machinectl.html)
 
 
-## What's next
+# What's next
 
 In this post I showed you something like the top 1% of the things that can be done with `systemd-nspawn`, there's **moar!!**, like:
 
