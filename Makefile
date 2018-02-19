@@ -1,7 +1,7 @@
 .PHONY: build push localserve
 
 GIT_COMMIT := $(shell git rev-parse HEAD 2> /dev/null || true)
-IMAGE := docker.io/fntlnz/fntlnz.wtf:${GIT_COMMIT}
+IMAGE := quay.io/fntlnz/fntlnz.wtf:${GIT_COMMIT}
 
 build:
 	docker build --build-arg HUGO_SITE_VERSION=${GIT_COMMIT} -t ${IMAGE} .

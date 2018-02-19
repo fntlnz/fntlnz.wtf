@@ -60,7 +60,7 @@ spec:
     spec:
       containers:
       - name: fntlnzweb
-        image: docker.io/fntlnz/fntlnz.wtf:latest
+        image: quay.io/fntlnz/fntlnz.wtf:latest
         resources:
           limits:
             cpu: 0.5
