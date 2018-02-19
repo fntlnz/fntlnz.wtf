@@ -116,6 +116,20 @@ If it is zero, you are not core dumping so you need to raise the limit.
 ulimit -c unlimited
 ```
 
+Also, when debugging, you have to remember that the Go runtime can be said
+to trigger certain behavior that can make debuggin easier.
+In this case, we are interested to say the Go runtime to trigger a core dump
+by actually doing a segfault instead of just exiting in case of panic.
+
+To do so, when we run the Go program we need to run it with *GOTRACEBACK=crash* like this.
+
+```bash
+GOTRACEBACK=crash ./myprogram
+```
+
+There are also other environment variables and behaviors for *GOTRACEBACK*, if
+you want to discover more take a look [here](https://golang.org/pkg/runtime/#hdr-Environment_Variables).
+
 &nbsp;
 
 Now that your system can core dump you need to restart the program and wait for it
