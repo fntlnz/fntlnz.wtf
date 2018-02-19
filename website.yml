@@ -47,7 +47,7 @@ metadata:
   name: fntlnzweb
   namespace: fntlnzweb
   labels:
-    app: catrday
+    app: fntlnzweb
 spec:
   replicas: 2
   selector:
