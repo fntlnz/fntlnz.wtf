@@ -1,16 +1,23 @@
-.PHONY: build push localserve
+.PHONY: serve deploy
 
-GIT_COMMIT := $(shell git rev-parse HEAD 2> /dev/null || true)
-IMAGE := quay.io/fntlnz/fntlnz.wtf:${GIT_COMMIT}
+help: ## Show this help
+	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
-build:
-	docker build --build-arg HUGO_SITE_VERSION=${GIT_COMMIT} -t ${IMAGE} .
+deploy: ## Deploy to GitHub Pages
+	echo -e "\033[0;32mDeploying updates to GitHub...\033[0m"
 
-push:
-	docker push ${IMAGE}
-	@echo ""
-	@echo "Now you only need to deploy the brand new ver!"
-	@echo ">> kubectl set image deployment/fntlnzweb -n fntlnzweb fntlnzweb=${IMAGE}"
+	# Build the project
+	hugo -d docs
+	echo "fntlnz.wtf" > docs/CNAME
 
-localserve: build
-	docker run --rm -p 8080:80 ${IMAGE}
+	# Add changes to git
+	git add -A
+
+	# Commit changes
+	git commit -S -s -m "rebuilding site `date`"
+
+	# Deploy
+	git push origin master
+
+serve: ## Serve a local development copy
+	hugo serve

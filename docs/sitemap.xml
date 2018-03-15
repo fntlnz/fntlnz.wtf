@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://fntlnz.wtf/post/gopostmortem/</loc>
+    <lastmod>2018-02-19T02:53:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/17-oct-17-intesa-dockerconeu/</loc>
+    <lastmod>2017-10-26T18:11:09+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/20-june-17-practical-cni/</loc>
+    <lastmod>2017-06-20T07:47:06+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/28-apr-17-containerday-moby-linuxkit/</loc>
+    <lastmod>2017-04-29T13:48:54+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/17-apr-17-dockercon-networking-workshop/</loc>
+    <lastmod>2017-04-19T10:34:49+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/30-mar-17-demist-docker-networking/</loc>
+    <lastmod>2017-04-07T14:10:49+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/25-mar-17-codemotion-rome-golang-dsl/</loc>
+    <lastmod>2017-03-26T01:32:37+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/16-mar-17-demist-docker-networking-cloudconf/</loc>
+    <lastmod>2017-03-16T21:01:04+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/10-mar-17-demist-docker-networking/</loc>
+    <lastmod>2017-04-29T13:48:54+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/28-feb-17-demist-docker-net-docker-milan/</loc>
+    <lastmod>2017-03-02T00:33:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/27-jan-17-demist-docker-netw-i4di/</loc>
+    <lastmod>2017-02-06T13:29:08+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/15-nov-16-rhos-automation-devops/</loc>
+    <lastmod>2017-02-06T13:27:48+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/post/systemd-nspawn/</loc>
+    <lastmod>2018-01-16T13:04:11+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/26-nov-16-understanding-docker-net/</loc>
+    <lastmod>2017-02-05T02:27:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/monitoring-docker-containers-elastic-cadvisor/</loc>
+    <lastmod>2017-01-23T02:50:13+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/post/why-containers/</loc>
+    <lastmod>2017-10-26T23:23:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/nginx-reverse-proxy-docker-containers-swarm/</loc>
+    <lastmod>2017-02-04T20:14:50+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/extending-docker-via-plugin/</loc>
+    <lastmod>2017-02-04T20:14:50+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/15-apr-16-extending-docker/</loc>
+    <lastmod>2017-02-05T02:27:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/15-12-15-introduction-ansible/</loc>
+    <lastmod>2017-02-05T02:27:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/20-11-14-php-ext-dev/</loc>
+    <lastmod>2017-02-05T02:27:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/dist-data-analysis-swarm/</loc>
+    <lastmod>2017-02-04T20:14:50+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/write-filesystem-fuse/</loc>
+    <lastmod>2017-12-12T00:19:07+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/</loc>
+    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://fntlnz.wtf/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/</loc>
+    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://fntlnz.wtf/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/links/</loc>
+    <lastmod>2017-01-23T02:50:13+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/</loc>
+    <lastmod>2018-02-19T02:53:33+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/post/</loc>
+    <lastmod>2018-02-19T02:53:33+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://fntlnz.wtf/talks/</loc>
+    <lastmod>2017-10-26T18:11:09+02:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

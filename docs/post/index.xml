@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Lorenzo Fontana&#39;s Homepage</title>
+    <link>https://fntlnz.wtf/post/</link>
+    <description>Recent content in Posts on Lorenzo Fontana&#39;s Homepage</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 16 Jan 2018 13:03:00 +0200</lastBuildDate>
+    
+	<atom:link href="https://fntlnz.wtf/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Post-mortem debugging of Go Programs</title>
+      <link>https://fntlnz.wtf/post/gopostmortem/</link>
+      <pubDate>Tue, 16 Jan 2018 13:03:00 +0200</pubDate>
+      
+      <guid>https://fntlnz.wtf/post/gopostmortem/</guid>
+      <description>Introduction Even if you write tests and those tests are perfect, effective and everything you will face production issues. Sometimes everything will just crash and when that&amp;rsquo;ll happen you&amp;rsquo;ll need some debugging skills. Here I&amp;rsquo;m putting some flow examples, notes and resources around post-mortem debugging of Go programs, including, but not limited to, those running inside a Kubernetes cluster.
+&amp;nbsp;
+I&amp;rsquo;m a huge fan of GDB, I used it for almost a decade now and while I remember it was a bit clunky and difficult at first but it got better in the years and in the meantime I got used to it and it&amp;rsquo;s commands and perks.</description>
+    </item>
+    
+    <item>
+      <title>Using systemd-nspawn for some containerization needs</title>
+      <link>https://fntlnz.wtf/post/systemd-nspawn/</link>
+      <pubDate>Mon, 14 Nov 2016 10:00:22 +0200</pubDate>
+      
+      <guid>https://fntlnz.wtf/post/systemd-nspawn/</guid>
+      <description>First things first About one year ago, after years with Fedora 18, I refreshed my laptop and installed a brand new Fedora 22. My first thought went to all the mess there was before the refresh because I tried tons of applications and changed my mind thousands of times in those three years.
+This time, I wanted to take my time to improve the process and after a few minutes thinking I had a light-bulb moment and I just started creating a Dockerfile for every application I needed !</description>
+    </item>
+    
+    <item>
+      <title>Why do we have containers</title>
+      <link>https://fntlnz.wtf/post/why-containers/</link>
+      <pubDate>Thu, 11 Aug 2016 15:35:53 +0200</pubDate>
+      
+      <guid>https://fntlnz.wtf/post/why-containers/</guid>
+      <description>Disclaimer This post reflects my own view of the whole world of virtualization, I summed up here my thoughts but please if you find something that you consider wrong or inexact leave a comment so I can learn by you and improve myself.
+Introduction As part of my work at Kiratech I evangelize people about OS level Virtualization and, while talking about Linux Containers, Docker Containers or more in general about the concept of containers itself I often (as it should be) encounter doubts and questions like:</description>
+    </item>
+    
+  </channel>
+</rss>
