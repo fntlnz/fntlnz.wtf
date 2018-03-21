@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://fntlnz.wtf/links/monitoring-kubernetes-nginx-ingress-nginx-influxdb-module/</loc>
+    <lastmod>2018-02-26T00:00:00+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://fntlnz.wtf/post/gopostmortem/</loc>
     <lastmod>2018-02-19T02:53:33+01:00</lastmod>
   </url>
@@ -139,13 +144,13 @@
   
   <url>
     <loc>https://fntlnz.wtf/links/</loc>
-    <lastmod>2017-01-23T02:50:13+01:00</lastmod>
+    <lastmod>2018-02-26T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://fntlnz.wtf/</loc>
-    <lastmod>2018-02-19T02:53:33+01:00</lastmod>
+    <lastmod>2018-02-26T00:00:00+02:00</lastmod>
     <priority>0</priority>
   </url>
   
