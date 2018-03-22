@@ -1,76 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-        <link rel="stylesheet" href='/css/style.css?v='>
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://fntlnz.wtf/index.xml">
-        <meta property="og:url" content="https://fntlnz.wtf/post/systemd-nspawn/">
-        
-        <meta property="og:type" content="article">
-        <meta property="og:title" content="Using systemd-nspawn for some containerization needs &middot; Lorenzo Fontana&#39;s Homepage">
-        
-        <title>Using systemd-nspawn for some containerization needs</title>
-        <link rel="apple-touch-icon" sizes="57x57" href='/favicon/apple-icon-57x57.png?v='>
-<link rel="apple-touch-icon" sizes="60x60" href='/favicon/apple-icon-60x60.png?v='>
-<link rel="apple-touch-icon" sizes="72x72" href='/favicon/apple-icon-72x72.png?v='>
-<link rel="apple-touch-icon" sizes="76x76" href='/favicon/apple-icon-76x76.png?v='>
-<link rel="apple-touch-icon" sizes="114x114" href='/favicon/apple-icon-114x114.png?v='>
-<link rel="apple-touch-icon" sizes="120x120" href='/favicon/apple-icon-120x120.png?v='>
-<link rel="apple-touch-icon" sizes="144x144" href='/favicon/apple-icon-144x144.png?v='>
-<link rel="apple-touch-icon" sizes="152x152" href='/favicon/apple-icon-152x152.png?v='>
-<link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-icon-180x180.png?v='>
-<link rel="icon" type="image/png" sizes="192x192" href='/favicon/android-icon-192x192.png?v='>
-<link rel="icon" type="image/png" sizes="32x32" href='/favicon/favicon-32x32.png?v='>
-<link rel="icon" type="image/png" sizes="96x96" href='/favicon/favicon-96x96.png?v='>
-<link rel="icon" type="image/png" sizes="16x16" href='/favicon/favicon-16x16.png?v='>
-<link rel="manifest" href='/favicon/manifest.json'>
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content='/favicon/ms-icon-144x144.png?v='>
-<meta name="theme-color" content="#ffffff">
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Using systemd-nspawn for some containerization needs | fntlnz</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <header>
 
-    </head>
-    <body>
-<header class="topBar">
-Lorenzo Fontana&#39;s Homepage
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <nav>
+    <ul>
+      
+      
+      <li class="pull-left ">
+        <a href="https://fntlnz.wtf">/home/fntlnz</a>
+      </li>
+      
+
+      
+      
+      <li class="pull-right">
+        <a href="/index.xml">~/subscribe</a>
+      </li>
+      
+
+    </ul>
+  </nav>
 </header>
- &lharu;
-<a href="/">back to posts list</a>
-<article>
-  <section id="title">
-    <h1>Using systemd-nspawn for some containerization needs</h1>
-    <time>Nov 14, 2016</time>
-    <hr>
-  </section>
-  <section id="content"><nav id="TableOfContents">
-<ul>
-<li><a href="#first-things-first">First things first</a>
-<ul>
-<li><a href="#what-happened">What happened ?</a></li>
-</ul></li>
-<li><a href="#example-container-spotify">Example container: Spotify</a>
-<ul>
-<li><a href="#here-s-the-dockerfile">Here&rsquo;s the Dockerfile:</a></li>
-<li><a href="#run-the-thing">Run the thing</a></li>
-<li><a href="#additional-notes">Additional notes</a></li>
-</ul></li>
-<li><a href="#machinectl">machinectl</a>
-<ul>
-<li><a href="#container-services">Container services</a></li>
-<li><a href="#management">Management</a>
-<ul>
-<li><a href="#list-all-the-machines">List all the machines</a></li>
-<li><a href="#terminate-the-machine">Terminate the machine</a></li>
-<li><a href="#get-the-status">Get the status</a>
-<ul>
-<li><a href="#pull-images">Pull images</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li><a href="#what-s-next">What&rsquo;s next</a></li>
-<li><a href="#what-i-achieved">What I achieved ?</a></li>
-</ul>
-</nav> 
+
+  </head>
+
+  <body>
+    <br/>
+
+<div class="article-meta">
+<h1><span class="title">Using systemd-nspawn for some containerization needs</span></h1>
+
+<h2 class="date">2016/11/14</h2>
+<p class="terms">
+  
+  
+  
+  
+  
+</p>
+</div>
+
+
+
+<main>
+
 
 <h1 id="first-things-first">First things first</h1>
 
@@ -133,57 +116,72 @@ by identifying why Docker wasn&rsquo;t performing well as I expected in such sit
 <p><strong>A</strong>: In fact <strong>I don&rsquo;t</strong>, I&rsquo;m just using Docker to create a Docker image, which I will export to a tar and use as a base filesystem for my container</p>
 
 <h2 id="here-s-the-dockerfile">Here&rsquo;s the Dockerfile:</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-docker" data-lang="docker"><span style="color:#000080;font-weight:bold">FROM</span><span style="color:#00f"> debian:jessie</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get update -y<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> gpg --export --armor BBEBDCB318AD50EC6865090613B00F1FD2C19886 | apt-key add -<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get update -y<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get install spotify-client -y<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get install pulseaudio -y<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> apt-get install -f -y<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> echo enable-shm=no &gt;&gt; /etc/pulse/client.conf<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">ENV</span><span style="color:#00f"> PULSE_SERVER /run/pulse/native</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">ENV</span><span style="color:#00f"> HOME /home/spotify</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span><span style="color:#000080;font-weight:bold">RUN</span> useradd --create-home --home-dir $HOME spotify <span style="color:#00f">\
-</span><span style="color:#00f"></span>  &amp;&amp; gpasswd -a spotify audio <span style="color:#00f">\
-</span><span style="color:#00f"></span>  &amp;&amp; chown -R spotify:spotify $HOME<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span>  WORKDIR $HOME<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span>  USER spotify<span style="color:#a61717;background-color:#e3d2d2">
-</span><span style="color:#a61717;background-color:#e3d2d2"></span>  ENTRYPOINT  [ <span style="color:#00f">&#34;spotify&#34;</span> ]</code></pre></div>
+
+<pre><code class="language-docker">FROM debian:jessie
+
+RUN apt-get update -y
+RUN gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+RUN gpg --export --armor BBEBDCB318AD50EC6865090613B00F1FD2C19886 | apt-key add -
+RUN echo deb http://repository.spotify.com stable non-free | tee /etc/apt/sources.list.d/spotify.list
+RUN apt-get update -y
+RUN apt-get install spotify-client -y
+RUN apt-get install pulseaudio -y
+RUN apt-get install -f -y
+RUN echo enable-shm=no &gt;&gt; /etc/pulse/client.conf
+
+ENV PULSE_SERVER /run/pulse/native
+ENV HOME /home/spotify
+
+RUN useradd --create-home --home-dir $HOME spotify \
+  &amp;&amp; gpasswd -a spotify audio \
+  &amp;&amp; chown -R spotify:spotify $HOME
+
+  WORKDIR $HOME
+  USER spotify
+  ENTRYPOINT  [ &quot;spotify&quot; ]
+</code></pre>
+
 <h2 id="run-the-thing">Run the thing</h2>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">docker run -d <span style="color:#00f">\
-</span><span style="color:#00f"></span>  -v /etc/localtime:/etc/localtime:ro <span style="color:#00f">\
-</span><span style="color:#00f"></span>  -v /tmp/.X11-unix:/tmp/.X11-unix <span style="color:#00f">\
-</span><span style="color:#00f"></span>  -e DISPLAY=unix$DISPLAY <span style="color:#00f">\
-</span><span style="color:#00f"></span>  -v /run/user/1000/pulse:/run/pulse:ro <span style="color:#00f">\
-</span><span style="color:#00f"></span>  -v /var/lib/dbus:/var/lib/dbus <span style="color:#00f">\
-</span><span style="color:#00f"></span>  -v $HOME/.spotify/config:/home/spotify/.config/spotify <span style="color:#00f">\
-</span><span style="color:#00f"></span>  -v $HOME/.spotify/cache:/home/spotify/spotify <span style="color:#00f">\
-</span><span style="color:#00f"></span>  --name spotify <span style="color:#00f">\
-</span><span style="color:#00f"></span>  fntlnz/spotify</code></pre></div>
+
+<pre><code class="language-bash">docker run -d \
+  -v /etc/localtime:/etc/localtime:ro \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -e DISPLAY=unix$DISPLAY \
+  -v /run/user/1000/pulse:/run/pulse:ro \
+  -v /var/lib/dbus:/var/lib/dbus \
+  -v $HOME/.spotify/config:/home/spotify/.config/spotify \
+  -v $HOME/.spotify/cache:/home/spotify/spotify \
+  --name spotify \
+  fntlnz/spotify
+</code></pre>
+
 <p>Now that I have my image and I can use it with Docker seeing that it works I can try it with <code>systemd-nspawn</code></p>
 
 <p>The first thing to do is to export the docker image to a folder we&rsquo;ll call <code>rootfs</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir -p /var/lib/machines
+
+<pre><code class="language-bash">mkdir -p /var/lib/machines
 cd /var/lib/machines
 
 mkdir spotify
-docker export <span style="color:#000080;font-weight:bold">$(</span>docker create fntlnz/spotify<span style="color:#000080;font-weight:bold">)</span> | tar -C spotify -xvf -</code></pre></div>
+docker export $(docker create fntlnz/spotify) | tar -C spotify -xvf -
+</code></pre>
+
 <p>Then we have to give the right permissions to <code>/home/spotify</code></p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemd-nspawn -D spotify/ bash -c <span style="color:#00f">&#34;chown -R spotify:spotify /home/spotify&#34;</span></code></pre></div>
+
+<pre><code class="language-bash">systemd-nspawn -D spotify/ bash -c &quot;chown -R spotify:spotify /home/spotify&quot;
+</code></pre>
+
 <p>Now each time we want to start that container we can do it with:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemd-nspawn <span style="color:#00f">\
-</span><span style="color:#00f"></span>  --setenv=DISPLAY=unix$DISPLAY <span style="color:#00f">\
-</span><span style="color:#00f"></span>  --bind=/tmp/.X11-unix:/tmp/.X11-unix <span style="color:#00f">\
-</span><span style="color:#00f"></span>  --bind /run/user/1000/pulse:/run/pulse <span style="color:#00f">\
-</span><span style="color:#00f"></span>  --bind /var/lib/dbus:/var/lib/dbus <span style="color:#00f">\
-</span><span style="color:#00f"></span>  -u spotify -D spotify/ <span style="color:#00f">\
-</span><span style="color:#00f"></span>  spotify</code></pre></div>
+
+<pre><code class="language-bash">systemd-nspawn \
+  --setenv=DISPLAY=unix$DISPLAY \
+  --bind=/tmp/.X11-unix:/tmp/.X11-unix \
+  --bind /run/user/1000/pulse:/run/pulse \
+  --bind /var/lib/dbus:/var/lib/dbus \
+  -u spotify -D spotify/ \
+  spotify
+</code></pre>
+
 <h2 id="additional-notes">Additional notes</h2>
 
 <ul>
@@ -203,7 +201,10 @@ by the <a href="https://wiki.freedesktop.org/www/Software/systemd/machined/"><st
 <h2 id="container-services">Container services</h2>
 
 <p>Using machinectl you can even create startup services, for example I use this for the NetworkManagr (image not included)</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl enable network-manager</code></pre></div>
+
+<pre><code class="language-bash">machinectl enable network-manager
+</code></pre>
+
 <p>Output:</p>
 
 <pre><code>Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@network-manager.service to /usr/lib/systemd/system/systemd-nspawn@.service.
@@ -214,7 +215,11 @@ by the <a href="https://wiki.freedesktop.org/www/Software/systemd/machined/"><st
 <p>machinectl allows you to list, terminate and show the status of machines.</p>
 
 <h3 id="list-all-the-machines">List all the machines</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl list</code></pre></div>
+
+<pre><code class="language-bash">machinectl list
+
+</code></pre>
+
 <p>Output:</p>
 
 <pre><code>MACHINE CLASS     SERVICE
@@ -224,9 +229,15 @@ spotify container nspawn
 </code></pre>
 
 <h3 id="terminate-the-machine">Terminate the machine</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl terminate spotify</code></pre></div>
+
+<pre><code class="language-bash">machinectl terminate spotify
+</code></pre>
+
 <h3 id="get-the-status">Get the status</h3>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl status spotify</code></pre></div>
+
+<pre><code class="language-bash">machinectl status spotify
+</code></pre>
+
 <p>Output:</p>
 
 <pre><code>spotify
@@ -248,8 +259,11 @@ Nov 14 02:13:54 fntlnz systemd[1]: Starting Container spotify.
 <h4 id="pull-images">Pull images</h4>
 
 <p>machinectl can pull images using <code>pull-raw</code>, <code>pull-tar</code> and <code>pull-dkr</code> from remote urls.</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">machinectl pull-raw --verify=no http://ftp.halifax.rwth-aachen.de/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.raw.xz
-systemd-nspawn -M Fedora-Cloud-Base-20141203-21</code></pre></div>
+
+<pre><code class="language-bash">machinectl pull-raw --verify=no http://ftp.halifax.rwth-aachen.de/fedora/linux/releases/21/Cloud/Images/x86_64/Fedora-Cloud-Base-20141203-21.x86_64.raw.xz
+systemd-nspawn -M Fedora-Cloud-Base-20141203-21
+</code></pre>
+
 <p>for more, see <a href="https://www.freedesktop.org/software/systemd/man/machinectl.html">machinectl</a></p>
 
 <h1 id="what-s-next">What&rsquo;s next</h1>
@@ -278,9 +292,41 @@ systemd-nspawn -M Fedora-Cloud-Base-20141203-21</code></pre></div>
 <p>Now let&rsquo;s listen some music!</p>
 
 <p><img src="/systemd-nspawn/video.gif" alt="systemd nspawn spotify" /></p>
-</section>
-</article>
 
-</body>
+</main>
+
+    <footer>
+      
+<script>
+(function() {
+  function center_el(tagName) {
+    var tags = document.getElementsByTagName(tagName), i, tag;
+    for (i = 0; i < tags.length; i++) {
+      tag = tags[i];
+      var parent = tag.parentElement;
+      
+      if (parent.childNodes.length === 1) {
+        
+        if (parent.nodeName === 'A') {
+          parent = parent.parentElement;
+          if (parent.childNodes.length != 1) continue;
+        }
+        if (parent.nodeName === 'P') parent.style.textAlign = 'center';
+      }
+    }
+  }
+  var tagNames = ['img', 'embed', 'object'];
+  for (var i = 0; i < tagNames.length; i++) {
+    center_el(tagNames[i]);
+  }
+})();
+</script>
+
+      
+      <hr/>
+      Just remember that you&rsquo;re awesome! :rainbow: | <a href="https://github.com/fntlnz">Github</a> | <a href="https://twitter.com/fntlnz">Twitter</a> | <a href="/downloads/pubkey-B2400EE4.asc">GPG Key</a>
+      
+    </footer>
+  </body>
 </html>
 

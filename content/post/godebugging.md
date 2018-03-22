@@ -13,21 +13,15 @@ when that'll happen you'll need some debugging skills.
 Here I'm putting some flow examples, notes and resources around post-mortem debugging of
 Go programs, including, but not limited to, those running inside a Kubernetes cluster.
 
-&nbsp;
-
 I'm a huge fan of GDB, I used it for almost a decade now and while I remember
 it was a bit clunky and difficult at first but it got better in the years
 and in the meantime I got used to it and it's commands and perks.
-
-&nbsp;
 
 A few years after my first gdb, I saw Delve and had the same feeling: it was clunky,
 and it had nearly anything I needed. Now, after a couple of years Delve seems pretty
 complete and it just works, one thing I really like about Delve is that even
 if the terminal interface is similar to other debuggers (like gdb) has a very
 well done UX, for example:
-
-&nbsp;
 
 This is the current execution point of a program under Delve:
 
@@ -60,16 +54,12 @@ However, one could extend GDB by customizing `.gdbinit` like how the [GDB Dashbo
 
 ![GDB Dashboard Screenshot](/gdb-go/gdb-dashboard.jpg)
 
-&nbsp;
-
 A part from the UX, Delve has several advantages over GDB when debugging Go:
 
 - It works out of the box - (Just Works™)
 - Integrated with major editors: Vim/Nvim, Code, Gogland
 - It has an impressivly well working support for Go concurrency patterns
 - Even post-mortem core dump analysis works just right
-
-&nbsp;
 
 On the other hand, GDB has still some advantages over it:
 
@@ -78,13 +68,9 @@ On the other hand, GDB has still some advantages over it:
 - You can debug Cgo
 - You need to extend your debugging to the Go runtime itself, GDB is your tool
 
-&nbsp;
-
 So, how to say, I'm not very religious about the debugger I use but generally
 when I need to choose Delve or GDB I just go with Delve and then if Delve breaks
 I try with GDB. It's not very scientific but it's a wise way to proceed.
-
-&nbsp;
 
 I will show a few examples:
 
@@ -94,8 +80,6 @@ I will show a few examples:
 - You have a router mounting a mips processor and you want to debug your own DHCP written for it in Go? you know the debugger, true story.
 
 See it? Straightforward!
-
-&nbsp;
 
 # Proceed with the Autopsy
 
@@ -117,7 +101,7 @@ ulimit -c unlimited
 ```
 
 Also, when debugging, you have to remember that the Go runtime can be said
-to trigger certain behavior that can make debuggin easier.
+to trigger certain behavior that can make debugging easier.
 In this case, we are interested to say the Go runtime to trigger a core dump
 by actually doing a segfault instead of just exiting in case of panic.
 
@@ -130,22 +114,13 @@ GOTRACEBACK=crash ./myprogram
 There are also other environment variables and behaviors for *GOTRACEBACK*, if
 you want to discover more take a look [here](https://golang.org/pkg/runtime/#hdr-Environment_Variables).
 
-&nbsp;
-
 Now that your system can core dump you need to restart the program and wait for it
 to crash.
 
-&nbsp;
-
-OR
-
-&nbsp;
+**OR**
 
 You can obtain the core file of a running program using *gcore*,
-see *man gcore* for more info.
-
-
-&nbsp;
+see `man gcore` for more info.
 
 Core files in linux are written with a template
 defined in `/proc/sys/kernel/core_pattern`
@@ -155,14 +130,12 @@ cat /proc/sys/kernel/core_pattern
 |/usr/lib/systemd/systemd-coredump %P %u %g %s %t %c %e
 ```
 
-In my case it is using the *systemd-coredump* program to write files, and I get 
-lz4 compressed files like this 
+In my case it is using the `systemd-coredump` program to write files, and I get 
+lz4 compressed files like this:
 
 ```bash
 /var/lib/systemd/coredump/core.godebugging.1000.a0b55b870a3f443696cf7cb874d7f27b.32124.1515962062000000.lz4
 ```
-
-&nbsp;
 
 # Production just got hot
 
@@ -181,9 +154,6 @@ from Dave Cheney on what the Go build command does, you'll see a few interesting
 
 The good news is that we can analyze a core file with a binary built from
 the same source code, this time without those ldflags.
-
-&nbsp;
-
 
 ## I don't own the code
 
@@ -257,15 +227,10 @@ All this is not very useful unfortunately but in case of problems it can be of h
 
 On the other hand if you own the code your life is just easier.
 
-&nbsp;
-
 In this situation, you'll likely to have an optimized binary in production
 that can't be used for reading the core dump. If this is the case the thing you can do
 is to compile the same source code without the optimizations and then use the debugger
 to read the dump file along with it.
-
-
-&nbsp;
 
 With Delve
 
@@ -291,13 +256,9 @@ dlv core ./godebugging core.1234
    at /usr/lib/go/src/runtime/asm_amd64.s:2337
 ```
 
-&nbsp;
-
 Things are so clear, *bt* is showing that main.go broke at line 34
 leading to a panic, let's see what happened,
 the problem seemed to be at frame 4 (the 4 in the backtrace), so I can print the source of that frame:
-
-&nbsp;
 
 
 ```
@@ -316,9 +277,6 @@ Goroutine 1 frame 4 at /home/fntlnz/go/src/github.com/fntlnz/godebugging/main.go
 
 Wow! That's a panic, I wrote it so that the program would crash if a timeout occurs, well done program.
 
-
-&nbsp;
-
 Now I'm interested to see the state of the *goroutines* at the crash
 
 ```dlv
@@ -333,9 +291,6 @@ Now I'm interested to see the state of the *goroutines* at the crash
 ```
 
 Nice, there where six goroutines, a few ones [parked](https://github.com/golang/go/blob/7c2cf4e779a66b212a3c94f2b20ade1c2c275b84/src/runtime/proc.go#L277) too
-
-
-&nbsp;
 
 Between all those goroutines the one t hat seems interesting is the Goroutine 5,
 let's see what's inside:
@@ -372,11 +327,7 @@ Goroutine 5 frame 4 at /home/fntlnz/go/src/github.com/fntlnz/godebugging/main.go
     26:         ch := make(chan string)
 ```
 
-&nbsp;
-
-When in the Goroutine 5, I can hook in the *frame 4* to see the content of the *messages* and *ch* variables:
-
-&nbsp;
+When in the Goroutine 5, I can hook in the `frame 4` to see the content of the `messages` and `ch` variables:
 
 ```dlv
 (dlv) frame 4 p ch
@@ -418,8 +369,6 @@ chan<- string {
 ]
 ```
 
-&nbsp;
-
 With GDB things are similar, but not that nice:
 
 ```bash
@@ -448,9 +397,7 @@ gdb godebugging core.1234
 #17 0x0000000000000000 in ?? ()
 ```
 
-&nbsp;
-
-A notable point here is *proc.go:1070* so I'll dig into that frame, also it seems that there has been a panic after.
+A notable point here is `proc.go:1070` so I'll dig into that frame, also it seems that there has been a panic after.
 
 ```gdb
 >>> frame 6
@@ -472,8 +419,6 @@ A notable point here is *proc.go:1070* so I'll dig into that frame, also it seem
 What I see is Go code but not mine. Also given that this is a dump of a specific state and not an interactive
 debugging session I cannot control the state so I can't even inspect goroutines in such situation.
 
-&nbsp;
-
 The most useful thing I can do now is to get a full backtrace dump printed to a file
 
 ```gdb
@@ -481,7 +426,7 @@ set logging on
 bt full
 ```
 
-This creates a *gdb.txt* file in the current directory where I see that there's a known variable I can try to print
+This creates a `gdb.txt` file in the current directory where I see that there's a known variable I can try to print
 
 
 ```gdb
@@ -496,19 +441,14 @@ However no luck in getting the right place in my own code where the panic occurr
 In case your crashed program runs in a kubernetes cluster the good news is that you can just get
 your core dumps inside the machines and analyze them like if they weren't containers (unexpected right?).
 
-&nbsp;
-
 The bad news is that in case of a cluster with a number of nodes you will
 need some effort to understand on which node the process crasheed and the way
 to get the core dump may not be all that straightforward.
-
-&nbsp;
-
 
 However the other good news is that there's a pull request [kubernetes/community#1311](https://github.com/kubernetes/community/pull/1311)
 to add a crd just to do that, seems magical!
 
 In the past on this kind of distributed systems (prior to kubernetes), I was used to
-write a program to be used in  */proc/sys/kernel/core/core_pattern* that would write the dumps
+write a program to be used in `/proc/sys/kernel/core/core_pattern` that would write the dumps
 to a shared filesystem, usually NFS.
 

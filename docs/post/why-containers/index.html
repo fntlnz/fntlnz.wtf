@@ -1,58 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-        <link rel="stylesheet" href='/css/style.css?v='>
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://fntlnz.wtf/index.xml">
-        <meta property="og:url" content="https://fntlnz.wtf/post/why-containers/">
-        
-        <meta property="og:type" content="article">
-        <meta property="og:title" content="Why do we have containers &middot; Lorenzo Fontana&#39;s Homepage">
-        
-        <title>Why do we have containers</title>
-        <link rel="apple-touch-icon" sizes="57x57" href='/favicon/apple-icon-57x57.png?v='>
-<link rel="apple-touch-icon" sizes="60x60" href='/favicon/apple-icon-60x60.png?v='>
-<link rel="apple-touch-icon" sizes="72x72" href='/favicon/apple-icon-72x72.png?v='>
-<link rel="apple-touch-icon" sizes="76x76" href='/favicon/apple-icon-76x76.png?v='>
-<link rel="apple-touch-icon" sizes="114x114" href='/favicon/apple-icon-114x114.png?v='>
-<link rel="apple-touch-icon" sizes="120x120" href='/favicon/apple-icon-120x120.png?v='>
-<link rel="apple-touch-icon" sizes="144x144" href='/favicon/apple-icon-144x144.png?v='>
-<link rel="apple-touch-icon" sizes="152x152" href='/favicon/apple-icon-152x152.png?v='>
-<link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-icon-180x180.png?v='>
-<link rel="icon" type="image/png" sizes="192x192" href='/favicon/android-icon-192x192.png?v='>
-<link rel="icon" type="image/png" sizes="32x32" href='/favicon/favicon-32x32.png?v='>
-<link rel="icon" type="image/png" sizes="96x96" href='/favicon/favicon-96x96.png?v='>
-<link rel="icon" type="image/png" sizes="16x16" href='/favicon/favicon-16x16.png?v='>
-<link rel="manifest" href='/favicon/manifest.json'>
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content='/favicon/ms-icon-144x144.png?v='>
-<meta name="theme-color" content="#ffffff">
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Why do we have containers | fntlnz</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <header>
 
-    </head>
-    <body>
-<header class="topBar">
-Lorenzo Fontana&#39;s Homepage
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <nav>
+    <ul>
+      
+      
+      <li class="pull-left ">
+        <a href="https://fntlnz.wtf">/home/fntlnz</a>
+      </li>
+      
+
+      
+      
+      <li class="pull-right">
+        <a href="/index.xml">~/subscribe</a>
+      </li>
+      
+
+    </ul>
+  </nav>
 </header>
- &lharu;
-<a href="/">back to posts list</a>
-<article>
-  <section id="title">
-    <h1>Why do we have containers</h1>
-    <time>Aug 11, 2016</time>
-    <hr>
-  </section>
-  <section id="content"><nav id="TableOfContents">
-<ul>
-<li><a href="#disclaimer">Disclaimer</a></li>
-<li><a href="#introduction">Introduction</a></li>
-<li><a href="#different-types-of-virtualization">Different types of virtualization</a>
-<ul>
-<li><a href="#motivations-for-using-containers">Motivations for using Containers</a></li>
-<li><a href="#in-the-end-why-containers-are-actually-there">In the end, why containers are actually there?</a></li>
-</ul></li>
-</ul>
-</nav> 
+
+  </head>
+
+  <body>
+    <br/>
+
+<div class="article-meta">
+<h1><span class="title">Why do we have containers</span></h1>
+
+<h2 class="date">2016/08/11</h2>
+<p class="terms">
+  
+  
+  
+  
+  
+</p>
+</div>
+
+
+
+<main>
+
 
 <h1 id="disclaimer">Disclaimer</h1>
 
@@ -61,8 +62,7 @@ if you find something that you consider wrong or inexact leave a comment so I ca
 
 <h1 id="introduction">Introduction</h1>
 
-<p>As part of my work at <a href="http://www.kiratech.it/">Kiratech</a> I evangelize people about <a href="https://en.wikipedia.org/wiki/Operating-system-level_virtualization">OS level Virtualization</a>
-and, while talking about Linux Containers, Docker Containers or more in general about the <strong>concept of containers itself</strong> I often (as it should be) encounter doubts and questions like:</p>
+<p>While talking about Linux Containers, Docker Containers or more in general about the <strong>concept of containers itself</strong> I often (as it should be) encounter doubts and questions like:</p>
 
 <ul>
 <li>What is the actual difference between containers and other types of virtualization?</li>
@@ -143,9 +143,41 @@ OS-Level virtualization (aka containers) is just another way of doing virtualiza
 <p>We need containers for being able to work closer to the kernel while executing in a fully isolated environment.
 This specific thing allows us to achieve <strong>higher densities</strong> and run more workload within the same hardware while
 obtaining <strong>faster delivery and scaling</strong> thanks to their nature of high portability.</p>
-</section>
-</article>
 
-</body>
+</main>
+
+    <footer>
+      
+<script>
+(function() {
+  function center_el(tagName) {
+    var tags = document.getElementsByTagName(tagName), i, tag;
+    for (i = 0; i < tags.length; i++) {
+      tag = tags[i];
+      var parent = tag.parentElement;
+      
+      if (parent.childNodes.length === 1) {
+        
+        if (parent.nodeName === 'A') {
+          parent = parent.parentElement;
+          if (parent.childNodes.length != 1) continue;
+        }
+        if (parent.nodeName === 'P') parent.style.textAlign = 'center';
+      }
+    }
+  }
+  var tagNames = ['img', 'embed', 'object'];
+  for (var i = 0; i < tagNames.length; i++) {
+    center_el(tagNames[i]);
+  }
+})();
+</script>
+
+      
+      <hr/>
+      Just remember that you&rsquo;re awesome! :rainbow: | <a href="https://github.com/fntlnz">Github</a> | <a href="https://twitter.com/fntlnz">Twitter</a> | <a href="/downloads/pubkey-B2400EE4.asc">GPG Key</a>
+      
+    </footer>
+  </body>
 </html>
 

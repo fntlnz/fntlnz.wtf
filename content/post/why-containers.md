@@ -14,8 +14,7 @@ if you find something that you consider wrong or inexact leave a comment so I ca
 
 # Introduction
 
-As part of my work at [Kiratech](http://www.kiratech.it/) I evangelize people about [OS level Virtualization](https://en.wikipedia.org/wiki/Operating-system-level_virtualization)
-and, while talking about Linux Containers, Docker Containers or more in general about the **concept of containers itself** I often (as it should be) encounter doubts and questions like:
+While talking about Linux Containers, Docker Containers or more in general about the **concept of containers itself** I often (as it should be) encounter doubts and questions like:
 
 - What is the actual difference between containers and other types of virtualization?
 - How are containers going to make my life better?
