@@ -3,6 +3,7 @@ date        = "2018-01-16T13:03:00+02:00"
 title       = "Post-mortem debugging of Go Programs"
 description = ""
 slug        = "gopostmortem"
+toc         = true
 +++
 
 # Introduction

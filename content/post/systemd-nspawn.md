@@ -3,6 +3,7 @@ date        = "2016-11-14T10:00:22+02:00"
 title       = "Using systemd-nspawn for some containerization needs"
 description = "Personal considerations on the usage of systemd-nspawn for desktop applications and system services"
 slug        = "systemd-nspawn"
+toc         = true
 +++
 
 # First things first
