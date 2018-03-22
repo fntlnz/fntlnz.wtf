@@ -18,7 +18,7 @@ well I never stopped.
 
 ### #noonecares things I like
 
-(you should now skip to the blog section.
+(you should now skip to the blog section.)
 
 - My Girlfriend
 - Cats :cat2: - [heres' a meme](/img/iare.jpg)

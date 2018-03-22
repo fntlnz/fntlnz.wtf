@@ -13,4 +13,4 @@ footnotereturnlinkcontents = "↩"
 
 [params]
     description = "A simple, minimal blog for those who love text."
-    footer = "Just remember that you're awesome! :rainbow: | [Github](https://github.com/fntlnz) | [Twitter](https://twitter.com/fntlnz) | [GPG Key](/downloads/pubkey-B2400EE4.asc)"
+    footer = "Just remember that you're awesome! | [Github](https://github.com/fntlnz) | [Twitter](https://twitter.com/fntlnz) | [GPG Key](/downloads/pubkey-B2400EE4.asc)"
