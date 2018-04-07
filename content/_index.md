@@ -9,12 +9,7 @@ title: Home
 
 Here you are in my personal little place on the internet where I share thoughts, ideas and findings.
 
-I'm a member of the leenux fanclub by night and an SRE at [InfluxData](https://www.influxdata.com/) by day.
-
-I don't remember the exact moment in which I wrote my first line of code but the Wayback Machine dates
-my first website at March 2004, I was eleven and I remember my parents saying "Don't waste your nights at that PC",
-well I never stopped.
-
+I'm a member of the leenux :penguin: fanclub by night and an SRE at [InfluxData](https://www.influxdata.com/) by day.
 
 ### #noonecares things I like
 
