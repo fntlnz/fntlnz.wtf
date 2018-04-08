@@ -4,7 +4,7 @@ title       = "Post-mortem debugging of Go Programs"
 description = ""
 slug        = "gopostmortem"
 toc         = true
-image       = "gdb-go/gdb-dashboard.jpg"
+image       = "/gdb-go/gdb-dashboard.jpg"
 +++
 
 # Introduction
