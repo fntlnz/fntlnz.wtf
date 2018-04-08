@@ -11,4 +11,8 @@
 {{ if .Params.image }}
 <meta property="og:image" content="{{.Site.BaseURL}}{{ .Params.image }}" />
 {{ end }}
+{{ if .Params.description }}
+<meta property="og:description" content="{{ .Params.description }}" />
+{{ end }}
+<meta property="og:url" content="{{ .Permalink }}" />
 {{ end }}
