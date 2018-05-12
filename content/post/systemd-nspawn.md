@@ -171,9 +171,9 @@ Created symlink from /etc/systemd/system/machines.target.wants/systemd-nspawn@ne
 machinectl allows you to list, terminate and show the status of machines.
 
 ### List all the machines
+
 ```bash
 machinectl list
-
 ```
 
 Output:

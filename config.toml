@@ -1,16 +1,11 @@
 baseurl = "https://fntlnz.wtf"
 languageCode = "en-us"
-title = "fntlnz"
-theme = "hugo-classic"
-enableEmoji = true
+title = "Lorenzo Fontana's Homepage"
+theme = "fntlnz"
+paginate = 500
 publishDir = "docs"
-enableGitInfo = true
-footnotereturnlinkcontents = "↩"
 
-[[menu.feed]]
-    name = "Subscribe"
-    url = "/index.xml"
+[taxonomies]
+  category = ""
+  tag = ""
 
-[params]
-    description = "A simple, minimal blog for those who love text."
-    footer = "Just remember that you're awesome! | [Github](https://github.com/fntlnz) | [Twitter](https://twitter.com/fntlnz) | [GPG Key](/downloads/pubkey-B2400EE4.asc)"

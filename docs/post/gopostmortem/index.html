@@ -1,86 +1,47 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Post-mortem debugging of Go Programs | fntlnz</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/fonts.css" />
-    
-<meta property="og:type" content="article">
-<meta property="og:title" content="Post-mortem debugging of Go Programs &middot; fntlnz">
-
-<meta property="og:image" content="https://fntlnz.wtf/gdb-go/gdb-dashboard.jpg" />
-
-
-<meta property="og:description" content="Here I&#39;m putting some flow examples, notes and resources around post-mortem debugging of Go programs, including, but not limited to, those running inside a Kubernetes cluster" />
-
-<meta property="og:url" content="https://fntlnz.wtf/post/gopostmortem/" />
-
-
-    <header>
-
-  
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-  <nav>
-    <ul>
-      
-      
-      <li class="pull-left ">
-        <a href="https://fntlnz.wtf">/home/fntlnz</a>
-      </li>
-      
-
-      
-      
-      <li class="pull-right">
-        <a href="/index.xml">~/subscribe</a>
-      </li>
-      
-
-    </ul>
-  </nav>
-</header>
-
-    <link rel="apple-touch-icon" sizes="57x57" href='/favicon/apple-icon-57x57.png?v='>
-<link rel="apple-touch-icon" sizes="60x60" href='/favicon/apple-icon-60x60.png?v='>
-<link rel="apple-touch-icon" sizes="72x72" href='/favicon/apple-icon-72x72.png?v='>
-<link rel="apple-touch-icon" sizes="76x76" href='/favicon/apple-icon-76x76.png?v='>
-<link rel="apple-touch-icon" sizes="114x114" href='/favicon/apple-icon-114x114.png?v='>
-<link rel="apple-touch-icon" sizes="120x120" href='/favicon/apple-icon-120x120.png?v='>
-<link rel="apple-touch-icon" sizes="144x144" href='/favicon/apple-icon-144x144.png?v='>
-<link rel="apple-touch-icon" sizes="152x152" href='/favicon/apple-icon-152x152.png?v='>
-<link rel="apple-touch-icon" sizes="180x180" href='/favicon/apple-icon-180x180.png?v='>
-<link rel="icon" type="image/png" sizes="192x192" href='/favicon/android-icon-192x192.png?v='>
-<link rel="icon" type="image/png" sizes="32x32" href='/favicon/favicon-32x32.png?v='>
-<link rel="icon" type="image/png" sizes="96x96" href='/favicon/favicon-96x96.png?v='>
-<link rel="icon" type="image/png" sizes="16x16" href='/favicon/favicon-16x16.png?v='>
-<link rel="manifest" href='/favicon/manifest.json'>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+        <link rel="stylesheet" href="/css/style.css?v=3">
+        <link rel="stylesheet" href="/css/chroma.css?v=3">
+        <link rel="alternate" type="application/rss+xml" title="RSS" href="https://fntlnz.wtf/index.xml">
+        <meta property="og:url" content="https://fntlnz.wtf">
+        <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png?v=2">
+<link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png?v=2">
+<link rel="apple-touch-icon" sizes="72x72" href="/favicon/apple-icon-72x72.png?v=2">
+<link rel="apple-touch-icon" sizes="76x76" href="/favicon/apple-icon-76x76.png?v=2">
+<link rel="apple-touch-icon" sizes="114x114" href="/favicon/apple-icon-114x114.png?v=2">
+<link rel="apple-touch-icon" sizes="120x120" href="/favicon/apple-icon-120x120.png?v=2">
+<link rel="apple-touch-icon" sizes="144x144" href="/favicon/apple-icon-144x144.png?v=2">
+<link rel="apple-touch-icon" sizes="152x152" href="/favicon/apple-icon-152x152.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-icon-180x180.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-icon-192x192.png?v=2">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png?v=2">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png?v=2">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png?v=2">
+<link rel="manifest" href="/favicon/manifest.json">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content='/favicon/ms-icon-144x144.png?v='>
+<meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png?v=2">
 <meta name="theme-color" content="#ffffff">
-
-  </head>
-  <body>
-    <br/>
-
-<div class="article-meta">
-<h1><span class="title">Post-mortem debugging of Go Programs</span></h1>
-
-<h2 class="date">2018/01/16</h2>
-<p class="terms">
-  
-  
-  
-  
-  
-</p>
-</div>
-
-
-<nav id="TableOfContents">
+        
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Post-mortem debugging of Go Programs &middot; Lorenzo Fontana&#39;s Homepage">
+        
+        <title>Post-mortem debugging of Go Programs</title>
+    </head>
+    <body>
+<header class="topBar">
+Lorenzo Fontana&#39;s Homepage
+</header>
+ &lharu; <a href="/">back to posts list</a>
+<article>
+  <section id="title">
+    <h1>Post-mortem debugging of Go Programs</h1>
+    <time>Jan 16, 2018 - 11 min read</time>
+    
+    <hr>
+      <nav id="TableOfContents">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#proceed-with-the-autopsy">Proceed with the Autopsy</a></li>
@@ -92,14 +53,14 @@
 </ul></li>
 </ul>
 </nav>
-
-
-<main>
-
+    
+  </section>
+    <hr>
+  <section id="content">
 
 <h1 id="introduction">Introduction</h1>
 
-<p>Even if you write tests and those tests are perfect, effective and everything
+<p>Even <code>if</code> you write tests and those tests are perfect, effective and everything
 you will face production issues. Sometimes everything will just crash and
 when that&rsquo;ll happen you&rsquo;ll need some debugging skills.
 Here I&rsquo;m putting some flow examples, notes and resources around post-mortem debugging of
@@ -201,12 +162,12 @@ to trigger certain behavior that can make debugging easier.
 In this case, we are interested to say the Go runtime to trigger a core dump
 by actually doing a segfault instead of just exiting in case of panic.</p>
 
-<p>To do so, when we run the Go program we need to run it with <em>GOTRACEBACK=crash</em> like this.</p>
+<p>To do so, when we run the Go program we need to run it with <code>GOTRACEBACK=crash</code> like this.</p>
 
 <pre><code class="language-bash">GOTRACEBACK=crash ./myprogram
 </code></pre>
 
-<p>There are also other environment variables and behaviors for <em>GOTRACEBACK</em>, if
+<p>There are also other environment variables and behaviors for <code>GOTRACEBACK</code>, if
 you want to discover more take a look <a href="https://golang.org/pkg/runtime/#hdr-Environment_Variables">here</a>.</p>
 
 <p>Now that your system can core dump you need to restart the program and wait for it
@@ -214,7 +175,7 @@ to crash.</p>
 
 <p><strong>OR</strong></p>
 
-<p>You can obtain the core file of a running program using <em>gcore</em>,
+<p>You can obtain the core file of a running program using <code>gcore</code>,
 see <code>man gcore</code> for more info.</p>
 
 <p>Core files in linux are written with a template
@@ -305,7 +266,7 @@ Program terminated with signal SIGABRT, Aborted.
 0x455674:    mov    %rbp,0x10(%rsp)
 </code></pre>
 
-<p>The first thing I did was to use the <em>bt</em> command to analyze how the backtrace looks
+<p>The first thing I did was to use the <code>bt</code> command to analyze how the backtrace looks
 like, and then I showed the next 30 lines of Assembly with:</p>
 
 <pre><code class="language-gdb">x/30i $pc
@@ -344,7 +305,7 @@ to read the dump file along with it.</p>
    at /usr/lib/go/src/runtime/asm_amd64.s:2337
 </code></pre>
 
-<p>Things are so clear, <em>bt</em> is showing that main.go broke at line 34
+<p>Things are so clear, <code>bt</code> is showing that main.go broke at line 34
 leading to a panic, let&rsquo;s see what happened,
 the problem seemed to be at frame 4 (the 4 in the backtrace), so I can print the source of that frame:</p>
 
@@ -363,7 +324,7 @@ Goroutine 1 frame 4 at /home/fntlnz/go/src/github.com/fntlnz/godebugging/main.go
 
 <p>Wow! That&rsquo;s a panic, I wrote it so that the program would crash if a timeout occurs, well done program.</p>
 
-<p>Now I&rsquo;m interested to see the state of the <em>goroutines</em> at the crash</p>
+<p>Now I&rsquo;m interested to see the state of the <code>goroutines</code> at the crash</p>
 
 <pre><code class="language-dlv">(dlv) goroutines
 [6 goroutines]
@@ -527,41 +488,9 @@ to add a crd just to do that, seems magical!</p>
 <p>In the past on this kind of distributed systems (prior to kubernetes), I was used to
 write a program to be used in <code>/proc/sys/kernel/core/core_pattern</code> that would write the dumps
 to a shared filesystem, usually NFS.</p>
+</section>
+</article>
 
-</main>
-
-    <footer>
-      
-<script>
-(function() {
-  function center_el(tagName) {
-    var tags = document.getElementsByTagName(tagName), i, tag;
-    for (i = 0; i < tags.length; i++) {
-      tag = tags[i];
-      var parent = tag.parentElement;
-      
-      if (parent.childNodes.length === 1) {
-        
-        if (parent.nodeName === 'A') {
-          parent = parent.parentElement;
-          if (parent.childNodes.length != 1) continue;
-        }
-        if (parent.nodeName === 'P') parent.style.textAlign = 'center';
-      }
-    }
-  }
-  var tagNames = ['img', 'embed', 'object'];
-  for (var i = 0; i < tagNames.length; i++) {
-    center_el(tagNames[i]);
-  }
-})();
-</script>
-
-      
-      <hr/>
-      Just remember that you&rsquo;re awesome! | <a href="https://github.com/fntlnz">Github</a> | <a href="https://twitter.com/fntlnz">Twitter</a> | <a href="/downloads/pubkey-B2400EE4.asc">GPG Key</a>
-      
-    </footer>
-  </body>
+</body>
 </html>
 

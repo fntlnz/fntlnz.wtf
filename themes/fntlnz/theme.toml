@@ -1,0 +1,5 @@
+name = "fntlnz"
+description = "fntlnz blog theme"
+PygmentsCodeFences = true
+PygmentsOptions = ""
+PygmentsStyle = "bw"

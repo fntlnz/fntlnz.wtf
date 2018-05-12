@@ -9,7 +9,7 @@ image       = "/gdb-go/gdb-dashboard.jpg"
 
 # Introduction
 
-Even if you write tests and those tests are perfect, effective and everything
+Even `if` you write tests and those tests are perfect, effective and everything
 you will face production issues. Sometimes everything will just crash and
 when that'll happen you'll need some debugging skills.
 Here I'm putting some flow examples, notes and resources around post-mortem debugging of
@@ -107,13 +107,13 @@ to trigger certain behavior that can make debugging easier.
 In this case, we are interested to say the Go runtime to trigger a core dump
 by actually doing a segfault instead of just exiting in case of panic.
 
-To do so, when we run the Go program we need to run it with *GOTRACEBACK=crash* like this.
+To do so, when we run the Go program we need to run it with `GOTRACEBACK=crash` like this.
 
 ```bash
 GOTRACEBACK=crash ./myprogram
 ```
 
-There are also other environment variables and behaviors for *GOTRACEBACK*, if
+There are also other environment variables and behaviors for `GOTRACEBACK`, if
 you want to discover more take a look [here](https://golang.org/pkg/runtime/#hdr-Environment_Variables).
 
 Now that your system can core dump you need to restart the program and wait for it
@@ -121,7 +121,7 @@ to crash.
 
 **OR**
 
-You can obtain the core file of a running program using *gcore*,
+You can obtain the core file of a running program using `gcore`,
 see `man gcore` for more info.
 
 Core files in linux are written with a template
@@ -216,7 +216,7 @@ Program terminated with signal SIGABRT, Aborted.
 0x455674:    mov    %rbp,0x10(%rsp)
 ```
 
-The first thing I did was to use the *bt* command to analyze how the backtrace looks
+The first thing I did was to use the `bt` command to analyze how the backtrace looks
 like, and then I showed the next 30 lines of Assembly with:
 
 ```gdb
@@ -258,7 +258,7 @@ dlv core ./godebugging core.1234
    at /usr/lib/go/src/runtime/asm_amd64.s:2337
 ```
 
-Things are so clear, *bt* is showing that main.go broke at line 34
+Things are so clear, `bt` is showing that main.go broke at line 34
 leading to a panic, let's see what happened,
 the problem seemed to be at frame 4 (the 4 in the backtrace), so I can print the source of that frame:
 
@@ -279,7 +279,7 @@ Goroutine 1 frame 4 at /home/fntlnz/go/src/github.com/fntlnz/godebugging/main.go
 
 Wow! That's a panic, I wrote it so that the program would crash if a timeout occurs, well done program.
 
-Now I'm interested to see the state of the *goroutines* at the crash
+Now I'm interested to see the state of the `goroutines` at the crash
 
 ```dlv
 (dlv) goroutines
