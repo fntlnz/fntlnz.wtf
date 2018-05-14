@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-        <link rel="stylesheet" href="/css/style.css?v=3">
-        <link rel="stylesheet" href="/css/chroma.css?v=3">
-        <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ .Site.BaseURL }}/index.xml">
-        <meta property="og:url" content="{{ .Site.BaseURL }}">
-        {{ partial "favicon.html" . }}
-        {{ if eq .URL "/" }}
-        <meta property="og:type" content="website">
-        {{ range first 1 .Data.Pages }}
-        <meta property="og:title" content="{{ .Site.Title }}">
-        {{ end }}
-        {{ else if eq .URL "/post/" }}
-        <meta property="og:title" content="All Entries &middot; {{ .Site.Title }}">
-        {{ else if in .URL "/tags/" }}
-        <meta property="og:title" content="{{ .Site.Title }}">
-        {{ else }}
-        <meta property="og:type" content="article">
-        <meta property="og:title" content="{{ .Title }} &middot; {{ .Site.Title }}">
-        {{ end }}
-        <title>{{ if eq .URL "/" }}{{ .Site.Title }}{{ else if eq .URL "/post/" }}All Entries &middot; {{ .Site.Title }}{{ else if in .URL "/tags/" }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}</title>
-    </head>
-    <body>
-<header class="topBar">
-{{ .Site.Title }}
-</header>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel="stylesheet" href='/css/style.css'>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ .Site.BaseURL }}/index.xml">
+    <meta property="og:url" content="{{ .Permalink }}">
+    {{ if eq .URL "/" }}
+    <meta property="og:type" content="website">
+    {{ range first 1 .Data.Pages }}
+    <meta property="og:title" content="{{ .Site.Title }}">
+    {{ end }}
+    {{ else if eq .URL "/post/" }}
+    <meta property="og:title" content="All Entries &middot; {{ .Site.Title }}">
+    {{ else if in .URL "/tags/" }}
+    <meta property="og:title" content="{{ .Site.Title }}">
+    {{ else }}
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ .Title }} - {{ .Site.Title }}">
+    {{ if .Params.image }}<meta property="og:image" content="{{.Site.BaseURL}}{{ .Params.image }}" />{{ end }}
+    {{ if .Params.description }}<meta property="og:description" content="{{ .Params.description }}" />{{ end }}
+    {{ end }}
+    <title>{{ if eq .URL "/" }}{{ .Site.Title }}{{ else if eq .URL "/post/" }}All Entries &middot; {{ .Site.Title }}{{ else if in .URL "/tags/" }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}</title>
+{{ partial "favicon.html" . }}
+  </head>
+  <body>
+    <header class="topBar">
+      {{ .Site.Title }}
+    </header>

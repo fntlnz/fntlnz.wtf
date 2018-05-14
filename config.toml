@@ -4,6 +4,7 @@ title = "Lorenzo Fontana's Homepage"
 theme = "fntlnz"
 paginate = 500
 publishDir = "docs"
+disableKinds = ["section", "taxonomy", "taxonomyTerm", "404"]
 
 [taxonomies]
   category = ""
