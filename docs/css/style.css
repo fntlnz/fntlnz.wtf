@@ -102,6 +102,10 @@ strong {
   color: rgb(36, 35, 35);
 }
 
+section.list ul {
+  list-style-type: none;
+}
+
 li.postExcerpt time {
   color: #666666;
   margin-right: 2em;
@@ -268,7 +272,7 @@ blockquote p {
 
 /* Lists */
 ul {
-  list-style-type: none;
+  list-style-type: disc;
   list-style-position: outside;
 }
 
