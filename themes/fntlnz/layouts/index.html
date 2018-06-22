@@ -19,6 +19,7 @@
       <li class="postExcerpt">
         <a href='{{ .Permalink }}'>{{ .Title }}</a> 
         <time>{{ .Date.Format "Jan 2, 2006" }}</time>
+        <p>{{ .Description }}</p>
       </li>
       {{ end }}
     </ul>

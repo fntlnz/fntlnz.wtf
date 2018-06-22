@@ -8,7 +8,7 @@
     <updated>Tue, 16 Jan 2018 13:03:00 &#43;0200</updated>
     
     <item>
-      <title>Post-mortem debugging of Go Programs</title>
+      <title>Go Post-mortem</title>
       <link>https://fntlnz.wtf/post/gopostmortem/</link>
       <pubDate>Tue, 16 Jan 2018 13:03:00 &#43;0200</pubDate>
       <author>Lorenzo Fontana</author>
@@ -449,7 +449,7 @@ to a shared filesystem, usually NFS.&lt;/p&gt;
     </item>
     
     <item>
-      <title>Using systemd-nspawn for some containerization needs</title>
+      <title>How I use systemd-nspawn</title>
       <link>https://fntlnz.wtf/post/systemd-nspawn/</link>
       <pubDate>Mon, 14 Nov 2016 10:00:22 &#43;0200</pubDate>
       <author>Lorenzo Fontana</author>

@@ -1,6 +1,6 @@
 +++
 date        = "2018-01-16T13:03:00+02:00"
-title       = "Post-mortem debugging of Go Programs"
+title       = "Go Post-mortem"
 description = "Here I'm putting some flow examples, notes and resources around post-mortem debugging of Go programs, including, but not limited to, those running inside a Kubernetes cluster"
 slug        = "gopostmortem"
 image       = "/gdb-go/gdb-dashboard.jpg"
