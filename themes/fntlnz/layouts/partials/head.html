@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <link rel="stylesheet" href='/css/style.css'>
     <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ .Site.BaseURL }}/index.xml">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet"> 
     <meta property="og:url" content="{{ .Permalink }}">
     {{ if eq .URL "/" }}
     <meta property="og:type" content="website">
@@ -25,6 +26,3 @@
 {{ partial "favicon.html" . }}
   </head>
   <body>
-    <header class="topBar">
-      {{ .Site.Title }}
-    </header>

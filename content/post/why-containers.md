@@ -5,12 +5,10 @@ description = "Speculations on why we do have containers"
 slug        = "why-containers"
 +++
 
-
 # Disclaimer
 
 This post reflects my own view of the whole world of virtualization, I summed up here my thoughts but please
 if you find something that you consider wrong or inexact leave a comment so I can learn by you and improve myself.
-
 
 # Introduction
 

@@ -1,18 +1,19 @@
 {{ partial "head.html" . }}
 
+<header class="topBar">
+    {{ .Site.Title }}
+</header>
 <section id="main">
   <section class="lorenzo-pic">
-    <img src="/img/headshot.png" />
-    <h2>fntlnz</h2>
     <ul>
-      <li><a href="https://github.com/fntlnz">github</a></li>
-      <li><a href="https://twitter.com/fntlnz">twitter</a></li>
-      <li><a href="/downloads/pubkey-B2400EE4.asc">gpg key</a></li>
+      <li>Find me on: </li>
+      <li><a href="https://github.com/fntlnz">Github</a></li>
+      <li><a href="https://twitter.com/fntlnz">Twitter</a></li>
+      <li><a href="/downloads/pubkey-B2400EE4.asc">GPG key</a></li>
       <li><a href="/index.xml">RSS</a></li>
     </ul>
   </section>
   <section class="list">
-    <h2>Blog Posts</h2>
     <ul>
       {{ range where .Data.Pages "Section" "post"}}
       <li class="postExcerpt">
@@ -21,46 +22,6 @@
       </li>
       {{ end }}
     </ul>
-
-    <h2>Other Publications</h2>
-    <ul>
-      {{ range where .Data.Pages "Section" "link"}}
-      <li class="postExcerpt">
-        <a href='{{ echoParam .Params "link" }}'>{{ .Title }}</a>
-        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
-      </li>
-      {{ end }}
-    </ul>
-
-    {{ if where .Data.Pages.ByDate "Section" "talk-upcoming"  | len }}
-    <h2>Upcoming Talks</h2>
-    <ul>
-      {{ range where .Data.Pages.ByDate "Section" "talk-upcoming" }}
-      <li class="postExcerpt">
-        <a href="{{ echoParam .Params "details" }}">{{ echoParam .Params "where" }}</a>
-        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
-        <br />
-        <em>{{ .Title }}</em>
-      </li>
-      {{ end }}
-    </ul>
-    {{ end }}
-
-    <h2>Talks</h2>
-    <ul>
-      {{ range where .Data.Pages "Section" "talk"}}
-      <li class="postExcerpt">
-        <a href="{{ echoParam .Params "details" }}">{{ echoParam .Params "where" }}</a>
-        <time>{{ .Date.Format "Jan 2, 2006" }}</time>
-        <br />
-        <em>{{ .Title }}</em> 
-        {{ if index .Params "slide" }}- <a href="{{ echoParam .Params "slide" }}">slides</a>{{ end }}
-        {{ if index .Params "video" }}- <a href="{{ echoParam .Params "video" }}">video</a>{{ end }}
-      </li>
-      {{ end }}
-    </ul>
-  </section>
-
 </section>
 
 {{ partial "foot.html" . }}

@@ -59,7 +59,7 @@ body {
   padding-top: 0.5em;
   padding-bottom: 1em;
   max-width: 780px;
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: #111111;
   line-height: 1.58;
   text-rendering: optimizeLegibility !important;
@@ -92,15 +92,21 @@ strong {
   font-weight: bold;
 }
 
-header.topBar {
-  font-size: 1.3em;
-}
 
 /* Index */
+.topBar {
+  font-size: 2.5em;
+  font-weight: 700;
+  letter-spacing: -.015em;
+  font-style: normal;
+  color: rgb(36, 35, 35);
+}
+
 li.postExcerpt time {
   color: #666666;
   margin-right: 2em;
 }
+
 
 section.postExcerpt section {
   display: block;
@@ -117,6 +123,44 @@ section.postExcerpt header {
   margin-bottom: 0.4em;
 }
 
+section.lorenzo-pic {
+  margin-right: 2em;
+  float: left;
+  padding-top: 1.2em;
+}
+
+section.lorenzo-pic > img {
+  max-width: 100px;
+}
+
+section.list {
+  max-width: 80%;
+  float: left;
+}
+
+section.lorenzo-pic {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  font-size: 1em;
+  display: block;
+}
+
+section.lorenzo-pic ul {
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+section.lorenzo-pic li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 1em;
+}
+
+section.lorenzo-pic li a {
+  color: #375EAB;
+}
+
 /* Single */
 
 article section#title h1 {
@@ -127,17 +171,23 @@ article section#title h1 {
   color: rgb(36, 35, 35);
 }
 
-
-article > time {
-  color: #242020cc;
-  font-size: 1.1em;
-  padding-top: 1em;
-  right: 1px;
+@media screen and (min-width: 0px) and (max-width: 600px) {
+  .topBar {
+    font-size: 1.4em;
+  }
+  li.postExcerpt time {
+    margin-right: 0.1em;
+    font-size: 0.5em;
+  }
+  section.lorenzo-pic li {
+    padding-right: 0.2em;
+  }
 }
 
-article section#title {
-  margin-top: 1em;
-  margin-bottom: 1.3em;
+
+article > #title > time {
+  color: #375EAB;
+  font-size: 1em;
 }
 
 article section#content {
@@ -161,7 +211,7 @@ article section#content h1 {
   font-style: normal;
   margin-bottom: 0.4em;
   font-weight: 800;
-  margin-top: 1.4em;
+  margin-top: 0.8em;
 }
 
 article section#content h2 {
@@ -169,7 +219,7 @@ article section#content h2 {
   font-style: normal;
   margin-bottom: 0.4em;
   font-weight: 800;
-  margin-top: 1.3em;
+  margin-top: 0.5em;
 }
 
 article section#content h3 {
@@ -177,7 +227,7 @@ article section#content h3 {
   font-style: normal;
   font-weight: 800;
   margin-bottom: 0.4em;
-  margin-top: 1em;
+  margin-top: 0.4em;
 }
 
 article section#content h4 {
@@ -185,7 +235,7 @@ article section#content h4 {
   font-style: normal;
   font-weight: 800;
   margin-bottom: 0.4em;
-  margin-top: 0.8em;
+  margin-top: 0.3em;
 }
 
 /* Quotes */
@@ -249,53 +299,13 @@ hr {
   background-color: #e6e9ea;
 }
 
-section.lorenzo-pic {
-  margin-right: 2em;
-  float: left;
-  padding-top: 1.2em;
-}
-
-section.lorenzo-pic > img {
-  max-width: 100px;
-}
-
 section.list {
-  max-width: 80%;
-  float: left;
+  max-width: 100%;
+  margin-top: 1.2em;
 }
 
-@media screen and (min-width: 0px) and (max-width: 600px) {
-  section.lorenzo-pic {
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    font-size: 0.8em;
-    display: block;
-  }
-  section.lorenzo-pic > h2 {
-    display: none;
-  }
-  section.lorenzo-pic ul {
-    width: 100%;
-    margin: 0;
-    overflow: hidden;
-  }
-  section.lorenzo-pic li {
-    display: inline;
-    list-style-type: none;
-    padding-right: 1em;
-  }
-  section.lorenzo-pic > img{
-    display: none;
-  }
-
-  li.postExcerpt time {
-    margin-right: 0.1em;
-  }
-
-  section.list {
-    max-width: 100%;
-  }
+section#main {
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 section#main h2 {
@@ -307,7 +317,7 @@ p > code {
   padding: .2em;
   margin: 0;
   font-size: 85%;
-  background-color: rgba(27,31,35,.05);
+  background-color: #FFD;
   border-radius: 3px;
   font-family: "inconsolata",Menlo,Monaco,"Courier New",monospace;
 }
@@ -321,10 +331,10 @@ pre {
   padding: 15px;
 
   border: 1px solid #ddd;
-box-shadow: 5px 5px 5px #eee;
-background: #f8f8f8;
-padding: 1em;
-overflow-x: auto;
+  box-shadow: 5px 5px 5px #eee;
+  background: #FFD;
+  padding: 1em;
+  overflow-x: auto;
 }
 
 article p {
