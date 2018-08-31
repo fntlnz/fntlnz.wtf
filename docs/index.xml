@@ -66,7 +66,7 @@ well done UX, for example:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;It works out of the box - (Just Works™)&lt;/li&gt;
-&lt;li&gt;Integrated with major editors: Vim/Nvim, Code, Gogland&lt;/li&gt;
+&lt;li&gt;Integrated with major editors: Vim/Nvim, Code, GoLand&lt;/li&gt;
 &lt;li&gt;It has an impressivly well working support for Go concurrency patterns&lt;/li&gt;
 &lt;li&gt;Even post-mortem core dump analysis works just right&lt;/li&gt;
 &lt;/ul&gt;

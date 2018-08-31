@@ -58,7 +58,7 @@ However, one could extend GDB by customizing `.gdbinit` like how the [GDB Dashbo
 A part from the UX, Delve has several advantages over GDB when debugging Go:
 
 - It works out of the box - (Just Works™)
-- Integrated with major editors: Vim/Nvim, Code, Gogland
+- Integrated with major editors: Vim/Nvim, Code, GoLand
 - It has an impressivly well working support for Go concurrency patterns
 - Even post-mortem core dump analysis works just right
 
