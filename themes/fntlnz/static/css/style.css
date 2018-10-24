@@ -59,7 +59,7 @@ body {
   padding-top: 0.5em;
   padding-bottom: 1em;
   max-width: 780px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Playfair Display', serif;
   color: #111111;
   line-height: 1.58;
   text-rendering: optimizeLegibility !important;
@@ -69,6 +69,15 @@ body {
 
 h1 {
   line-height: 1.10;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+h2 {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+h3 {
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -100,6 +109,7 @@ strong {
   letter-spacing: -.015em;
   font-style: normal;
   color: rgb(36, 35, 35);
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 section.list ul {
@@ -179,16 +189,19 @@ section.lorenzo-pic li a {
   letter-spacing: -.015em;
   font-style: normal;
   color: rgb(36, 35, 35);
+  font-family: 'Roboto Condensed', sans-serif;
 }
+
 
 
 article section#title h1 {
-  font-size: 2.5em;
+  font-size: 2.3em;
   font-weight: 700;
   letter-spacing: -.015em;
   font-style: normal;
-  color: rgb(36, 35, 35);
+  color: rgb(36, 35, 35); 
 }
+
 
 @media screen and (min-width: 0px) and (max-width: 600px) {
   .topBar {
@@ -207,11 +220,26 @@ article section#title h1 {
 article > #title > time {
   color: #375EAB;
   font-size: 1em;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 article section#content {
-  line-height: 1.7em;
-  font-size: 1em;
+  line-height: 33px;
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: -0.0666667px;
+  margin-top: 10px;
+  text-rendering: optimizeLegibility;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  overflow-wrap: break-word;
+  font-feature-settings: "liga"
+}
+
+@media only screen and (max-device-width: 480px) {
+  article section#content {
+    line-height: 28px;
+    font-size: 18px;
+  }
 }
 
 article section#content ul {
@@ -226,7 +254,7 @@ article section#content > :not(h1):not(h2):not(h3):not(h4):not(ul) {
 }
 
 article section#content h1 {
-  font-size: 1.9em;
+  font-size: 1.4em;
   font-style: normal;
   margin-bottom: 0.4em;
   font-weight: 800;
@@ -234,7 +262,7 @@ article section#content h1 {
 }
 
 article section#content h2 {
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-style: normal;
   margin-bottom: 0.4em;
   font-weight: 800;
