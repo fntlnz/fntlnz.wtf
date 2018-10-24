@@ -5,7 +5,88 @@
     <link>https://fntlnz.wtf/</link>
     <language>en-US</language>
     <author>Lorenzo Fontana</author>
-    <updated>Tue, 16 Jan 2018 13:03:00 &#43;0200</updated>
+    <updated>Wed, 05 Sep 2018 13:03:00 &#43;0200</updated>
+    
+    <item>
+      <title>What I learnt about Kubernetes Controllers</title>
+      <link>https://fntlnz.wtf/post/what-i-learnt-about-kubernetes-controller/</link>
+      <pubDate>Wed, 05 Sep 2018 13:03:00 &#43;0200</pubDate>
+      <author>Lorenzo Fontana</author>
+      <guid>https://fntlnz.wtf/post/what-i-learnt-about-kubernetes-controller/</guid>
+      <description>&lt;p&gt;If you are a Kubernetes Controller you know that your main duty is to react to changes to the world’s desired state and actual state to do whatever you can to update the latter so that it matches the former.&lt;/p&gt;
+
+&lt;p&gt;When I think about my early steps with Kubernetes two things comes to mind related to Controllers:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;That everyone used the &lt;code&gt;ReplicationController&lt;/code&gt; because we didn’t have &lt;code&gt;Deployment&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;The hard times to have the controller manager working in my clusters.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Said that, I was sure I knew everything about controllers myself but just realized I never had the opportunity to learn what they actually do underneath until recently when I had a peak of interest after opening issue &lt;a href=&#34;https://github.com/kubernetes/kubernetes/issues/67342&#34;&gt;#67342&lt;/a&gt; titled “Storage: devicePath is empty while WaitForAttach in StatefulSets”.&lt;/p&gt;
+
+&lt;p&gt;While trying to reproduce, I encountered a set of call to functions that were happening through some files named with very explanatory names:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;actual_state_of_world.go:616 -&amp;gt;
+  reconciler.go:238 -&amp;gt;
+    operation_executor.go:712 -&amp;gt;
+       operation_generator.go:437 -&amp;gt; error on line 496
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This looked very similar to a definition I found in the &lt;em&gt;&amp;ldquo;Standardized Glossary&amp;rdquo;&lt;/em&gt; here.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A control loop that watches the shared state of the cluster through the apiserver and makes changes attempting to move the current state towards the desired state.
+Examples of controllers that ship with Kubernetes today are the replication controller, endpoints controller, namespace controller, and serviceaccounts controller.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Nice so the &lt;a href=&#34;https://github.com/kubernetes/kubernetes/blob/6cc7b1cd3aac5c9abd6fc1416b16f9c141b6ff14/pkg/kubelet/volumemanager/volume_manager.go#L98&#34;&gt;&lt;code&gt;VolumeManager&lt;/code&gt;&lt;/a&gt; is not really a controller but conceptually it behaves in a very similar way since it has a loop, a reconciler, a desired state and an actual state.&lt;/p&gt;
+
+&lt;p&gt;At this point I started looking at all the projects both private and public I touched and among the public ones I recognized a very interesting pattern they all had a &lt;code&gt;cache.ListWatch&lt;/code&gt; and a &lt;code&gt;cache.SharedInformer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The interesting part was that most of them also had a &lt;code&gt;workqueue.Interface&lt;/code&gt; like the &lt;a href=&#34;https://github.com/coreos/etcd-operator/blob/c8f63d508266990a4d20718d94363c30e75e6282/pkg/controller/backup-operator/controller.go#L37&#34;&gt;etcd operator controller&lt;/a&gt;, the &lt;a href=&#34;https://github.com/kubernetes/ingress-nginx/blob/29c5d770688b04d0a8beedf70aebd76990332d56/internal/task/queue.go#L41&#34;&gt;NGINX ingress controller&lt;/a&gt; and the &lt;a href=&#34;https://github.com/openfaas-incubator/openfaas-operator/blob/a928752c5cd0429330c9474b834ea63d29741185/pkg/controller/controller.go#L66&#34;&gt;OpenFaas Operator Controller&lt;/a&gt; and it turns out that they use it because it’s a key component in ensuring that the state is consistent and that all the controller’s instances agree on a shared set of elements to be processed with certain constraints (this looks very close to that Glossary’s definition above!).&lt;/p&gt;
+
+&lt;p&gt;While writing this post I was tempted to write a full length example but I found an already available &lt;a href=&#34;https://github.com/kubernetes/kubernetes/tree/53ee0c86522b1afc1ee64503c73965b89d500db5/staging/src/k8s.io/sample-controller&#34;&gt;exhaustive example&lt;/a&gt; in the kubernetes repo so i will just write and go through the simplest self-contained example I can write.&lt;/p&gt;
+
+&lt;p&gt;Scroll to the end of the controller example to read about it.&lt;/p&gt;
+
+&lt;script src=&#34;https://gist.github.com/fntlnz/65ec4e7273b15e858dda97c0f6f2241b.js&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;The main components of this Controller are:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The Workqueue (I would say, the reconciler or the thing that coordinates the synchronization from the actual state of the world to the desired state of the world)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;syncToStdout&lt;/code&gt;: The logic used to make changes to the actual state of the world&lt;/li&gt;
+&lt;li&gt;The SharedInformer: From the glossary’s definition — A control loop that watches the shared state&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In the SharedInformer I define some handlers to deal with &lt;code&gt;Add&lt;/code&gt;, &lt;code&gt;Delete&lt;/code&gt; and &lt;code&gt;Update&lt;/code&gt; but instead of using them directly I synchronize what they receive into a workqueue with &lt;code&gt;queue.Add&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;AddFunc: func(obj interface{}) {
+   key, err := cache.MetaNamespaceKeyFunc(obj)
+   if err == nil {
+    queue.Add(key)
+   }
+ },
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Workqueue is a structure that allows to queue changes for a specific resource and process them later in multiple workers with the guarantee that there will be no more than one worker working on a specific item at the same moment.
+In fact the elements are processed in &lt;code&gt;runWorker&lt;/code&gt; and multiple workers are started by increasing the &lt;code&gt;threadiness&lt;/code&gt; parameter of the Controller’s Run method.&lt;/p&gt;
+
+&lt;p&gt;In this way I can end up in &lt;code&gt;syncToStdout&lt;/code&gt; and be sure I will be the only one processing that item while knowing that if the current process gives an error my operation will be repeated up to an hardcoded limit of 5 times as defined in &lt;code&gt;handleErr&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In this situation every item has an exponential backoff rate limit so that failures are not retried immediately but after a calculated amount of time that increases depending on the specified factor (I used DefaultControllerRateLimiter here but it’s very easy to create your own with chosen parameters).&lt;/p&gt;
+
+&lt;p&gt;This rate limit mechanism can be very helpful if we added a call to an external API every time we are informed about a pod. In such case the external API might impose a rate limit to our calls resulting in a failed behavior right now that will be perfectly fine after retrying in a while.&lt;/p&gt;
+
+&lt;p&gt;The Indexer and the Informer are also key components to use the process workqueue elements here because we want to be Informed about events occurring for the resources Kind we are interested in (in this case: Pod) and we want to have an Index where we can lookup for the final Pod object.&lt;/p&gt;
+
+&lt;p&gt;But hey, since we used the SharedInformer so we don’t need to provide an indexer ourselves because our beloved informer already contains one in &lt;code&gt;GetStore()&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Another aspect of using the SharedInformer here is that we are guaranteed that the element we get from its internal indexer is at least as fresh as the event we received.&lt;/p&gt;
+
+&lt;p&gt;Wow, I don’t think I know everything about controllers now but I’m still in the peak of interest so I will probably follow with more stuff on the topic.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Go Post-mortem</title>
@@ -698,7 +779,7 @@ systemd-nspawn -M Fedora-Cloud-Base-20141203-21
     <item>
       <title>Why do we have containers</title>
       <link>https://fntlnz.wtf/post/why-containers/</link>
-      <pubDate>Thu, 11 Aug 2016 15:35:53 CEST</pubDate>
+      <pubDate>Thu, 11 Aug 2016 15:35:53 &#43;0200</pubDate>
       <author>Lorenzo Fontana</author>
       <guid>https://fntlnz.wtf/post/why-containers/</guid>
       <description>
