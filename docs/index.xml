@@ -5,12 +5,12 @@
     <link>https://fntlnz.wtf/</link>
     <language>en-US</language>
     <author>Lorenzo Fontana</author>
-    <updated>Wed, 05 Sep 2018 13:03:00 &#43;0200</updated>
+    <updated>Wed, 05 Sep 2018 13:03:00 CEST</updated>
     
     <item>
       <title>What I learnt about Kubernetes Controllers</title>
       <link>https://fntlnz.wtf/post/what-i-learnt-about-kubernetes-controller/</link>
-      <pubDate>Wed, 05 Sep 2018 13:03:00 &#43;0200</pubDate>
+      <pubDate>Wed, 05 Sep 2018 13:03:00 CEST</pubDate>
       <author>Lorenzo Fontana</author>
       <guid>https://fntlnz.wtf/post/what-i-learnt-about-kubernetes-controller/</guid>
       <description>&lt;p&gt;If you are a Kubernetes Controller you know that your main duty is to react to changes to the world’s desired state and actual state to do whatever you can to update the latter so that it matches the former.&lt;/p&gt;
@@ -779,7 +779,7 @@ systemd-nspawn -M Fedora-Cloud-Base-20141203-21
     <item>
       <title>Why do we have containers</title>
       <link>https://fntlnz.wtf/post/why-containers/</link>
-      <pubDate>Thu, 11 Aug 2016 15:35:53 &#43;0200</pubDate>
+      <pubDate>Thu, 11 Aug 2016 15:35:53 CEST</pubDate>
       <author>Lorenzo Fontana</author>
       <guid>https://fntlnz.wtf/post/why-containers/</guid>
       <description>
