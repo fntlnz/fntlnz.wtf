@@ -5,6 +5,7 @@ theme = "fntlnz"
 paginate = 500
 publishDir = "docs"
 disableKinds = ["section", "taxonomy", "taxonomyTerm", "404"]
+googleAnalytics = "UA-131742080-1"
 
 [taxonomies]
   category = ""

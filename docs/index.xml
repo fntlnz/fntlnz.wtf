@@ -5,7 +5,315 @@
     <link>https://fntlnz.wtf/</link>
     <language>en-US</language>
     <author>Lorenzo Fontana</author>
-    <updated>Wed, 05 Sep 2018 13:03:00 CEST</updated>
+    <updated>Mon, 08 Oct 2018 10:35:53 CEST</updated>
+    
+    <item>
+      <title>Load XDP programs using the ip (iproute2) command</title>
+      <link>https://fntlnz.wtf/post/xdp-ip-iproute/</link>
+      <pubDate>Mon, 08 Oct 2018 10:35:53 CEST</pubDate>
+      <author>Lorenzo Fontana</author>
+      <guid>https://fntlnz.wtf/post/xdp-ip-iproute/</guid>
+      <description>
+
+&lt;h1 id=&#34;load-xdp-programs-using-the-ip-iproute2-command&#34;&gt;Load XDP programs using the ip (iproute2) command&lt;/h1&gt;
+
+&lt;p&gt;&lt;strong&gt;Nota bene:&lt;/strong&gt; If you don’t even know what XDP is, continue reading I will explain it later.&lt;/p&gt;
+
+&lt;h3 id=&#34;my-journey&#34;&gt;My journey&lt;/h3&gt;
+
+&lt;p&gt;Past week I was working on a piece of software that needed the ability to define some custom network paths to route HTTP traffic to multiple destinations based on rules defined on a data store.&lt;/p&gt;
+
+&lt;p&gt;During the first phase, I had the opportunity to go through different ideas, and since my end result &lt;strong&gt;needed to be very fast and able to handle high throughput&lt;/strong&gt;, in my mind there was only one thing “XDP”.
+I already used XDP in the past working at a similar project and my knowledge about eBPF was already good enough that my team agreed this was crazy and thus we decided we should try.&lt;/p&gt;
+
+&lt;p&gt;I’m aware of, and I usually use &lt;a href=&#34;https://github.com/iovisor/bcc&#34;&gt;iovisor/bcc&lt;/a&gt; or &lt;code&gt;libbpf&lt;/code&gt; directly, but this time, I wanted something I can use to validate some ideas first, debug some of that code and only later include my program in a more complete project.&lt;/p&gt;
+
+&lt;p&gt;Even if usually pay a lot of attention to LKML, lwn.net and in general, to relevant projects in this area like &lt;a href=&#34;http://github.com/cilium/cilium&#34;&gt;Cilium&lt;/a&gt; I didn’t know that the &lt;code&gt;ip&lt;/code&gt; command was able to load XDP programs since last week when I was lucky enough to be in &lt;code&gt;man 8 ip-link&lt;/code&gt; looking for something else and I found it! However, using it in that way wasn’t really straightforward (for me) and I had to spend quite some time to put all the pieces together so I decided to write this walkthrough.&lt;/p&gt;
+
+&lt;h3 id=&#34;wait-wait-wait-what-is-xdp&#34;&gt;Wait wait wait.. What is XDP?&lt;/h3&gt;
+
+&lt;p&gt;From the &lt;a href=&#34;https://iovisor.org&#34;&gt;iovisor.org&lt;/a&gt; website:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;XDP or eXpress Data Path provides a high performance, programmable network data path in the Linux kernel as part of the IO Visor Project. XDP provides bare metal packet processing at the lowest point in the software stack which makes it ideal for speed without compromising programmability. Furthermore, new functions can be implemented dynamically with the integrated fast path without kernel modification.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Cool, so XDP is a way to hook our eBPF programs very close to the network stack in order to do packets processing, encapsulation, de-encapsulation, get metrics etc..&lt;/p&gt;
+
+&lt;p&gt;The important thing you need to know is that you can write a program, that gets loaded into the kernel as if it was a module but that can be loaded without modifying it.&lt;/p&gt;
+
+&lt;p&gt;This kind program is called an eBPF program and is compiled to run against a special VM residing in the kernel that verifies and then executes those programs in a way that they cannot harm the running system.&lt;/p&gt;
+
+&lt;p&gt;Note that eBPF programs &lt;strong&gt;are not Turing complete&lt;/strong&gt;, you can’t write loops for example.&lt;/p&gt;
+
+&lt;p&gt;You can look at the diagram below to visualize how the loading of eBPF programs works.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://fntlnz.wtf/xdp-ip/0.png&#34; alt=&#34;eBPF load diagram&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Said all of that, &lt;strong&gt;XDP programs are a specialized kind of eBPF programs&lt;/strong&gt; with the additional capability to go lower level than kernel space by accessing driver space to act directly on packets.&lt;/p&gt;
+
+&lt;p&gt;So if we wanted to visualize the same diagram from an XDP point of view it will look like this.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://fntlnz.wtf/xdp-ip/1.png&#34; alt=&#34;XDP load diagram&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In most cases, however your hardware may not support XDP so you will still be able to load XDP programs using the &lt;code&gt;xdpgeneric&lt;/code&gt; driver so you will still get the improvements of doing this lower level but not as with a network card that supports offloading network processing to it instead of doing that stuff on your CPU(s).&lt;/p&gt;
+
+&lt;p&gt;If this is still very unclear you can read more about &lt;a href=&#34;https://www.iovisor.org/technology/xdp&#34;&gt;XDP here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&#34;what-can-i-do-with-xdp&#34;&gt;What can I do with XDP?&lt;/h3&gt;
+
+&lt;p&gt;This depends on how much imagination you have, some examples can be:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Monitoring of the network packet flow by populating a map back to the userspace, look at &lt;a href=&#34;https://github.com/iovisor/gobpf/blob/master/examples/bcc/bash_readline/bash_readline.go&#34;&gt;this example&lt;/a&gt; if you need inspiration;&lt;/li&gt;
+&lt;li&gt;Writing your own custom ingress/egress firewall like in the examples here;&lt;/li&gt;
+&lt;li&gt;Rewrite packet destinations, packets re-routing;&lt;/li&gt;
+&lt;li&gt;Packet inspection, security tools based on packets flowing;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&#34;let-s-try-to-load-a-program&#34;&gt;Let’s try to load a program.&lt;/h3&gt;
+
+&lt;h4 id=&#34;requirements&#34;&gt;Requirements:&lt;/h4&gt;
+
+&lt;p&gt;You will need a Linux machine with Kernel &amp;gt; 4.8 with clang (&lt;a href=&#34;http://releases.llvm.org/3.7.0/docs/ReleaseNotes.html#bpf-compiler-collection-bcc&#34;&gt;llvm ≥ 3.7&lt;/a&gt;) , iproute2 and docker installed. 
+Docker &lt;strong&gt;is not&lt;/strong&gt; needed to run XDP programs but it is used here because of three reasons:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Docker by default creates bridged network interfaces on the host and on the container when you create a new container. Sick! I can point my XDP program to one of the bridged interfaces on the host.&lt;/li&gt;
+&lt;li&gt;Since it creates network namespaces, I can access them again using the &lt;code&gt;ip&lt;/code&gt; command, since we are talking about that command here, this is a bonus for this post for me.&lt;/li&gt;
+&lt;li&gt;I can run a web server featuring cats, the real force that powers the internet, and then I can then block traffic using XDP without asking you to compile, install or run anything else.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&#34;step-0-create-a-docker-container-that-can-accept-some-http-traffic&#34;&gt;&lt;strong&gt;Step 0:&lt;/strong&gt; Create a docker container that can accept some HTTP traffic&lt;/h4&gt;
+
+&lt;p&gt;So, let’s run caturday, we are not exposing the 8080 port for a reason!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# docker run --name httptest -d fntlnz/caturday
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;step-1-discover-the-ip-address-and-network-interface-for-httptest&#34;&gt;&lt;strong&gt;Step 1&lt;/strong&gt;: Discover the ip address and network interface for &lt;code&gt;httptest&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;Obtain the network namespace file descriptor from docker&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# sandkey=$(docker inspect httptest -f &amp;quot;{{.NetworkSettings.SandboxKey}}&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Prepare the network namespace to be inspected with the &lt;code&gt;ip&lt;/code&gt; command so that we can look at its network interfaces without using &lt;code&gt;docker exec&lt;/code&gt; .This also allows us to use any program we have in our root mount namespace against the container’s network. This is needed because the image we used &lt;code&gt;fntlnz/caturday&lt;/code&gt; does not contain &lt;code&gt;iproute2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# mkdir -p /var/run/netns
+# ln -s $sandkey /var/run/netns/httpserver
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Don&amp;rsquo;t worry too much about that symlink, it will go away at next reboot. Now, let’s show the interfaces inside the container:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ip netns exec httpserver ip a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Output&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00    inet 127.0.0.1/8 scope host lo       valid_lft forever preferred_lft forever71: eth0@if72: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default     link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0       valid_lft forever preferred_lft forever
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The IP address is &lt;code&gt;172.17.0.2&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our interface &lt;code&gt;eth0&lt;/code&gt; in the container has id &lt;code&gt;71&lt;/code&gt; and is in pair with &lt;code&gt;if72&lt;/code&gt; so the ID in the host machine is just &lt;code&gt;72&lt;/code&gt;, let&amp;rsquo;s get the interface name in the host machine.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ip a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cool, the name is right there:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;72: vethcaf7146@if71: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue master docker0 state UP group default
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So I have: IP: &lt;code&gt;172.17.0.2&lt;/code&gt;, Interface name on the host: &lt;code&gt;vethcaf7146&lt;/code&gt;&lt;/p&gt;
+
+&lt;h4 id=&#34;step-2-generate-some-traffic-to-go-to-the-interface-we-just-created-with-the-container-httptest&#34;&gt;&lt;strong&gt;Step 2:&lt;/strong&gt; Generate some traffic to go to the interface we just created with the container &lt;code&gt;httptest&lt;/code&gt;&lt;/h4&gt;
+
+&lt;p&gt;For this purpose, we can use &lt;code&gt;hping3&lt;/code&gt; or the browser or even &lt;code&gt;curl&lt;/code&gt;. In this case I will be using &lt;code&gt;hping3&lt;/code&gt; because it continuously sends traffic to the interface and I can see how this changes after loading my XDP program.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# hping3 172.17.0.2 --fast
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In another terminal open &lt;code&gt;tcpdump&lt;/code&gt; to see the packet flow.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# tcpdump -i vethcaf7146
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;vethcaf7146&lt;/code&gt; is the name of the interface we found at step 2.&lt;/p&gt;
+
+&lt;h4 id=&#34;step-3-compile-an-xdp-program-using-clang&#34;&gt;&lt;strong&gt;Step 3:&lt;/strong&gt; Compile an XDP program using clang&lt;/h4&gt;
+
+&lt;p&gt;Let’s take this XDP program as an example &lt;em&gt;(there’s a more complete example later!)&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#include &amp;lt;linux/bpf.h&amp;gt;
+int main() {
+  return XDP_DROP;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Compile it with:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ clang -O2 -target bpf -c dropper.c -o dropper.o
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Once loaded, this program drops every packet sent to the interface. If you change &lt;code&gt;XDP_DROP&lt;/code&gt; with &lt;code&gt;XDP_TX&lt;/code&gt; the packets will be sent back to the direction where they came from and you then change it to &lt;code&gt;XDP_PASS&lt;/code&gt;, the packets will just continue flowing.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;XDP_TX&lt;/code&gt; can also be used to transmit the packet to another destination if used after modifying the packet&amp;rsquo;s destination address, mac address and TCP checksum for example.&lt;/p&gt;
+
+&lt;h4 id=&#34;step-4-load-the-dropper-o-program&#34;&gt;&lt;strong&gt;Step 4:&lt;/strong&gt; Load the dropper&lt;code&gt;.o&lt;/code&gt; program&lt;/h4&gt;
+
+&lt;p&gt;At the previous step, we compiled &lt;code&gt;dropper.o&lt;/code&gt; from &lt;code&gt;dropper.c&lt;/code&gt;. We can now use the &lt;code&gt;ip&lt;/code&gt; command to load the program into the kernel.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ip link set dev vethcaf7146 xdp obj dropper.o sec .text
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The careful reader may have noticed that we are using the &lt;code&gt;xdp&lt;/code&gt; flag in the previous command. That flag means that the kernel will do its best to load the XDP program on the network card as native. However not all the network cards support native XDP programs with hardware offloads, in that case, the kernel disables that.&lt;/p&gt;
+
+&lt;p&gt;Hardware offloads happen when the network driver is attached to a network card that can process the networking work defined in the XDP program so that the server’s CPU doesn’t have to do that.&lt;/p&gt;
+
+&lt;p&gt;In case you already know your card supports XDP you can use &lt;code&gt;xdpdrv&lt;/code&gt;, if you know that It doesn’t you can use &lt;code&gt;xdpgeneric&lt;/code&gt; .&lt;/p&gt;
+
+&lt;h4 id=&#34;step-5-test-with-traffic-and-unload&#34;&gt;&lt;strong&gt;Step 5:&lt;/strong&gt; Test with traffic and unload&lt;/h4&gt;
+
+&lt;p&gt;At this point, after loading the program you will notice that your &lt;code&gt;tcpdump&lt;/code&gt; started at Step 3 will stop receiving traffic because of the drop.&lt;/p&gt;
+
+&lt;p&gt;You can now stop the XDP program by unloading it&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ip link set dev vethcaf7146 xdp off
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;step-6-drop-only-udp-packets&#34;&gt;Step 6: Drop only UDP packets&lt;/h4&gt;
+
+&lt;p&gt;For the very simple use case we had (drop everything) we didn’t need to access the &lt;code&gt;xdp_md&lt;/code&gt; struct to get the context of the current packet flow, but now, since we want to selectively drop specific packets we need to do that.&lt;/p&gt;
+
+&lt;p&gt;In order to do that, however, we need to declare a function that has &lt;code&gt;xdp_md *ctx&lt;/code&gt; as the first argument, to do that we need to use a different section than &lt;code&gt;.text&lt;/code&gt; when loading our program, let’s see the program below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;#include &amp;lt;linux/bpf.h&amp;gt;
+#include &amp;lt;linux/in.h&amp;gt;
+#include &amp;lt;linux/if_ether.h&amp;gt;
+#include &amp;lt;linux/ip.h&amp;gt;
+
+#define SEC(NAME) __attribute__((section(NAME), used))
+
+SEC(&amp;quot;dropper_main&amp;quot;)
+int dropper(struct xdp_md *ctx) {
+  int ipsize = 0;
+
+  void *data = (void *)(long)ctx-&amp;gt;data;
+  void *data_end = (void *)(long)ctx-&amp;gt;data_end;
+
+  struct ethhdr *eth = data;
+
+  ipsize = sizeof(*eth);
+
+  struct iphdr *ip = data + ipsize;
+  ipsize += sizeof(struct iphdr);
+  if (data + ipsize &amp;gt; data_end) {
+    return XDP_PASS;
+  }
+
+  if (ip-&amp;gt;protocol == IPPROTO_UDP) {
+    return XDP_DROP;
+  }
+  return XDP_PASS;
+}
+
+char _license[] SEC(&amp;quot;license&amp;quot;) = &amp;quot;GPL&amp;quot;;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Wow, a lot changed here!
+First, we have a macro that allows us to map a section name to specific symbols, then we use that macro in &lt;code&gt;SEC(“dropper_main”)&lt;/code&gt; to point the section name &lt;code&gt;dropper_main&lt;/code&gt; to the dropper function where we accept the &lt;code&gt;xdp_md&lt;/code&gt; struct pointer. After that, there’s some boilerplate to extract the Ethernet frame from which we can then extract the information related to the packet like the protocol in this case that we use to check the protocol and drop all the UDP packets (line 26).&lt;/p&gt;
+
+&lt;p&gt;Let’s compile it!&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ clang -O2 -target bpf -c udp.c -o udp.o
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And now we can verify the symbol table with &lt;code&gt;objdump&lt;/code&gt; to see if our section is there.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;objdump -t udp.o
+
+udp.o:     file format elf64-little
+
+SYMBOL TABLE:
+0000000000000050 l       dropper_main   0000000000000000 LBB0_3
+0000000000000000 g       license        0000000000000000 _license
+0000000000000000 g       dropper_main   0000000000000000 dropper
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Cool, let’s load the function using the section &lt;code&gt;dropper_main&lt;/code&gt; always on the same interface we used before &lt;code&gt;vethcaf7146&lt;/code&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ip link set dev vethcaf7146 xdp obj udp.o sec dropper_main
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Nice! So let’s now try to do a DNS query from the container to verify if UDP packets are being dropped:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;# ip netns exec httpserver dig github.com
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This should give nothing right now and &lt;code&gt;dig&lt;/code&gt; will be stuck for a while before exiting because there’s our XDP program that is dropping packets.&lt;/p&gt;
+
+&lt;p&gt;Now we can unload that program and our DNS queries will be there again&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;# dig github.com
+
+;&amp;lt;&amp;lt;&amp;gt;&amp;gt; DiG 9.13.3 &amp;lt;&amp;lt;&amp;gt;&amp;gt; github.com
+;; global options: +cmd
+;; Got answer:
+;; -&amp;gt;&amp;gt;HEADER&amp;lt;&amp;lt;- opcode: QUERY, status: NOERROR, id: 49708
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1&amp;lt;/pre&amp;gt;
+; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;github.com.                    IN      A
+;; ANSWER SECTION:
+github.com.             59      IN      A       192.30.253.112
+github.com.             59      IN      A       192.30.253.113
+;; Query time: 42 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Sun Oct 07 23:10:53 CEST 2018
+;; MSG SIZE  rcvd: 71
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h3&gt;
+
+&lt;p&gt;When I first approached &lt;strong&gt;eBPF and XDP&lt;/strong&gt; one year ago I was very scared and my brain was telling sentences like&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I’m not going to learn this you fool!! ~ My brain, circa June 2017&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;However, after some initial pain and some months thinking about it I really enjoyed working on this stuff.&lt;/p&gt;
+
+&lt;p&gt;But! As always I’m still in the process of learning stuff and this topic is very exciting and still very very obscure for me that I will surely try to do more stuff with this low-level unicorn.&lt;/p&gt;
+
+&lt;p&gt;I hope you will enjoy working with XDP as much as I did and I hope my post here helped you going forward with your journey, as writing it did with mine.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I love this! ~ My brain, circa October 2018&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Following, some references for you.&lt;/p&gt;
+
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/iovisor/bpf-docs&#34;&gt;https://github.com/iovisor/bpf-docs&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=JRFNIKUROPE&#34;&gt;https://www.youtube.com/watch?v=JRFNIKUROPE&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.kernel.org/doc/html/latest/networking/af_xdp.html&#34;&gt;https://www.kernel.org/doc/html/latest/networking/af_xdp.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://cilium.readthedocs.io/en/latest/bpf/&#34;&gt;https://cilium.readthedocs.io/en/latest/bpf/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html?highlight=XDP&#34;&gt;https://suricata.readthedocs.io/en/latest/capture-hardware/ebpf-xdp.html?highlight=XDP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.netdevconf.org/2.1/slides/apr6/bertin_Netdev-XDP.pdf&#34;&gt;https://www.netdevconf.org/2.1/slides/apr6/bertin_Netdev-XDP.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;Thanks for reading!&lt;/strong&gt; You can find me on &lt;a href=&#34;https://twitter.com/fntlnz&#34;&gt;Twitter&lt;/a&gt; and on &lt;a href=&#34;https://github.com/fntlnz&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+</description>
+    </item>
     
     <item>
       <title>What I learnt about Kubernetes Controllers</title>

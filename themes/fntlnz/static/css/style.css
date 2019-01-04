@@ -59,10 +59,9 @@ body {
   padding-top: 0.5em;
   padding-bottom: 1em;
   max-width: 780px;
-  font-family: 'Playfair Display', serif;
+	font-family: Avenir, Arial, Open Sans Light, sans-serif;
   color: #111111;
   line-height: 1.58;
-  text-rendering: optimizeLegibility !important;
   margin-left: auto;
   margin-right: auto;
 }
@@ -225,12 +224,11 @@ article > #title > time {
 
 article section#content {
   line-height: 33px;
-  font-size: 21px;
+  font-size: 19px;
   font-weight: 400;
   letter-spacing: -0.0666667px;
   margin-top: 10px;
   text-rendering: optimizeLegibility;
-  font-family: Georgia, 'Times New Roman', Times, serif;
   overflow-wrap: break-word;
   font-feature-settings: "liga"
 }
@@ -288,10 +286,10 @@ article section#content h4 {
 /* Quotes */
 blockquote {
   background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-  quotes: "\201C" "\201D" "\2018" "\2019";
+  border-left: 5px solid #ccc;
+  font-style: italic;
+  margin: 0.8em 10px;
+  padding: 0.1em 10px;
 }
 
 blockquote:before {
@@ -359,30 +357,39 @@ section#main h2 {
   margin-top: 0.8em;
 }
 
+.foothandle {
+  width: 100%;
+  font-size: 0.9em;
+  font-family: 'Roboto Condensed', sans-serif;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+}
+
 p > code {
   padding: .2em;
   margin: 0;
   font-size: 85%;
   background-color: #FFD;
   border-radius: 3px;
-  font-family: "inconsolata",Menlo,Monaco,"Courier New",monospace;
+  font-family: Courier, "Courier New", mono;
 }
 
 pre {
   display: block;
-  font-size: 13px;
-  font-family: Menlo,Monaco,"Courier New",Courier,monospace;
+  font-size: 15px;
+  font-family: Courier, "Courier New", mono;
   margin: 1em 0;
   width: auto;
   padding: 15px;
-
   border: 1px solid #ddd;
   box-shadow: 5px 5px 5px #eee;
   background: #FFD;
-  padding: 1em;
   overflow-x: auto;
+  line-height: 20px;
 }
 
 article p {
   padding-bottom: 1em;
 }
+
