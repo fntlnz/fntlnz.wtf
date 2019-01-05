@@ -370,7 +370,7 @@ p > code {
   padding: .2em;
   margin: 0;
   font-size: 85%;
-  background-color: #FFD;
+  background-color: #fbfae6;
   border-radius: 3px;
   font-family: Courier, "Courier New", mono;
 }
@@ -383,8 +383,7 @@ pre {
   width: auto;
   padding: 15px;
   border: 1px solid #ddd;
-  box-shadow: 5px 5px 5px #eee;
-  background: #FFD;
+  background: #fbfae6;
   overflow-x: auto;
   line-height: 20px;
 }
