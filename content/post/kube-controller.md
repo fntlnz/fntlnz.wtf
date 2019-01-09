@@ -3,7 +3,6 @@ date        = "2018-09-05T13:03:00+02:00"
 title       = "What I learnt about Kubernetes Controllers"
 description = "Some stuff I learnt about kubernetes controllers while working on an issue around Storage"
 slug        = "what-i-learnt-about-kubernetes-controller"
-image       = "/gdb-go/gdb-dashboard.jpg"
 +++
 
 If you are a Kubernetes Controller you know that your main duty is to react to changes to the world’s desired state and actual state to do whatever you can to update the latter so that it matches the former.
