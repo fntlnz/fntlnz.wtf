@@ -5,8 +5,6 @@ description = "Some examples on how to use ip to load XDP programs"
 slug        = "xdp-ip-iproute"
 +++
 
-# Load XDP programs using the ip (iproute2) command
-
 **Nota bene:** If you don’t even know what XDP is, continue reading I will explain it later.
 
 ### My journey

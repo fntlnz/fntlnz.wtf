@@ -4,17 +4,15 @@
     <link>https://fntlnz.wtf/</link>
     <language>en-US</language>
     <author>Lorenzo Fontana</author>
-    <updated>Wed, 12 Jun 2019 00:00:00 &#43;0200</updated>
+    <updated>Wed, 12 Jun 2019 00:00:00 CEST</updated>
     
     <item>
       <title>Load XDP programs using the ip (iproute2) command</title>
       <link>https://fntlnz.wtf/post/xdp-ip-iproute/</link>
-      <pubDate>Mon, 08 Oct 2018 10:35:53 &#43;0200</pubDate>
+      <pubDate>Mon, 08 Oct 2018 10:35:53 CEST</pubDate>
       <author>Lorenzo Fontana</author>
       <guid>https://fntlnz.wtf/post/xdp-ip-iproute/</guid>
       <description>
-
-&lt;h1 id=&#34;load-xdp-programs-using-the-ip-iproute2-command&#34;&gt;Load XDP programs using the ip (iproute2) command&lt;/h1&gt;
 
 &lt;p&gt;&lt;strong&gt;Nota bene:&lt;/strong&gt; If you don’t even know what XDP is, continue reading I will explain it later.&lt;/p&gt;
 
@@ -317,7 +315,7 @@ github.com.             59      IN      A       192.30.253.113
     <item>
       <title>What I learnt about Kubernetes Controllers</title>
       <link>https://fntlnz.wtf/post/what-i-learnt-about-kubernetes-controller/</link>
-      <pubDate>Wed, 05 Sep 2018 13:03:00 &#43;0200</pubDate>
+      <pubDate>Wed, 05 Sep 2018 13:03:00 CEST</pubDate>
       <author>Lorenzo Fontana</author>
       <guid>https://fntlnz.wtf/post/what-i-learnt-about-kubernetes-controller/</guid>
       <description>&lt;p&gt;If you are a Kubernetes Controller you know that your main duty is to react to changes to the world’s desired state and actual state to do whatever you can to update the latter so that it matches the former.&lt;/p&gt;
@@ -1086,7 +1084,7 @@ systemd-nspawn -M Fedora-Cloud-Base-20141203-21
     <item>
       <title>Why do we have containers</title>
       <link>https://fntlnz.wtf/post/why-containers/</link>
-      <pubDate>Thu, 11 Aug 2016 15:35:53 &#43;0200</pubDate>
+      <pubDate>Thu, 11 Aug 2016 15:35:53 CEST</pubDate>
       <author>Lorenzo Fontana</author>
       <guid>https://fntlnz.wtf/post/why-containers/</guid>
       <description>

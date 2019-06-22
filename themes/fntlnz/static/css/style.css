@@ -25,8 +25,13 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 
+html{
+  height: 100%;
+}
+
 body {
-  line-height: 1;
+  background-color:rgb(250, 251, 252);
+  height: 100%;
 }
 
 em {
@@ -53,13 +58,20 @@ table {
 }
 
 /* Generic styles */
-body {
+.container { 
+  background-color: white;
+  border-style: solid solid none none;
+  border-width: 0px 10px 0px 0px;
+  height: 100%;
+  border-color: rgb(225, 228, 232);
+  border-radius: 0px;
+  line-height: 1;
   padding-left: 1.5em;
   padding-right: 1.5em;
   padding-top: 0.5em;
   padding-bottom: 1em;
   max-width: 780px;
-	font-family: Avenir, Arial, Open Sans Light, sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   color: #111111;
   line-height: 1.58;
   margin-left: auto;
@@ -68,23 +80,6 @@ body {
 
 h1 {
   line-height: 1.10;
-  font-family: 'Roboto Condensed', sans-serif;
-}
-
-h2 {
-  font-family: 'Roboto Condensed', sans-serif;
-}
-
-h3 {
-  font-family: 'Roboto Condensed', sans-serif;
-}
-
-@media only screen and (max-device-width: 480px) {
-  body {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    padding-top: 0.5em;
-  }
 }
 
 a {
@@ -108,7 +103,6 @@ strong {
   letter-spacing: -.015em;
   font-style: normal;
   color: rgb(36, 35, 35);
-  font-family: 'Roboto Condensed', sans-serif;
 }
 
 section.list ul {
@@ -188,7 +182,6 @@ section.lorenzo-pic li a {
   letter-spacing: -.015em;
   font-style: normal;
   color: rgb(36, 35, 35);
-  font-family: 'Roboto Condensed', sans-serif;
 }
 
 
@@ -219,7 +212,6 @@ article section#title h1 {
 article > #title > time {
   color: #375EAB;
   font-size: 1em;
-  font-family: 'Roboto Condensed', sans-serif;
 }
 
 article section#content {
@@ -348,10 +340,6 @@ section.list {
   margin-top: 1.2em;
 }
 
-section#main {
-  font-family: 'Roboto Condensed', sans-serif;
-}
-
 section#main h2 {
   font-weight: bold;
   margin-top: 0.8em;
@@ -360,7 +348,6 @@ section#main h2 {
 .foothandle {
   width: 100%;
   font-size: 0.9em;
-  font-family: 'Roboto Condensed', sans-serif;
   bottom: 0;
   right: 0;
   text-align: right;
@@ -387,6 +374,7 @@ pre {
   overflow-x: auto;
   line-height: 20px;
 }
+
 
 article p {
   padding-bottom: 1em;
