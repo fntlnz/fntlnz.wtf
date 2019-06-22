@@ -82,6 +82,12 @@ h1 {
   line-height: 1.10;
 }
 
+@media only screen and (max-device-width: 480px) {
+  .container {
+    padding-left: 0.5em;
+  }
+}
+
 a {
   color: black;
   text-decoration: underline;
