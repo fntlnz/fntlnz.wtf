@@ -24,7 +24,6 @@
     {{ end }}
     <title>{{ if eq .URL "/" }}{{ .Site.Title }}{{ else if eq .URL "/post/" }}All Entries &middot; {{ .Site.Title }}{{ else if in .URL "/tags/" }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}</title>
 {{ partial "favicon.html" . }}
-{{ template "_internal/google_analytics_async.html" . }}
   </head>
   <body>
   <div class="container">
