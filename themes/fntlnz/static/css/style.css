@@ -71,7 +71,7 @@ table {
   padding-top: 0.5em;
   padding-bottom: 1em;
   max-width: 780px;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: sans-serif;
   color: #111111;
   line-height: 1.58;
   margin-left: auto;
@@ -365,13 +365,13 @@ p > code {
   font-size: 85%;
   background-color: #fbfae6;
   border-radius: 3px;
-  font-family: 'Fira Code', monospace;
+  font-family: monospace;
 }
 
 pre {
   display: block;
   font-size: 15px;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: monospace;
   margin: 1em 0;
   width: auto;
   padding: 15px;
