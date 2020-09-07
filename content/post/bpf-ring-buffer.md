@@ -1,23 +1,22 @@
 +++
 date        = "2020-09-05T00:03:00+02:00"
 title       = "Using the BPF ring buffer"
-description = "yo"
+description = "Usage of the new BPF_MAP_TYPE_RINGBUF bpf map type"
 slug        = "bpf-ring-buffer-usage"
-image       = "not-yet.jpg"
 +++
 
 # Introduction
 
-The 5.8 release of the Linux Kernel came out with lots of interesting elements.
+The 5.8 release of the Linux Kernel came out with lots of interesting elements. Yes, as always.
 
-A couple of weeks ago, while still processing all the news in there, I came accross [a patch](0) proposing
+A couple of weeks ago, while still processing all the news in there, I came accross [a patch][0] proposing
 a new bpf map type called `BPF_MAP_TYPE_RINGBUF`. By using this new map type
 we finally have an MPSC (multi producer single consumer) data structure
 optimized for data buffering and streaming.
 
 Some exciting things about it:
 
-- I'm not tied anymore to the same CPU when dealing with the output as I was with `BPF_MAP_TYPE_PERF_EVENT_ARRAY`. This is very important for me and I'm already experimenting with this in the [Falco](8) BPF driver.
+- I'm not tied anymore to the same CPU when dealing with the output as I was with `BPF_MAP_TYPE_PERF_EVENT_ARRAY`. This is very important for me and I'm already experimenting with this in the [Falco][8] BPF driver.
 - It's very flexible in letting me to decide what kind of memory allocation model I want to use by reserving beforehand or not.
 - It is observable using `bpf_ringbuf_query` by replying to various queries about its  state. This could be useful to feed a prometheus exporter to monitor the health of the buffer.
 - Producers do not block each other, even on different CPUs
@@ -30,6 +29,7 @@ about to actually make use of this new feature.
 # Note on helpers
 
 For every functionality it exposes, the BPF subsystem exposes an helper.
+
 The helper is used to let you interact with that specific part of the subsystem
 that does the feature you are invoking.
 
@@ -55,7 +55,7 @@ void bpf_ringbuf_discard(void *data, u64 flags);
 u64 bpf_ringbuf_query(void *ringbuf, u64 flags);
 ```
 
-You can look at a complete list of all the BPF helpers at [bpf-helpers(7)](5).
+You can look at a complete list of all the BPF helpers at [bpf-helpers(7)][5].
 
 With these premises, and to keep things simple I decided to show two different usage examples of the new features using libbpf and BCC.
 
@@ -63,6 +63,7 @@ It would be impractical for me to show you how to
 use the functionalities in a *raw* way by defining ourselves all
 the needed helpers definitions for the BPF functionalities we use.
 
+A very good explaination about BPF helpers can be found at [ebpf.io][9].
 
 # Using libbpf
 
@@ -70,24 +71,28 @@ Fortunately, the kernel provides a complete API that does all the work of export
 
 If you look around for libbpf, it has two homes:
 
-- The original copy, resides in the linux kernel under [tools/lib/bpf](6).
-- The out-of-tree mirror at [github.com/libbpf/libbpf](7).
+- The original copy, resides in the linux kernel under [tools/lib/bpf][6].
+- The out-of-tree mirror at [github.com/libbpf/libbpf][7].
 
 To follow the example here, first go to the libbpf repository and follow the instructions to install it.
 The ring buffer support was added in v0.0.9. Also, make sure to have a >= 5.8 Kernel.
 
-
+Here is how our 
+```c
+PROGRAM here
+```
 
 # Using BCC
 
-As always, the easiest way to get your hands into something new in the BPF world
-is by trying [BCC](1) first.
+A very convenient way to try out something new in the BPF world is by looking at [BCC][1] first.
 
-BCC added the support for the BPF ring buffer almost immediately by [adding the helper definitions](2)
-and by implementing [the Python API support](3).
+BCC added the support for the BPF ring buffer almost immediately by [adding the helper definitions][2]
+and by implementing [the Python API support][3].
+
+At the moment of writing BCC does not implement a frontend for `BPF_FUNC_ringbuf_query`, I [opened an issue][10].
 
 To make this work you will need to be on a kernel >= 5.8 and have at least BCC 0.16.0.
-If you need to learn how to install BCC they have a very good resource [here](4).
+If you need to learn how to install BCC they have a very good resource [here][4].
 
 Here's the python code, comments below:
 
@@ -146,9 +151,6 @@ As you can see, we are making use of the BCC helper `BPF_RINGBUF_OUTPUT` to
 create a ring buffer named `events`, then on that one we call `ringbuf_submit` and `ringbug_poll`
 to do our read and write operations. 
 
-The python bcc module does not implement the `bpf_ring_query` helper so I was not
-able to use that to show the current status of the buffer anywhere.
-
 If you want to try, copy the program to a `program.py` file.
 You will need to execute it with root permissions:
 
@@ -192,3 +194,5 @@ Thanks to the maintainers and the many contributors for their hard work!
 [6]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/tools/lib/bpf?h=v5.8.6
 [7]: https://github.com/libbpf/libbpf
 [8]: https://github.com/falcosecurity/falco
+[9]: https://ebpf.io/what-is-ebpf#helper-calls
+[10]: https://github.com/iovisor/bcc/issues/3089
