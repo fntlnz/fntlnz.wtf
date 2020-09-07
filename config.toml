@@ -5,3 +5,15 @@ theme = "fntlnz"
 paginate = 500
 publishDir = "docs"
 disableKinds = ["section", "taxonomy", "taxonomyTerm", "404"]
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    noClasses = true
+    style = "algol_nu"
+    tabWidth = 4
