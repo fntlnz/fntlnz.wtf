@@ -231,6 +231,10 @@ article section#content {
   font-feature-settings: "liga"
 }
 
+article section#content a {
+  background: rgba(76, 175, 80, 0.5);
+}
+
 @media only screen and (max-device-width: 480px) {
   article section#content {
     line-height: 28px;
@@ -359,24 +363,20 @@ section#main h2 {
   text-align: right;
 }
 
-p > code {
-  padding: .2em;
+code {
   margin: 0;
   font-size: 85%;
-  background-color: #fbfae6;
   border-radius: 3px;
   font-family: monospace;
 }
 
 pre {
   display: block;
-  font-size: 15px;
   font-family: monospace;
   margin: 1em 0;
   width: auto;
   padding: 15px;
   border: 1px solid #ddd;
-  background: #fbfae6;
   overflow-x: auto;
   line-height: 20px;
 }
