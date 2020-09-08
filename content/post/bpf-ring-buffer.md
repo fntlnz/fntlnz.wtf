@@ -26,6 +26,16 @@ The patch author did a very good job at explaining all the reasons why the chang
 was needed, so I will not go that way with this post. Instead, I want to write
 about to actually make use of this new feature.
 
+# Motivation for this post
+
+Finding good resources on new BPF features is very hard. The subsystem maintainers team is
+doing a ginormous work at it and documenting every single bit is very difficult.
+
+Moreover, this new feature is just another map interface so essentially
+can be used as the others do. However, I felt like others could benefit
+from my researching about this new features so i did put together this writeup
+while I was experimenting on it.
+
 # Note on helpers
 
 For every functionality it exposes, the BPF subsystem exposes an helper.
@@ -77,19 +87,190 @@ If you look around for libbpf, it has two homes:
 To follow the example here, first go to the libbpf repository and follow the instructions to install it.
 The ring buffer support was added in v0.0.9. Also, make sure to have a >= 5.8 Kernel.
 
-Here is how our 
+Here is how the BPF program:
+
+The program itself is very simple, we attach to the tracepoint that gets hit
+every time an `execve` syscall is done.
+
+The interesting part here for `BPF_MAP_TYPE_RINGBUF` is the initialization
+of the map with `bpf_map_def`. This type of map does not want the `.key` and `.value` sections
+and for the `.max_entries` value the patch says it wants a power of two. That is
+not entirely right, the value also needs to be page aligned with the current page shift size.
+In the current `asm_generic/page.h` [here][10] it's defined as `1 << 12` so any value multiple of 4096 will be ok.
+
+Once the map is initialized, look at what we do in our tracepoint, there are two ringbuf specific calls:
+
+- `bpf_ringbuf_reserve` does the memory reservation for the buffer, this is the only time locking is done
+- `bpf_ringbuf_submit` does the actual write to the map, this is lock free
+
 ```c
-PROGRAM here
+#include <linux/types.h>
+
+#include <bpf/bpf_helpers.h>
+#include <linux/bpf.h>
+
+struct event {
+  __u32 pid;
+  char filename[16];
+};
+
+struct bpf_map_def SEC("maps") buffer = {
+    .type = BPF_MAP_TYPE_RINGBUF,
+    .max_entries = 4096 * 64,
+};
+
+struct trace_entry {
+  short unsigned int type;
+  unsigned char flags;
+  unsigned char preempt_count;
+  int pid;
+};
+
+struct trace_event_raw_sys_enter {
+  struct trace_entry ent;
+  long int id;
+  long unsigned int args[6];
+  char __data[0];
+};
+
+
+SEC("tracepoint/syscalls/sys_enter_execve")
+int sys_enter_execve(struct trace_event_raw_sys_enter *ctx) {
+  __u32 pid = bpf_get_current_pid_tgid();
+  struct event *event = bpf_ringbuf_reserve(&buffer, sizeof(struct event), 0);
+  if (!event) {
+    return 1;
+  }
+  event->pid = pid;
+  bpf_probe_read_user_str(event->filename, sizeof(event->filename),
+                          (const char *)ctx->args[0]);
+
+  bpf_ringbuf_submit(event, 0);
+
+  return 0;
+}
+
+char _license[] SEC("license") = "GPL";
 ```
+Now save this source in a file called `program.c` if you want to try it later.
+
+Loading the program would be impossible without a loader.
+
+Besides all the boilerplate it does to load the program and the tracepoint,
+there are some interesting things for the ringbuf usecase here too:
+
+- The `buf_process_sample` callback gets called every time a new element is read from the ring buffer
+- The ringbuffer is read using `ring_buffer_consume`
+
+```c
+#include <bpf/libbpf.h>
+#include <stdio.h>
+#include <unistd.h>
+
+struct event {
+  __u32 pid;
+  char filename[16];
+};
+
+static int buf_process_sample(void *ctx, void *data, size_t len) {
+  struct event *evt = (struct event *)data;
+  printf("%d %s\n", evt->pid, evt->filename);
+
+  return 0;
+}
+
+int main(int argc, char *argv[]) {
+  const char *file = "program.o";
+  struct bpf_object *obj;
+  int prog_fd = -1;
+  int buffer_map_fd = -1;
+  struct  bpf_program *prog;
+
+  bpf_prog_load(file, BPF_PROG_TYPE_TRACEPOINT, &obj, &prog_fd);
+
+  struct bpf_map *buffer_map;
+  buffer_map_fd = bpf_object__find_map_fd_by_name(obj, "buffer");
+
+  struct ring_buffer *ring_buffer;
+ 
+  ring_buffer = ring_buffer__new(buffer_map_fd, buf_process_sample, NULL, NULL);
+
+  if(!ring_buffer) {
+    fprintf(stderr, "failed to create ring buffer\n");
+    return 1;
+  }
+
+	prog = bpf_object__find_program_by_title(obj, "tracepoint/syscalls/sys_enter_execve");
+	if (!prog) {
+    fprintf(stderr, "failed to find tracepoint\n");
+    return 1;
+	}
+
+  bpf_program__attach_tracepoint(prog, "syscalls", "sys_enter_execve");
+
+  while(1) {
+    ring_buffer__consume(ring_buffer);
+    sleep(1);
+  }
+
+  return 0;
+}
+```
+
+Now save this source in a file called `loader.c` if you want to try it later.
+
+It required quite some code to just showcase the ringbuf related functions.
+Sorry for the big wall of code!
+
+Now we can proceed, compile and run it.
+
+In the folder where you saved `program.c` and `loader.c`:
+
+Compile the program:
+
+```bash
+clang -O2 -target bpf -g -c program.c # -g is to generate btf code
+```
+
+Compile the loader
+```
+gcc -g -lbpf loader.c
+```
+
+You can now run it via:
+
+```
+sudo ./a.out
+```
+
+It wil produce something similar to this:
+
+
+```bash
+393811 /bin/zsh
+393812 /usr/bin/env
+393812 /usr/local/bin/
+393812 /usr/local/sbin
+393812 /usr/bin/zsh
+393816 /usr/bin/ls
+393818 /usr/bin/git
+393819 /usr/bin/awk
+393824 /usr/bin/git
+393825 /usr/bin/git
+393826 /usr/bin/git
+```
+
+If when compiling you followed my suggestion and left the `-g` flag
+to `clang` while compiling the program congrats, you just produced a BPF CO-RE (Compile Once, Run Everywhere) program.
+Yes, you can move it to another machine and it will work. Next step is to compile the loader statically to move it
+together with the program. This is left to the reader :)
 
 # Using BCC
 
-A very convenient way to try out something new in the BPF world is by looking at [BCC][1] first.
+This paragraph is about doing the same thing we did with libbpf but with [BCC][1].
 
 BCC added the support for the BPF ring buffer almost immediately by [adding the helper definitions][2]
 and by implementing [the Python API support][3].
-
-At the moment of writing BCC does not implement a frontend for `BPF_FUNC_ringbuf_query`, I [opened an issue][10].
 
 To make this work you will need to be on a kernel >= 5.8 and have at least BCC 0.16.0.
 If you need to learn how to install BCC they have a very good resource [here][4].
@@ -185,6 +366,7 @@ very felt use case for those (like me) who move a lot of data around using maps.
 
 Thanks to the maintainers and the many contributors for their hard work!
 
+
 [0]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=457f44363a8894135c85b7a9afd2bd8196db24ab
 [1]: https://github.com/iovisor/bcc
 [2]: https://github.com/iovisor/bcc/pull/2969
@@ -195,4 +377,4 @@ Thanks to the maintainers and the many contributors for their hard work!
 [7]: https://github.com/libbpf/libbpf
 [8]: https://github.com/falcosecurity/falco
 [9]: https://ebpf.io/what-is-ebpf#helper-calls
-[10]: https://github.com/iovisor/bcc/issues/3089
+[10]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/asm-generic/page.h?id=457f44363a8894135c85b7a9afd2bd8196db24ab#n18
