@@ -1,5 +1,5 @@
 +++
-date        = "2020-09-05T00:03:00+02:00"
+date        = "2020-09-08T00:17:00+02:00"
 title       = "Using the BPF ring buffer"
 description = "Usage of the new BPF_MAP_TYPE_RINGBUF bpf map type"
 slug        = "bpf-ring-buffer-usage"
@@ -16,8 +16,8 @@ optimized for data buffering and streaming.
 
 Some exciting things about it:
 
-- I'm not tied anymore to the same CPU when dealing with the output as I was with `BPF_MAP_TYPE_PERF_EVENT_ARRAY`. This is very important for me and I'm already experimenting with this in the [Falco][8] BPF driver.
-- It's very flexible in letting me to decide what kind of memory allocation model I want to use by reserving beforehand or not.
+- This type of map is not tied to the same CPU when dealing with the output as it is with `BPF_MAP_TYPE_PERF_EVENT_ARRAY`. This is very important for me and I'm already experimenting with this in the [Falco][8] BPF driver.
+- It's very flexible in letting the user to decide what kind of memory allocation model they want to use by reserving beforehand or not.
 - It is observable using `bpf_ringbuf_query` by replying to various queries about its  state. This could be useful to feed a prometheus exporter to monitor the health of the buffer.
 - Producers do not block each other, even on different CPUs
 - Spinlock is used internally to do the locking on reservations that are also ordered, while commits are completely lock free. This is very cool, because locking comes for free, no need to use `bpf_spin_lock` around or having to manage it.
@@ -260,9 +260,10 @@ It wil produce something similar to this:
 393826 /usr/bin/git
 ```
 
-If when compiling you followed my suggestion and left the `-g` flag
-to `clang` while compiling the program congrats, you just produced a BPF CO-RE (Compile Once, Run Everywhere) program.
-Yes, you can move it to another machine and it will work. Next step is to compile the loader statically to move it
+If you followed my suggestion and left the `-g` flag
+to the `clang` command while compiling the program, congrats, you just produced a BPF CO-RE (Compile Once, Run Everywhere) program.
+
+Yes, you can move it to another machine with Kernel 5.8 and it will work. Next step is to compile the loader statically to move it
 together with the program. This is left to the reader :)
 
 # Using BCC
