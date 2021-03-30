@@ -5,6 +5,13 @@ description = "Usage of the new BPF_MAP_TYPE_RINGBUF bpf map type"
 slug        = "bpf-ring-buffer-usage"
 +++
 
+Update March 30 2021:
+
+This article is still relevant if you are looking for a practical example
+on how to use the BPF Ring Buffer. If you want a deep explaination
+on how it works I suggest to visit the blog of the main author
+of this feature Andrii [here](https://nakryiko.com/posts/bpf-ringbuf/). Enjoy the learning! :)
+
 # Introduction
 
 The 5.8 release of the Linux Kernel came out with lots of interesting elements. Yes, as always.
